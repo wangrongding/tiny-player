@@ -145,6 +145,24 @@ class TinyPlayer {
 }
 ```
 
+### 模板
+
+模板引擎：
+
+1. Ejs
+1. Art-template
+1. DOT
+1. JavaScript-Templates
+1. Template.js
+1. Tempo
+1. ECT
+1. Dot Dom
+1. Template7
+1. Bunny
+1. Squirrelly
+
+> https://cloud.tencent.com/developer/article/1539238
+
 使用：
 
 ```typescript
