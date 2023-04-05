@@ -1,0 +1,25 @@
+@import './watermask.scss';
+
+// 渐变色文字
+h1 {
+  background-color: #2b90b6;
+  background-image: linear-gradient(45deg, #4ec5d4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+// 视频容器
+.tiny-player-container {
+  position: relative;
+
+  // 控制台
+  .tiny-player-controls {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: 0;
+    left: 0;
+  }
+}

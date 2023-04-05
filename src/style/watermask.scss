@@ -1,0 +1,10 @@
+.tiny-player-watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('//eyuankupub-cdn-oss.chuangkit.com/sys/front/ckt-watermark-v3.png');
+  background-size: 100%;
+  pointer-events: none;
+}
