@@ -1,0 +1,40 @@
+<!-- prettier-ignore -->
+<div class="tiny-player-container">
+  <video 
+    class="tiny-player-video"
+    crossorigin="anonymous"
+    webkit-playsinline
+    playsinline
+    src="<%= locals.src %>" 
+    <% if(locals.nativeControl){ %> controls <% } %> 
+    <% if(locals.airplay){ %> x-webkit-airplay="allow" <% } %> 
+    <% if(locals.preload){ %> src="<%= locals.preload %>" <% } %> 
+    <% if(locals.poster){ %> poster="<%= locals.poster %>" <% } %> 
+    <% if(locals.volume){ %> src="<%= locals.volume %>" <% } %> 
+    <% if(locals.playbackSpeed){ %> src="<%= locals.playbackSpeed %>" <% } %> 
+    <% if(locals.anonymous){ %> src="<%= locals.anonymous %>" <% } %> 
+    <% if(locals.autoplay){ %> autoplay <% } %> 
+    <% if(locals.airplay){ %> airplay <% } %> 
+  >
+    你的浏览器不支持 video 标签，换个浏览器试试？
+  </video>
+
+  <% if(locals.controls && !locals.nativeControl){ %> 
+  <div class="tiny-player-controls">
+    <div>Play</div>
+    <div>
+      <input type="range" class="tiny-player-seek-bar" value="0" />
+      <div>
+        <button class="play">Play</button>
+        <button class="pause">Pause</button>
+        <input type="range" class="tiny-player-volume-bar" min="0" max="1" step="0.1" value="${this.videoElement.volume}" />
+        <button class="full-screen">Full</button>
+      </div>
+    </div>
+  </div>
+  <% } %> 
+
+  <!-- 水印 -->
+  <div class="tiny-player-watermark"></div>
+  <%- include('watermark'); %>
+</div>
