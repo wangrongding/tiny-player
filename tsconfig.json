@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6", // 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'.
+    "module": "es6", // 指定生成哪个模块系统代码
+    "esModuleInterop": true, // 允许从CommonJS模块导入默认导出
+    "strict": true, // 启用所有严格类型检查选项
+    "sourceMap": true, // 生成相应的.map文件
+    "outDir": "dist", // 指定输出目录
+
+    "skipLibCheck": true, // 忽略依赖包的类型检查
+    "forceConsistentCasingInFileNames": true, // 在文件名中强制使用一致的大小写
+    "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
+    "allowJs": true, // 允许编译javascript文件
+    "noEmit": true, // 不生成输出文件
+    "moduleResolution": "node", // 指定模块解析策略
+    "resolveJsonModule": true, // 允许导入json文件
+    "isolatedModules": true, // 将每个文件做为单独的模块（与ts.transpileModule类似）。
+    "incremental": true // 启用增量编译
+  },
+  "include": ["src/**/*.ts", "src/player-template.ejs"],
+  "exclude": ["node_modules"]
+}
