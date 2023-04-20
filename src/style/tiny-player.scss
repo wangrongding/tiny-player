@@ -1,25 +1,136 @@
 @import './watermask.scss';
 
-// 渐变色文字
-h1 {
-  background-color: #2b90b6;
-  background-image: linear-gradient(45deg, #4ec5d4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
 // 视频容器
 .tiny-player-container {
   position: relative;
 
-  // 控制台
-  .tiny-player-controls {
+  // 控制面板
+  .tiny-player-control-panel {
     position: absolute;
     width: 100%;
-    height: 100px;
+    height: 100%;
     bottom: 0;
     left: 0;
+
+    // 播放按钮
+    .tiny-player-play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.5);
+      background-size: 100% 100%;
+      border-radius: 50%;
+    }
+
+    // 底部控制栏
+    .tiny-player-control-bar {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 0 10px;
+      box-sizing: border-box;
+      display: flex;
+      gap: 4px;
+      justify-content: space-between;
+      align-items: center;
+      // flex-direction: column;
+
+      // 播放进度条
+      .tiny-player-seek-bar {
+        flex: 1;
+      }
+    }
+  }
+}
+
+// 控制栏中的 range bar 样式
+.tiny-player-control-bar input[type='range'] {
+  height: 25px;
+  // 控制 UI 控件的基于操作系统主题的原生外观
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  margin: 10px 0;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: #2497e3;
+    border-radius: 1px;
+    border: 0px solid #000000;
+  }
+  &::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid #2497e3;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: #a1d0ff;
+    -webkit-appearance: none;
+    margin-top: -7px;
+  }
+  &:focus::-webkit-slider-runnable-track {
+    background: #2497e3;
+  }
+  &::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #000000;
+    background: #2497e3;
+    border-radius: 1px;
+    border: 0px solid #000000;
+  }
+  &::-ms-track {
+    width: 100%;
+    height: 5px;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+  &::-ms-fill-lower {
+    background: #2497e3;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  &::-ms-fill-upper {
+    background: #2497e3;
+    border: 0px solid #000000;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px #000000;
+  }
+  &::-ms-thumb {
+    margin-top: 1px;
+    box-shadow: 0px 0px 0px #000000;
+    border: 1px solid #2497e3;
+    height: 18px;
+    width: 18px;
+    border-radius: 25px;
+    background: #a1d0ff;
+  }
+  &:focus::-ms-fill-lower {
+    background: #2497e3;
+  }
+  &:focus::-ms-fill-upper {
+    background: #2497e3;
   }
 }

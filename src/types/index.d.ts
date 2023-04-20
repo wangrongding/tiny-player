@@ -7,7 +7,7 @@ interface Player {
 }
 
 interface PlayerOptions {
-  container: string
+  container: HTMLElement
   loop?: boolean
   autoplay?: boolean
   controls?: boolean
