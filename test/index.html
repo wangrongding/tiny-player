@@ -10,6 +10,19 @@
       body {
         display: grid;
         place-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        background-color: #2b90b6;
+        background-image: linear-gradient(45deg, #146b8c 0%, #4ec5d4 70%);
+        background-size: 100%;
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-text-fill-color: transparent;
       }
     </style>
   </head>
@@ -21,9 +34,14 @@
 
       // 创建 player
       const player = new TinyPlayer({
-        container: 'tiny-player', // 要挂载的目标容器
+        container: document.querySelector('#tiny-player'), // 要挂载的目标容器
         src: './movie.mp4', // 视频地址
+        poster: './cover.jpeg', // 封面地址
+        width: '800px', // 宽度
         controls: true,
+        loop: true,
+        autoplay: true,
+        // muted: true,
         // nativeControl: true, // 原生控制栏
       })
     </script>
