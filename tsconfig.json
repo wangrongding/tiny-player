@@ -7,15 +7,15 @@
     "sourceMap": true, // 生成相应的.map文件
     "outDir": "dist", // 指定输出目录
 
-    "skipLibCheck": true, // 忽略依赖包的类型检查
     "forceConsistentCasingInFileNames": true, // 在文件名中强制使用一致的大小写
-    "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
-    "allowJs": true, // 允许编译javascript文件
-    "noEmit": true, // 不生成输出文件
-    "moduleResolution": "node", // 指定模块解析策略
-    "resolveJsonModule": true, // 允许导入json文件
-    "isolatedModules": true, // 将每个文件做为单独的模块（与ts.transpileModule类似）。
-    "incremental": true // 启用增量编译
+    // "resolveJsonModule": true, // 允许导入json文件
+    // "skipLibCheck": true, // 忽略依赖包的类型检查
+    // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
+    // "allowJs": true, // 允许编译javascript文件
+    // "noEmit": true, // 不生成输出文件
+    // "moduleResolution": "node", // 指定模块解析策略
+    // "isolatedModules": true, // 将每个文件做为单独的模块（与ts.transpileModule类似）。
+    // "incremental": true // 启用增量编译
   },
   "include": ["src/**/*.ts", "src/player-template.ejs"],
   "exclude": ["node_modules"]
