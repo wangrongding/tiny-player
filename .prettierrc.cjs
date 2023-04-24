@@ -22,21 +22,27 @@ module.exports = {
   embeddedLanguageFormatting: 'auto',
 }
 
-// 文件中忽略格式化的方式
+// 文件中忽略格式化的方式：
 // html
 // <!-- prettier-ignore -->
+
 // js
 // // prettier-ignore
+
 // css
 // /* prettier-ignore */
+
 // markdown
 // <!-- prettier-ignore -->
 // <!-- prettier-ignore-start -->
 // <!-- prettier-ignore-end -->
+
 // YAML
 // # prettier-ignore
+
 // JSX
 // {/* prettier-ignore */}
+
 // cli
 // prettier --ignore-path .gitignore --write .
 // prettier --write . '!**/*.{js,jsx,vue}'

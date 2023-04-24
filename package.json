@@ -1,28 +1,18 @@
 {
-  "name": "tiny-player",
-  "version": "1.0.0-alpha",
   "description": "",
-  "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "rollup -c -w",
-    "build": "rollup -c",
-    "preinstall": "npx pm-limiter pnpm",
-    "prepare": "husky install"
+    "changeset:init": "npx changeset init",
+    "changeset:add": "changeset add",
+    "clean-install": "pnpm clean && rm -rf ./{packages}/*/node_modules node_modules && pnpm i",
+    "dev": "pnpm -F \"lowcode-platform\" dev",
+    "build": "pnpm -F \"lowcode-platform\" build",
+    "dev:ui": "pnpm -F \"ui-material\" lowcode:dev",
+    "build:ui": "pnpm -F \"ui-material\" lowcode:build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "荣顶",
+  "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-url": "^8.0.1",
-    "rollup": "^3.20.6",
-    "rollup-plugin-ejs": "^4.0.0",
-    "rollup-plugin-scss": "^4.0.0",
-    "rollup-plugin-serve": "^2.0.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.34.1",
-    "typescript": "^5.0.4"
+    "changeset": "^0.2.6"
   }
 }
