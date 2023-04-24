@@ -1,6 +1,6 @@
 {
   "name": "tiny-player",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -15,7 +15,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-url": "^8.0.1",
     "rollup": "^3.20.6",
+    "rollup-plugin-ejs": "^4.0.0",
+    "rollup-plugin-scss": "^4.0.0",
+    "rollup-plugin-serve": "^2.0.2",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
     "typescript": "^5.0.4"
   }
