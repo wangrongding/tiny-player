@@ -5,7 +5,7 @@
     "changeset:init": "npx changeset init",
     "changeset:add": "changeset add",
     "clean-install": "pnpm clean && rm -rf ./{packages}/*/node_modules node_modules && pnpm i",
-    "dev": "pnpm -F \"lowcode-platform\" dev",
+    "dev": "pnpm -F \"tiny-player\" dev",
     "build": "pnpm -F \"lowcode-platform\" build",
     "dev:ui": "pnpm -F \"ui-material\" lowcode:dev",
     "build:ui": "pnpm -F \"ui-material\" lowcode:build"

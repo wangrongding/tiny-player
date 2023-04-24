@@ -36,10 +36,7 @@ export default {
   ],
 
   plugins: [
-    // watch({
-    //   include: 'src/**',
-    // }),
-
+    // watch({ include: 'src/**' }),
     json(),
     serve({
       // open: true,
