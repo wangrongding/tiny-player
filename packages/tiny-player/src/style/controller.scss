@@ -12,16 +12,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
     color: white;
-    font-size: 30px;
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.5);
-    background-size: 100% 100%;
-    border-radius: 50%;
+    // width: 50px;
+    // height: 50px;
+    // line-height: 50px;
+    // background: rgba(0, 0, 0, 0.5);
+    // text-align: center;
+    // font-size: 30px;
+    // background-size: 100% 100%;
+    // border-radius: 50%;
   }
 
   // 底部控制栏
@@ -39,14 +39,21 @@
     gap: 4px;
     justify-content: space-between;
     align-items: center;
-    // flex-direction: column;
 
     // 播放进度条
     .tiny-player-seek-bar {
       flex: 1;
     }
+
+    .tiny-player-volume-icon {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+    }
   }
 }
+
 // 控制栏中的 range bar 样式
 .tiny-player-control-bar input[type='range'] {
   height: 25px;

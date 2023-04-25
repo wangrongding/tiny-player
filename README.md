@@ -9,11 +9,10 @@ pnpm i
 pnpm dev
 ```
 
-## 参考仓库：
+## 相关参考：
 
-| name         | stars⭐️ |
-| ------------ | -------- |
-| plyr         | 23.1k    |
-| dplayer      | 14k      |
-| xgplayer     | 6.1k     |
-| shaka-player | 6.3k     |
+- [plyr](https://github.com/sampotts/plyr)
+- [dplayer](https://dplayer.diygod.dev/zh/)
+- [xgplayer](https://github.com/bytedance/xgplayer)
+- [shaka-player](https://github.com/shaka-project/shaka-player)
+- [videojs-player](https://github.com/surmon-china/videojs-player)

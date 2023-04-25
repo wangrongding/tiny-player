@@ -10,7 +10,7 @@ onMounted(() => {
   document.querySelector('h1')!.textContent = `${TinyPlayer.title} ${TinyPlayer.version}`
 
   // 创建 player
-  const player = new TinyPlayer({
+  new TinyPlayer({
     container: document.querySelector('#tiny-player'), // 要挂载的目标容器
     // src: './movie.mp4', // 视频地址
     src: movie, // 视频地址
@@ -22,7 +22,6 @@ onMounted(() => {
     // muted: true,
     // nativeControl: true, // 原生控制栏
   })
-  console.log('🚀🚀🚀 / player:', player)
 })
 </script>
 

@@ -2,9 +2,9 @@ import typescript from 'rollup-plugin-typescript2'
 import ejs from 'rollup-plugin-ejs'
 import { terser } from 'rollup-plugin-terser'
 import scss from 'rollup-plugin-scss'
-import serve from 'rollup-plugin-serve'
 import json from '@rollup/plugin-json'
-import url from '@rollup/plugin-url'
+import svg from 'rollup-plugin-svg-import'
+import del from 'rollup-plugin-delete'
 
 export default {
   input: 'src/index.ts',
@@ -18,9 +18,14 @@ export default {
     },
     {
       file: 'dist/index.min.js',
-      format: 'iife',
-      name: 'version',
+      format: 'umd',
+      name: 'TinyPlayer',
       plugins: [terser()],
+    },
+    {
+      file: 'dist/index.iife.js',
+      format: 'iife',
+      name: 'iife',
     },
     {
       file: 'dist/index.cjs',
@@ -38,13 +43,13 @@ export default {
 
   plugins: [
     // watch({ include: 'src/**' }),
-    // serve({
-    //   // open: true,
-    //   openPage: 'index.html', // 指定打开的页面
-    //   host: 'localhost', // 默认localhost
-    //   port: 5500, // 默认10001
-    //   contentBase: ['dist', 'test'], // 配置静态文件路径,默认为当前路径
-    // }),
+    del({
+      targets: 'dist/*',
+      // runOnce: true,
+    }),
+    svg({
+      stringify: true, // process SVG to DOM Node or String. Default: false
+    }),
     json(),
     scss({
       fileName: 'bundle.css',
@@ -55,10 +60,6 @@ export default {
       // inlineStyles: true, // 编译 scss 插入行间样式，默认为 false
       exclude: ['**/index.html'], // optional, undefined by default
       compilerOptions: { client: true }, // optional, any options supported by ejs compiler
-    }),
-    url({
-      include: ['**/*.svg', '**/*.png', '**/*.jp(e)?g', '**/*.gif', '**/*.webp'],
-      // limit: 1024, // 内联文件的文件大小限制。如果文件超过此限制，它将被复制到目标文件夹并提供散列文件名。如果将 limit 设置为 0 ，将复制所有文件。
     }),
   ],
 }
