@@ -14,6 +14,7 @@ export default {
       file: 'dist/index.js',
       format: 'umd',
       name: 'TinyPlayer',
+      sourcemap: true,
     },
     {
       file: 'dist/index.min.js',
@@ -37,14 +38,14 @@ export default {
 
   plugins: [
     // watch({ include: 'src/**' }),
+    // serve({
+    //   // open: true,
+    //   openPage: 'index.html', // 指定打开的页面
+    //   host: 'localhost', // 默认localhost
+    //   port: 5500, // 默认10001
+    //   contentBase: ['dist', 'test'], // 配置静态文件路径,默认为当前路径
+    // }),
     json(),
-    serve({
-      // open: true,
-      openPage: 'index.html', // 指定打开的页面
-      host: 'localhost', // 默认localhost
-      port: 5500, // 默认10001
-      contentBase: ['dist', 'test'], // 配置静态文件路径,默认为当前路径
-    }),
     scss({
       fileName: 'bundle.css',
       insert: true, // 将 CSS 插入到 HTML 中
@@ -57,7 +58,7 @@ export default {
     }),
     url({
       include: ['**/*.svg', '**/*.png', '**/*.jp(e)?g', '**/*.gif', '**/*.webp'],
-      limit: 1024, // 内联文件的文件大小限制。如果文件超过此限制，它将被复制到目标文件夹并提供散列文件名。如果将 limit 设置为 0 ，将复制所有文件。
+      // limit: 1024, // 内联文件的文件大小限制。如果文件超过此限制，它将被复制到目标文件夹并提供散列文件名。如果将 limit 设置为 0 ，将复制所有文件。
     }),
   ],
 }

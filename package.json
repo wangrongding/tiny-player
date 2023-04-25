@@ -5,10 +5,13 @@
     "changeset:init": "npx changeset init",
     "changeset:add": "changeset add",
     "clean-install": "pnpm clean && rm -rf ./{packages}/*/node_modules node_modules && pnpm i",
-    "dev": "pnpm -F \"tiny-player\" dev",
-    "build": "pnpm -F \"lowcode-platform\" build",
-    "dev:ui": "pnpm -F \"ui-material\" lowcode:dev",
-    "build:ui": "pnpm -F \"ui-material\" lowcode:build"
+    "dev": "pnpm -r --no-sort dev",
+    "--- player --------------------------------------------": "",
+    "dev:player": "pnpm -F \"tiny-player\" dev",
+    "build": "pnpm -F \"tiny-player\" build",
+    "--- playground ----------------------------------------": "",
+    "dev:playground": "pnpm -F playground dev",
+    "build:playground": "pnpm -F playground build"
   },
   "author": "荣顶",
   "license": "MIT",
