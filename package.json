@@ -1,11 +1,11 @@
 {
-  "description": "",
+  "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset:init": "npx changeset init",
     "changeset:add": "changeset add",
     "clean-install": "pnpm clean && rm -rf ./{packages}/*/node_modules node_modules && pnpm i",
-    "dev": "pnpm -r --no-sort dev",
+    "dev": "pnpm -r --parallel dev",
     "--- player --------------------------------------------": "",
     "dev:player": "pnpm -F \"tiny-player\" dev",
     "build": "pnpm -F \"tiny-player\" build",
@@ -16,6 +16,6 @@
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
-    "changeset": "^0.2.6"
+    "@changesets/cli": "^2.26.1"
   }
 }
