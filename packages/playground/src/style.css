@@ -32,7 +32,9 @@ body {
 }
 h1 {
   user-select: none;
-  font-size: 50px;
+  text-align: left;
+  font-size: 70px;
+  margin: 20px 0;
   background-color: #2b90b6;
   background-image: linear-gradient(45deg, #ff0000 0%, #0092ff 80%);
   background-size: 100%;
