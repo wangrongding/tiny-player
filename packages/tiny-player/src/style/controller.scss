@@ -36,7 +36,7 @@
     padding: 0 10px;
     box-sizing: border-box;
     display: flex;
-    gap: 4px;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
 
@@ -49,7 +49,11 @@
       width: 20px;
       height: 20px;
       text-align: center;
-      line-height: 20px;
+      color: white;
+    }
+
+    .tiny-player-play-time {
+      font-size: 14px;
     }
   }
 }

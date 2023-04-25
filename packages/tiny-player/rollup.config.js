@@ -45,7 +45,7 @@ export default {
     // watch({ include: 'src/**' }),
     del({
       targets: 'dist/*',
-      // runOnce: true,
+      runOnce: true,
     }),
     svg({
       stringify: true, // process SVG to DOM Node or String. Default: false

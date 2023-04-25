@@ -18,6 +18,7 @@ onMounted(() => {
     width: '800px', // 宽度
     controls: true,
     loop: true,
+    volume: 0.9,
     // autoplay: true,
     // muted: true,
     // nativeControl: true, // 原生控制栏
