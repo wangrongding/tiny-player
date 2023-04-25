@@ -1,0 +1,18 @@
+<% if(locals.controls && !locals.nativeControl){ %>
+<!-- 控制面板 -->
+<div class="tiny-player-control-panel">
+  <!-- 播放按钮 -->
+  <div class="tiny-player-play-icon"></div>
+  <!-- 底部控制栏 -->
+  <div class="tiny-player-control-bar">
+    <div class="tiny-player-play-btn"></div>
+    <input type="range" class="tiny-player-seek-bar" value="0" />
+    <span>00:00/11:00</span>
+    <span>音量:</span>
+    <span class="tiny-player-volume-icon"></span>
+    <input type="range" class="tiny-player-volume-bar" min="0" max="1" step="0.01" value="<%= locals.volume %>" />
+    <!-- <span>全屏</span> -->
+    <!-- <span class="tiny-player-volume-icon"></span> -->
+  </div>
+</div>
+<% } %>
