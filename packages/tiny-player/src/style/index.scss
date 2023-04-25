@@ -1,13 +1,7 @@
-@import './global';
-@import './player';
-@import './balloon';
-@import './bezel';
-@import './controller';
-@import './danmaku';
-@import './logo';
-@import './menu';
-@import './notice';
-@import './subtitle';
-@import './video';
-@import './info-panel';
-@import './watermask';
+@import './watermask.scss';
+@import './controller.scss';
+
+// 视频容器
+.tiny-player-container {
+  position: relative;
+}
