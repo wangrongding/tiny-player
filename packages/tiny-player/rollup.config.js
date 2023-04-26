@@ -12,32 +12,27 @@ export default {
   output: [
     {
       file: 'dist/index.js',
-      format: 'umd',
-      name: 'TinyPlayer',
+      format: 'es',
       sourcemap: true,
     },
     {
       file: 'dist/index.min.js',
-      format: 'umd',
-      name: 'TinyPlayer',
+      format: 'es',
       plugins: [terser()],
     },
     {
-      file: 'dist/index.iife.js',
-      format: 'iife',
-      name: 'iife',
+      file: 'dist/index.umd.js',
+      format: 'umd',
+      name: 'tiny-player',
     },
     {
       file: 'dist/index.cjs',
       format: 'cjs',
     },
     {
-      file: 'dist/index.mjs',
-      format: 'es',
-    },
-    {
-      file: 'dist/index.amd.js',
-      format: 'amd',
+      file: 'dist/index.iife.js',
+      format: 'iife',
+      name: 'iife',
     },
   ],
 

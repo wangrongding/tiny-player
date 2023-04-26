@@ -4,8 +4,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset:init": "npx changeset init",
     "changeset:add": "changeset add",
-    "clean-install": "pnpm clean && rm -rf ./{packages}/*/node_modules node_modules && pnpm i",
-    "dev": "pnpm -r --parallel dev",
+    "clean-install": "pnpm -r exec rm -rf node_modules && pnpm i",
+    "pre:dev": "wait-on ./packages/tiny-player/dist/index.js",
+    "dev": "concurrently \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:playground\"",
+    "dev:parallel": "pnpm -r --no-sort dev",
     "--- player --------------------------------------------": "",
     "dev:player": "pnpm -F \"tiny-player\" dev",
     "build": "pnpm -F \"tiny-player\" build",
@@ -16,6 +18,8 @@
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "^2.26.1"
+    "@changesets/cli": "^2.26.1",
+    "concurrently": "^8.0.1",
+    "wait-on": "^7.0.1"
   }
 }
