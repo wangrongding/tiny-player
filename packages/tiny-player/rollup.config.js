@@ -5,6 +5,7 @@ import scss from 'rollup-plugin-scss'
 import json from '@rollup/plugin-json'
 import svg from 'rollup-plugin-svg-import'
 import del from 'rollup-plugin-delete'
+import copy from 'rollup-plugin-copy'
 
 export default {
   input: 'src/index.ts',
@@ -22,8 +23,8 @@ export default {
     },
     {
       file: 'dist/index.umd.js',
-      format: 'umd',
-      name: 'tiny-player',
+      format: 'umd', // umd是兼容amd/cjs/iife的通用打包格式，适合浏览器
+      name: 'TinyPlayer', // cdn方式引入时挂载在window上的名字
     },
     {
       file: 'dist/index.cjs',
@@ -50,11 +51,16 @@ export default {
       fileName: 'bundle.css',
       insert: true, // 将 CSS 插入到 HTML 中
     }),
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     ejs({
       // inlineStyles: true, // 编译 scss 插入行间样式，默认为 false
       exclude: ['**/index.html'], // optional, undefined by default
       compilerOptions: { client: true }, // optional, any options supported by ejs compiler
+    }),
+    copy({
+      targets: [{ src: 'types/global.d.ts', dest: 'dist' }],
     }),
   ],
 }

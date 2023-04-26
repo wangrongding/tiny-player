@@ -12,15 +12,14 @@ onMounted(() => {
   // 创建 player
   new TinyPlayer({
     container: document.querySelector('#tiny-player'), // 要挂载的目标容器
-    // src: './movie.mp4', // 视频地址
     src: movie, // 视频地址
     poster: poster, // 封面地址
     width: '800px', // 宽度
-    controls: true,
-    loop: true,
-    volume: 0.9,
-    // autoplay: true,
-    // muted: true,
+    controls: true, // 是否显示控制栏
+    loop: true, // 循环播放
+    volume: 0.9, // 音量
+    // autoplay: true, // 自动播放
+    // muted: true, // 静音
     // nativeControl: true, // 原生控制栏
   })
 })

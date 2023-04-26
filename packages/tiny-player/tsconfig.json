@@ -9,16 +9,16 @@
 
     "declaration": true, // 根据ts文件自动生成.d.ts声明文件和js文件
     "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
+    // "declarationDir": "dist/types", // 声明文件的输出目录
+    // "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
+    // "skipLibCheck": true // 忽略依赖包的类型检查
     // "emitDeclarationOnly": true, // 只输出.d.ts声明文件，不生成js文件
-    // "skipLibCheck": true, // 忽略依赖包的类型检查
-    // "resolveJsonModule": true, // 允许导入json文件
     // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
     // "allowJs": true, // 允许编译javascript文件
     // "noEmit": true, // 不生成输出文件
-    // "moduleResolution": "node", // 指定模块解析策略
     // "isolatedModules": true, // 将每个文件做为单独的模块（与ts.transpileModule类似）。
     // "incremental": true // 启用增量编译
   },
-  "include": ["src/**/*.ts", "src/player-template.ejs"],
+  "include": ["src/**/*.ts", "types/*.d.ts"],
   "exclude": ["node_modules"]
 }
