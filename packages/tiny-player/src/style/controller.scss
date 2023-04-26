@@ -14,14 +14,8 @@
     transform: translate(-50%, -50%);
     color: white;
     cursor: pointer;
-    // width: 50px;
-    // height: 50px;
-    // line-height: 50px;
-    // background: rgba(0, 0, 0, 0.5);
-    // text-align: center;
-    // font-size: 30px;
-    // background-size: 100% 100%;
-    // border-radius: 50%;
+    width: 50px;
+    height: 50px;
   }
 
   // 底部控制栏
@@ -45,7 +39,8 @@
       flex: 1;
     }
 
-    .tiny-player-volume-icon {
+    .tiny-player-volume,
+    .tiny-player-fullscreen {
       width: 20px;
       height: 20px;
       text-align: center;
@@ -54,6 +49,7 @@
 
     .tiny-player-play-time {
       font-size: 14px;
+      width: 100px;
     }
   }
 }

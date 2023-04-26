@@ -5,13 +5,14 @@
   <div class="tiny-player-play-icon"></div>
   <!-- 底部控制栏 -->
   <div class="tiny-player-control-bar">
-    <div class="tiny-player-play-btn"></div>
+    <!-- 进度条 -->
     <input type="range" class="tiny-player-seek-bar" min="0" max="100" step="0.01" value="0" />
     <span class="tiny-player-play-time">00:00 / 00:00</span>
-    <span class="tiny-player-volume-icon"></span>
+    <!-- 音量控制 -->
+    <span class="tiny-player-volume"></span>
     <input type="range" class="tiny-player-volume-bar" min="0" max="1" step="0.01" value="<%= locals.volume %>" />
-    <!-- <span>全屏</span> -->
-    <!-- <span class="tiny-player-volume-icon"></span> -->
+    <!-- 全屏 -->
+    <span class="tiny-player-fullscreen"></span>
   </div>
 </div>
 <% } %>

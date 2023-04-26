@@ -21,4 +21,3 @@ interface PlayerOptions {
 declare module '*.ejs'
 declare module '*.svg'
 declare module '*.json'
-declare module '*.html'

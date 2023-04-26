@@ -111,15 +111,15 @@ export default class TinyPlayer {
     this.controls.playTime = this.videoContainer.querySelector('.tiny-player-play-time') as HTMLInputElement
 
     // 设置控制条声音控制栏的事件处理函数
-    this.controls.muteButton = this.videoContainer.querySelector('.tiny-player-volume-icon') as HTMLButtonElement
+    this.controls.muteButton = this.videoContainer.querySelector('.tiny-player-volume') as HTMLButtonElement
     this.controls.muteButton.addEventListener('click', this.mute)
     this.controls.muteButton && (this.controls.muteButton.innerHTML = Icons.volumeUp)
-    this.controls.muteButton.querySelector('svg')?.setAttribute('fill', 'white')
     this.controls.volumeBar = this.videoContainer.querySelector('.tiny-player-volume-bar') as HTMLInputElement
     this.controls.volumeBar.addEventListener('input', this.setVolume)
 
-    // const fullScreenButton = this.videoContainer.querySelector('.full-screen') as HTMLButtonElement
-    // fullScreenButton.addEventListener('click', this.fullScreen)
+    this.controls.fullScreenButton = this.videoContainer.querySelector('.tiny-player-fullscreen') as HTMLElement
+    this.controls.fullScreenButton.addEventListener('click', this.fullScreen)
+    this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
 
     if (!this.options.controls) return
   }
@@ -189,10 +189,10 @@ export default class TinyPlayer {
 
   private fullScreen = () => {
     // 进入或退出全屏模式
-    // if (document.fullscreenElement) {
-    //   document.exitFullscreen()
-    // } else {
-    //   this.video.requestFullscreen()
-    // }
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      this.videoContainer!.requestFullscreen()
+    }
   }
 }
