@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import TinyPlayer from 'tiny-player'
 import movie from '../assets/movie.mp4'
-import poster from '../assets/movie.jpeg'
+import poster from '../assets/movie.png'
 
 defineProps<{ msg: string }>()
 

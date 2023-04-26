@@ -15,7 +15,14 @@
     "dev": "rollup -c -w",
     "build": "rollup -c"
   },
-  "keywords": [],
+  "keywords": [
+    "player",
+    "video",
+    "mp4",
+    "hls",
+    "flv",
+    "m3u8"
+  ],
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
