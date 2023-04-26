@@ -2,23 +2,22 @@
   "name": "tiny-player",
   "version": "1.0.0-alpha",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "rollup -c -w",
-    "build:types": "tsc",
-    "build": "rollup -c"
-  },
   "type": "module",
-  "main": "dist/index.js",
-  "types": "index.d.ts",
-  "module": "dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "browser": "./dist/index.js",
+  "module": "./dist/index.js",
   "files": [
     "dist",
-    "src/types/index.d.ts"
+    "package.json",
+    "README.md"
   ],
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "荣顶",
+  "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-json": "^6.0.0",
     "rollup": "^3.20.6",
