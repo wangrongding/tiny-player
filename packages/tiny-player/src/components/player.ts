@@ -1,39 +1,30 @@
 import playerTemplate from '../template/player.ejs'
 import controlTemplate from '../template/control.ejs'
 import '../style/index.scss'
-import { name, version } from '../../package.json'
+import pkg from '../../package.json'
 import Icons from './icons'
 import utils from '../utils/index'
+import { PlayerOptions } from '../types/index'
 
+const { name, version } = pkg
 export default class TinyPlayer {
-  static title: string = name
-  static version: string = version
-  options: PlayerOptions
-  // 挂载目标元素
-  targetElement: HTMLElement
-  // 视频节点
-  videoContainer!: HTMLElement
-  // 播放器
-  video?: HTMLVideoElement
-  // 控制器节点
-  controlNode?: HTMLElement
+  static title: string = name // 播放器名称
+  static version: string = version // 版本号
+  options: PlayerOptions // 播放器配置
+  targetElement: HTMLElement // 挂载目标元素
+  videoContainer!: HTMLElement // 视频节点
+  video?: HTMLVideoElement // 播放器
   // 控制器
   controls: {
-    // 播放按钮
-    playButton?: HTMLElement
-    // 进度条
-    seekBar?: HTMLInputElement
-    // 播放时间
-    playTime?: HTMLElement
-    // 声音控制栏
-    volumeBar?: HTMLInputElement
-    // 静音按钮
-    muteButton?: HTMLElement
-    // 全屏按钮
-    fullScreenButton?: HTMLElement
+    playButton?: HTMLElement // 播放按钮
+    seekBar?: HTMLInputElement // 进度条
+    playTime?: HTMLElement // 播放时间
+    volumeBar?: HTMLInputElement // 声音控制栏
+    muteButton?: HTMLElement // 静音按钮
+    fullScreenButton?: HTMLElement // 全屏按钮
   } = {}
-  // 播放 requestAnimationFrame Id
-  playRaf = 0
+  controlNode?: HTMLElement // 控制器节点
+  playRaf = 0 // 播放 requestAnimationFrame Id
 
   constructor(options: PlayerOptions) {
     this.targetElement = options.container

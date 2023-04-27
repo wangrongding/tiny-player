@@ -1,4 +1,4 @@
-import TinyPlayer from './script/player'
+import TinyPlayer from './components/player'
 
 console.log(
   `${'\n'} %c ${TinyPlayer.title} v${TinyPlayer.version} ${'\n'}`,

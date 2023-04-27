@@ -1,4 +1,4 @@
-interface Player {
+export interface Player {
   playPause(): void
   mute(): void
   fullScreen(): void
@@ -6,8 +6,10 @@ interface Player {
   setVolume(): void
 }
 
-interface PlayerOptions {
+export interface PlayerOptions {
   container: HTMLElement
+  src: string
+  poster?: string
   loop?: boolean
   autoplay?: boolean
   controls?: boolean
@@ -17,7 +19,3 @@ interface PlayerOptions {
   width?: number
   height?: number
 }
-
-declare module '*.ejs'
-declare module '*.svg'
-declare module '*.json'
