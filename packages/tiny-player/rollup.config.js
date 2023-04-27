@@ -51,7 +51,7 @@ export default {
       insert: true, // 将 CSS 插入到 HTML 中
     }),
     typescript({
-      // tsconfig: './tsconfig.json',
+      tsconfig: './tsconfig.json',
     }),
     ejs({
       // inlineStyles: true, // 编译 scss 插入行间样式，默认为 false

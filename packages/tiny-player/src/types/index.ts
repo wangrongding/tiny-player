@@ -7,15 +7,15 @@ export interface Player {
 }
 
 export interface PlayerOptions {
-  container: HTMLElement
-  src: string
-  poster?: string
-  loop?: boolean
-  autoplay?: boolean
-  controls?: boolean
-  muted?: boolean
-  volume?: number
-  playbackRate?: number
-  width?: number
-  height?: number
+  container: HTMLElement // 播放器容器
+  src: string // 视频地址
+  poster?: string // 视频封面
+  loop?: boolean // 是否循环播放
+  autoplay?: boolean // 是否自动播放
+  controls?: boolean // 是否显示控制条
+  muted?: boolean // 是否静音
+  volume?: number // 音量
+  playbackRate?: number // 播放速率
+  width?: number | string // 播放器宽度
+  height?: number | string // 播放器高度
 }

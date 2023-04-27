@@ -9,6 +9,7 @@
     "declaration": true, // 根据ts文件自动生成.d.ts声明文件和js文件
     "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
 
+    // "removeComments": false // 是否删除注释
     // "skipLibCheck": true // 忽略依赖包的类型检查
     // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
     // "declarationDir": "dist/types", // 声明文件的输出目录
