@@ -1,0 +1,24 @@
+{
+  "name": "doc",
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.62.1",
+    "tiny-player": "workspace:*",
+    "vite": "^4.3.0",
+    "vite-plugin-vue-type-imports": "^0.2.4",
+    "vitepress": "1.0.0-alpha.74"
+  },
+  "dependencies": {
+    "vue": "3.3.0-beta.2"
+  }
+}

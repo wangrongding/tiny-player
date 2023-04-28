@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowJs": true
+  },
+  // 包含的文件
+  "include": [
+    ".vitepress/**/*.ts",
+    ".vitepress/**/*.d.ts",
+    ".vitepress/**/*.tsx",
+    ".vitepress/**/*.vue",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"] // 排除的文件
+}

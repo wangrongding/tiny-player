@@ -1,0 +1,75 @@
+:root {
+  --vp-home-hero-image-filter: blur(72px);
+  --vp-c-brand: #646cff;
+  --vp-c-brand-light: #747bff;
+  --vp-c-brand-lighter: #9499ff;
+  --vp-c-brand-lightest: #bcc0ff;
+  --vp-c-brand-dark: #535bf2;
+  --vp-c-brand-darker: #454ce1;
+  --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #49cbfe 50%);
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #49cbfe);
+}
+
+.VPHero {
+  // 标题下面的描述
+  .container .text {
+    font-size: 36px !important;
+  }
+}
+
+// 首页特性
+.VPFeatures.VPHomeFeatures {
+  margin-top: 50px;
+}
+// 首页底部
+.VPContent.is-home {
+  .VPHome {
+    padding-bottom: 20px !important;
+  }
+}
+
+// 首页底部copyright
+.copyright {
+  a {
+    text-decoration: underline;
+    color: var(--vp-c-brand);
+  }
+}
+
+.VPImage.logo {
+  height: 25px;
+}
+.VPImage.image-src {
+  max-width: 500px;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  transform: translate(0px, 0px) !important;
+}
+.image-bg {
+  width: 500px !important;
+}
+
+h1 {
+  font-weight: 700;
+  height: 80px;
+  width: fit-content;
+  line-height: 80px;
+  font-size: 60px;
+  user-select: none;
+  text-align: left;
+  margin: 20px auto;
+  background: -webkit-linear-gradient(120deg, #bd34fe 0%, #49cbfe 100%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
