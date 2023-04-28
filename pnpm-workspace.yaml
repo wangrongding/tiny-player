@@ -1,8 +1,8 @@
 # ./pnpm-workspace.yaml
 packages:
-  # root directory
-  # - "."
   # all packages in subdirs of packages/
   - "packages/*"
+  # root directory
+  # - "."
   # exclude packages that are inside test/ directories
   # - "!**/test/**" # '!' means exclude
