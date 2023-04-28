@@ -1,6 +1,6 @@
 {
   "name": "tiny-player",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.2",
   "description": "",
   "type": "module",
   "types": "./dist/index.d.ts",
