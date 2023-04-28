@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.2",
   "description": "",
   "type": "module",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "browser": "./dist/index.min.js",
   "module": "./dist/index.js",
   "files": [

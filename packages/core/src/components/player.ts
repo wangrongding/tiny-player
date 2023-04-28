@@ -4,7 +4,7 @@ import '../style/index.scss'
 import pkg from '../../package.json'
 import Icons from './icons'
 import utils from '../utils/index'
-import { PlayerOptions } from '../types/index'
+import { PlayerOptions } from '../index'
 
 const { name, version } = pkg
 export default class TinyPlayer {

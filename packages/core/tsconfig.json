@@ -7,6 +7,7 @@
     "sourceMap": true, // 生成相应的.map文件
     "outDir": "dist", // 指定输出目录
     "declaration": true, // 根据ts文件自动生成.d.ts声明文件和js文件
+    "declarationDir": "dist/types", // 声明文件的输出目录
     "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
 
     // "removeComments": false // 是否删除注释
