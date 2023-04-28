@@ -3,11 +3,12 @@
 layout: page
 ---
 
-<!-- <ClientOnly>
-  <TinyPlayer />
-</ClientOnly> -->
+<script setup lang="ts">
+import ExamplePlayer from './.vitepress/components/ExamplePlayer.vue'
+</script>
 
-<TinyPlayer />
+<ExamplePlayer />
+
 <style>
 .VPPage{
   margin-top:100px;

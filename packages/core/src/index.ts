@@ -23,8 +23,8 @@ export interface PlayerOptions {
   muted?: boolean // 是否静音
   volume?: number // 音量
   playbackRate?: number // 播放速率
-  width?: number | string // 播放器宽度
-  height?: number | string // 播放器高度
+  width?: string // 播放器宽度 "123px"
+  height?: string // 播放器高度 "123px"
 }
 
 export default TinyPlayer

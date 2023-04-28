@@ -47,6 +47,10 @@
       color: white;
     }
 
+    .tiny-player-volume-bar {
+      width: 60px;
+    }
+
     .tiny-player-play-time {
       font-size: 14px;
       width: 100px;
@@ -78,12 +82,12 @@
   &::-webkit-slider-thumb {
     box-shadow: 0px 0px 0px #000000;
     border: 1px solid #2497e3;
-    height: 18px;
-    width: 18px;
+    height: 15px;
+    width: 15px;
     border-radius: 25px;
     background: #a1d0ff;
     -webkit-appearance: none;
-    margin-top: -7px;
+    margin-top: -5px;
   }
   &:focus::-webkit-slider-runnable-track {
     background: #2497e3;
