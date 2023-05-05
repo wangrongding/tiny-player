@@ -14,4 +14,6 @@ const options: Omit<PlayerOptions, 'container'> = {
 }
 </script>
 
-<template><TinyPlayer :playerOptions="options" /></template>
+<template>
+  <TinyPlayer :playerOptions="options" />
+</template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import type { PlayerOptions } from 'tiny-player'
 
 const props = defineProps<{
@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 
 // 初始化 player
+// if (!import.meta.env.SSR)
 let TinyPlayer
 async function initPlayer(options: PlayerOptions) {
   TinyPlayer = (await import('tiny-player')).default
@@ -14,16 +15,7 @@ async function initPlayer(options: PlayerOptions) {
 }
 
 onMounted(() => {
-  console.log('🚀🚀🚀 / props:', props)
-  initPlayer(
-    Object.assign(
-      {
-        container: document.querySelector('#tiny-player') as HTMLElement,
-      },
-      props.playerOptions,
-    ),
-  )
-  // if (!import.meta.env.SSR) return
+  initPlayer({ container: document.querySelector('#tiny-player'), ...props.playerOptions })
 })
 </script>
 

@@ -1,8 +1,13 @@
 @import './watermask.scss';
 @import './controller.scss';
 
+.tiny-player,
+#tiny-player {
+  width: fit-content;
+}
 // 视频容器
 .tiny-player-container {
   position: relative;
   overflow: hidden;
+  width: fit-content;
 }

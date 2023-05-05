@@ -6,9 +6,9 @@ hero:
   name: 'Tiny Player'
   text: 'A sparrow has all five organs.'
   # tagline: 🦄 Wow, such a lovely HTML5 video player
-  image:
-    src: /movie.png
-    alt: VitePress
+  # image:
+  #   src: /movie.png
+  #   alt: VitePress
   actions:
     - theme: brand
       text: Get Started
@@ -26,8 +26,8 @@ features:
     details: 支持自定义控制栏挂载目标节点，支持自定义控制栏组件显示隐藏。
   - title: 🎨 轻量
     details: 仅 10kb 大小，gzip 压缩后仅 4kb 大小。
-  - title: 🎨 轻量
-    details: 仅 10kb 大小，gzip 压缩后仅 4kb 大小。
-  - title: 🎨 轻量
-    details: 仅 10kb 大小，gzip 压缩后仅 4kb 大小。
+  - title: 🎨 xx
+    details: ....
+  - title: 🎨 xxx
+    details: .......
 ---

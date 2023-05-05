@@ -36,6 +36,7 @@ export default class TinyPlayer {
     // 初始化视频播放器
     // this.videoContainer = document.createDocumentFragment().appendChild(document.createElement('div'))
     this.videoContainer = document.createElement('div') as HTMLElement
+    this.videoContainer.className = 'tiny-player-container'
     // 播放器模板
     this.videoContainer.innerHTML = playerTemplate(this.options)
     // 将 player 添加到指定容器中
@@ -84,7 +85,7 @@ export default class TinyPlayer {
       })
     })
   }
-
+  
   // 初始化播放器控制条
   private initControls() {
     this.controlNode = document.createElement('div')
@@ -108,6 +109,7 @@ export default class TinyPlayer {
     this.controls.volumeBar = this.videoContainer.querySelector('.tiny-player-volume-bar') as HTMLInputElement
     this.controls.volumeBar.addEventListener('input', this.setVolume)
 
+    // 设置控制条全屏按钮的事件处理函数
     this.controls.fullScreenButton = this.videoContainer.querySelector('.tiny-player-fullscreen') as HTMLElement
     this.controls.fullScreenButton.addEventListener('click', this.fullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
