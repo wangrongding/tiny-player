@@ -5,6 +5,8 @@
     "changeset:init": "npx changeset init",
     "changeset:add": "changeset add",
     "clean-install": "pnpm -r exec rm -rf node_modules && pnpm i",
+    "prepare": "husky install",
+    "preinstall": "npx only-allow pnpm",
     "--  dev  --------------------------------------------------": "",
     "pre:dev": "wait-on ./packages/core/dist/index.min.js",
     "dev": "concurrently \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
@@ -16,13 +18,33 @@
     "build:player": "pnpm -F \"tiny-player\" build",
     "--  publish  ----------------------------------------------": "",
     "pub": "pnpm -F \"tiny-player\" publish",
-    "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks"
+    "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks",
+    "commit": "cz"
+  },
+  "lint-staged": {
+    "*.{vue,js,ts,jsx,tsx,css,sass,scss,md}": [
+      "prettier --write",
+      "echo '统一格式化完成🌸'"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   },
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "commitizen": "^4.3.0",
+    "commitlint-config-cz": "^0.13.3",
     "concurrently": "^8.0.1",
+    "cz-customizable": "^7.0.0",
+    "eslint": "^8.40.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "wait-on": "^7.0.1"
   }
 }
