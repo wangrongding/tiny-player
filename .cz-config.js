@@ -1,19 +1,28 @@
-module.exports = {
-  types: [
-    { value: 'feat', name: 'feat: 一个新的特性' },
-    { value: 'fix', name: 'fix: 修复一个Bug' },
-    { value: 'docs', name: 'docs: 变更的只有文档' },
-    { value: 'style', name: 'style: 代码风格,格式修复' },
-    { value: 'refactor', name: 'refactor: 代码重构,注意和feat、fix区分开' },
-    { value: 'perf', name: 'perf: 码优化,改善性能' },
-    { value: 'test', name: 'test: 测试' },
-    { value: 'chore', name: 'chore: 变更构建流程或辅助工具' },
-    { value: 'revert', name: 'revert: 代码回退' },
-    { value: 'init', name: 'init: 项目初始化' },
-    { value: 'build', name: 'build: 变更项目构建或外部依赖' },
-    { value: 'wip', name: 'wip: 进行中的工作' },
-  ],
+const types = {
+  feat: '用于向项目中添加新的功能或功能模块',
+  fix: '用于修复Bug或解决其他问题',
+  perf: '用于对代码进行性能优化，如算法改进、资源利用优化等',
+  refactor: '对代码重构，提高代码质量和可维护性，不涉及功能修改',
+  chore: '构建系统、任务管理、辅助工具配置等与构建过程或开发流程相关的变更',
+  docs: '用于修改或添加文档内容，如README、API文档等',
+  style: '用于修改代码格式、空格、缩进等不涉及代码逻辑的变更',
+  revert: '代码回滚,用于撤销之前的提交',
+  build: '变更项目构建或外部依赖',
+  test: '测试变更，用于添加、修改或修复测试代码',
+  wip: '进行中的工作',
+}
 
+const typeList = Object.keys(types).map((key) => {
+  const pad = ' '.repeat(12 - key.length)
+  types[key] = `${pad}${types[key]}`
+  return {
+    value: key,
+    name: `${key}: ${types[key]}`,
+  }
+})
+
+module.exports = {
+  types: typeList,
   scopes: [],
   allowTicketNumber: false,
   isTicketNumberRequired: false,
@@ -38,14 +47,14 @@ module.exports = {
     subject: '简短说明(最多40个字):',
     body: '长说明，使用"|"换行(可选):\n',
     breaking: '非兼容性说明 (可选):\n',
-    footer: '关联关闭的issue,例如:#12, #34(可选):\n',
+    footer: '关联的issue,例如:#12,#34(可选,无可直接回车):',
     confirmCommit: '确定提交说明?',
   },
 
   allowCustomScopes: true,
   allowBreakingChanges: ['feat', 'fix'],
   // skip any questions you want
-  skipQuestions: ['scope', 'body', 'breaking'],
+  skipQuestions: ['scope', 'body', 'breaking', 'footer'],
   // limit subject length
   subjectLimit: 100,
   // breaklineChar: '|', // It is supported for fields body and footer.
