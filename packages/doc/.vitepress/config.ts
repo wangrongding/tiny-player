@@ -6,6 +6,12 @@ export default defineConfig({
   title: 'Tiny Player',
   description: 'A sparrow has all five organs.',
   head: [['link', { rel: 'icon', href: '/vite.svg' }]],
+  // markdown 配置
+  markdown: {
+    lineNumbers: true, // 代码块显示行号
+    // theme: 'material-theme-palenight', // 主题
+    theme: 'one-dark-pro', // 主题
+  },
   // 主题配置
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

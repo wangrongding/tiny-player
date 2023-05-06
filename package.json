@@ -16,6 +16,7 @@
     "--  build  ------------------------------------------------": "",
     "build": "pnpm -r --sort build",
     "build:player": "pnpm -F \"tiny-player\" build",
+    "preview": "pnpm -F doc preview",
     "--  publish  ----------------------------------------------": "",
     "pub": "pnpm -F \"tiny-player\" publish",
     "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks",

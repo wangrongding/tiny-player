@@ -77,3 +77,10 @@ h1 {
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
+
+h2 {
+  color: var(--vp-c-brand-dark);
+}
+.dark h2 {
+  color: var(--vp-c-brand-lighter);
+}
