@@ -12,7 +12,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /demo
+      link: /page/001-快速开始
     - theme: alt
       text: View on GitHub
       link: https://github.com/wangrongding

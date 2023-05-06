@@ -23,27 +23,23 @@ const typeList = Object.keys(types).map((key) => {
 
 module.exports = {
   types: typeList,
-  scopes: [],
+  // scopes: [{ name: 'player' }, { name: 'doc' }],
+  // usePreparedCommit: false, // to re-use commit from ./.git/COMMIT_EDITMSG
   allowTicketNumber: false,
   isTicketNumberRequired: false,
   ticketNumberPrefix: 'TICKET-',
   ticketNumberRegExp: '\\d{1,5}',
 
   // it needs to match the value for field type. Eg.: 'fix'
-  /*
-  scopeOverrides: {
-    fix: [
-      {name: 'merge'},
-      {name: 'style'},
-    ]
-  },
-  */
+  // scopeOverrides: {
+  //   fix: [{ name: 'merge' }, { name: 'style' }],
+  // },
+
   // override the messages, defaults are as follows
   messages: {
     type: '选择一种你的提交类型:',
     scope: '选择一个scope (可选):',
-    // used if allowCustomScopes is true
-    customScope: 'Denote the SCOPE of this change:',
+    customScope: 'Denote the SCOPE of this change:', // used if allowCustomScopes is true
     subject: '简短说明(最多40个字):',
     body: '长说明，使用"|"换行(可选):\n',
     breaking: '非兼容性说明 (可选):\n',
@@ -53,11 +49,14 @@ module.exports = {
 
   allowCustomScopes: true,
   allowBreakingChanges: ['feat', 'fix'],
-  // skip any questions you want
+  subjectLimit: 100, // limit subject length
+  breaklineChar: '|', // It is supported for fields body and footer.
+  footerPrefix: 'ISSUES CLOSED:',
+  askForBreakingChangeFirst: true, // default is false
+
+  // 跳过你想要填写的问题
   skipQuestions: ['scope', 'body', 'breaking', 'footer'],
-  // limit subject length
-  subjectLimit: 100,
-  // breaklineChar: '|', // It is supported for fields body and footer.
-  // footerPrefix : 'ISSUES CLOSED:'
-  // askForBreakingChangeFirst : true, // default is false
 }
+
+// 为什么使用规范的提交: https://www.conventionalcommits.org/en/v1.0.0/#summary
+// 示例：https://github.com/leoforfree/cz-customizable/blob/master/cz-config-EXAMPLE.js

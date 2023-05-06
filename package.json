@@ -32,6 +32,10 @@
       "path": "node_modules/cz-customizable"
     }
   },
+  "engineStrict": true,
+  "engines": {
+      "node": ">=16.15.0"
+  },
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
