@@ -4,19 +4,18 @@ import chokidar from 'chokidar'
 import rollupConfig from './rollup.config.js'
 
 async function build() {
-  const bundle = await rollup.rollup(rollupConfig)
-
-  // bundle.write() 目前不支持数组，所以需要遍历写入
-  // await bundle.write(rollupConfig.output)
-  const outputOptions = rollupConfig.output
-  await Promise.all(outputOptions.map((options) => bundle.write(options)))
-    .then(() => {
+  try {
+    const bundle = await rollup.rollup(rollupConfig)
+    // bundle.write() 目前不支持数组，所以需要遍历写入
+    // await bundle.write(rollupConfig.output)
+    const outputOptions = rollupConfig.output
+    await Promise.all(outputOptions.map((options) => bundle.write(options))).then(() => {
       const outputFiles = outputOptions.map((options) => options.file)
       console.log('🥳已生成文件:', outputFiles.join(', '))
     })
-    .catch((error) => {
-      console.error('😭构建错误:', error)
-    })
+  } catch (error) {
+    console.error(error)
+  }
 }
 build()
 

@@ -8,16 +8,16 @@
     "outDir": "dist", // 指定输出目录
     "declaration": true, // 根据ts文件自动生成.d.ts声明文件和js文件
     "declarationDir": "dist/types", // 声明文件的输出目录
-    "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
-
+    "forceConsistentCasingInFileNames": true, // 在文件名中强制使用一致的大小写
+    "noImplicitAny": true, // 在表达式和声明上有隐含的any类型时报错
+    "baseUrl": "./", // 解析非相对模块名的基准目录
+    "paths": {
+      "@/*": ["src/*"] // 路径映射
+    }
     // "removeComments": false // 是否删除注释
     // "skipLibCheck": true // 忽略依赖包的类型检查
     // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
     // "declarationDir": "dist/types", // 声明文件的输出目录
-    // "baseUrl": "./", // 解析非相对模块名的基准目录
-    // "paths": {
-    //   "@/*": ["src/*"] // 路径映射
-    // }
     // "declarationDir": "dist/types", // 声明文件的输出目录
     // "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
     // "emitDeclarationOnly": true, // 只输出.d.ts声明文件，不生成js文件

@@ -27,6 +27,7 @@
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "chokidar": "^3.5.3",
     "rollup": "^3.20.6",

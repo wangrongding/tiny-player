@@ -5,6 +5,7 @@ import scss from 'rollup-plugin-scss'
 import json from '@rollup/plugin-json'
 import svg from 'rollup-plugin-svg-import'
 import del from 'rollup-plugin-delete'
+import alias from '@rollup/plugin-alias'
 
 export default {
   input: 'src/index.ts',
@@ -38,6 +39,9 @@ export default {
 
   plugins: [
     // watch({ include: 'src/**' }),
+    alias({
+      entries: [{ find: '@', replacement: 'src' }],
+    }),
     del({
       targets: 'dist/*',
       runOnce: true,

@@ -9,7 +9,7 @@
     "preinstall": "npx only-allow pnpm",
     "--  dev  --------------------------------------------------": "",
     "pre:dev": "wait-on ./packages/core/dist/index.min.js",
-    "dev": "concurrently \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
+    "dev": "concurrently --kill-others-on-fail \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
     "dev:parallel": "pnpm -r --no-sort dev",
     "dev:player": "pnpm -F \"tiny-player\" dev",
     "dev:doc": "pnpm -F doc dev",
@@ -35,7 +35,7 @@
   },
   "engineStrict": true,
   "engines": {
-      "node": ">=16.15.0"
+    "node": ">=16.15.0"
   },
   "author": "荣顶",
   "license": "MIT",
