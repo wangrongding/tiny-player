@@ -1,27 +1,24 @@
 <!-- prettier-ignore -->
-<div class="tiny-player-container">
-  <video 
-    class="tiny-player-video"
-    crossorigin="anonymous"
-    webkit-playsinline
-    playsinline
-    width="<%= locals.width %>" 
-    src="<%= locals.src %>" 
-    <% if(locals.nativeControl){ %> controls <% } %> 
-    <% if(locals.loop){ %> loop <% } %> 
-    <% if(locals.autoplay){ %> autoplay <% } %> 
-    <% if(locals.muted){ %> muted <% } %> 
-    <% if(locals.airplay){ %> airplay <% } %> 
-    <% if(locals.airplay){ %> x-webkit-airplay="allow" <% } %> 
-    <% if(locals.preload){ %> src="<%= locals.preload %>" <% } %> 
-    <% if(locals.poster){ %> poster="<%= locals.poster %>" <% } %> 
-    <% if(locals.volume){ %> src="<%= locals.volume %>" <% } %> 
-    <% if(locals.playbackSpeed){ %> src="<%= locals.playbackSpeed %>" <% } %> 
-    <% if(locals.anonymous){ %> src="<%= locals.anonymous %>" <% } %> 
-  >
-    你的浏览器不支持 video 标签，换个浏览器试试？
-  </video>
-
-  <!-- 水印 -->
-  <div class="tiny-player-watermark"></div>
-</div>
+<video 
+  class="tiny-player-video"
+  crossorigin="anonymous"
+  webkit-playsinline
+  playsinline
+  width="<%= locals.width %>" 
+  src="<%= locals.src %>" 
+  <% if(locals.nativeControl){ %> controls <% } %> 
+  <% if(locals.loop){ %> loop <% } %> 
+  <% if(locals.autoplay){ %> autoplay <% } %> 
+  <% if(locals.muted){ %> muted <% } %> 
+  <% if(locals.airplay){ %> airplay <% } %> 
+  <% if(locals.airplay){ %> x-webkit-airplay="allow" <% } %> 
+  <% if(locals.preload){ %> src="<%= locals.preload %>" <% } %> 
+  <% if(locals.poster){ %> poster="<%= locals.poster %>" <% } %> 
+  <% if(locals.volume){ %> src="<%= locals.volume %>" <% } %> 
+  <% if(locals.playbackSpeed){ %> src="<%= locals.playbackSpeed %>" <% } %> 
+  <% if(locals.anonymous){ %> src="<%= locals.anonymous %>" <% } %> 
+>
+  你的浏览器不支持 video 标签，换个浏览器试试？
+</video>
+<!-- 水印 -->
+<div class="tiny-player-watermark"></div>
