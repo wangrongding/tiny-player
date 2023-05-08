@@ -24,7 +24,7 @@
     bottom: 0px;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 35px;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 0 10px;
@@ -55,85 +55,5 @@
       font-size: 14px;
       width: 100px;
     }
-  }
-}
-
-// 控制栏中的 range bar 样式
-.tiny-player-control-bar input[type='range'] {
-  height: 25px;
-  // 控制 UI 控件的基于操作系统主题的原生外观
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  margin: 10px 0;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: #2497e3;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  &::-webkit-slider-thumb {
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid #2497e3;
-    height: 15px;
-    width: 15px;
-    border-radius: 25px;
-    background: #a1d0ff;
-    -webkit-appearance: none;
-    margin-top: -5px;
-  }
-  &:focus::-webkit-slider-runnable-track {
-    background: #2497e3;
-  }
-  &::-moz-range-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: #2497e3;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  &::-ms-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-  &::-ms-fill-lower {
-    background: #2497e3;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  &::-ms-fill-upper {
-    background: #2497e3;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  &::-ms-thumb {
-    margin-top: 1px;
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid #2497e3;
-    height: 18px;
-    width: 18px;
-    border-radius: 25px;
-    background: #a1d0ff;
-  }
-  &:focus::-ms-fill-lower {
-    background: #2497e3;
-  }
-  &:focus::-ms-fill-upper {
-    background: #2497e3;
   }
 }
