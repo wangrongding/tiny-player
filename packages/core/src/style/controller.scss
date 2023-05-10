@@ -1,4 +1,17 @@
 // 控制面板
+.tiny-player-hide-controller {
+  .tiny-player-control-panel {
+    cursor: none;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+.tiny-player-show-controller {
+  .tiny-player-control-panel {
+    opacity: 1;
+  }
+}
+
 .tiny-player-control-panel {
   position: absolute;
   width: 100%;

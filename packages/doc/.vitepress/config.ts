@@ -4,6 +4,7 @@ import VueTypeImports from 'vite-plugin-vue-type-imports'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Tiny Player',
+  lang: 'en-US',
   description: 'A sparrow has all five organs.',
   head: [['link', { rel: 'icon', href: '/vite.svg' }]],
   // markdown 配置

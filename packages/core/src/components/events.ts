@@ -1,4 +1,4 @@
-enum VideoEventsEnum {
+export enum VideoEventsEnum {
   abort = 'abort',
   canplay = 'canplay',
   canplaythrough = 'canplaythrough',
@@ -9,7 +9,6 @@ enum VideoEventsEnum {
   loadeddata = 'loadeddata',
   loadedmetadata = 'loadedmetadata',
   loadstart = 'loadstart',
-  mozaudioavailable = 'mozaudioavailable',
   pause = 'pause',
   play = 'play',
   playing = 'playing',
@@ -22,30 +21,37 @@ enum VideoEventsEnum {
   timeupdate = 'timeupdate',
   volumechange = 'volumechange',
   waiting = 'waiting',
+  mozaudioavailable = 'mozaudioavailable',
 }
-enum playerEvents {
-  screenshot = 'screenshot',
+export enum PlayerEventsEnum {
   destroy = 'destroy',
   resize = 'resize',
-  fullscreen = 'fullscreen',
-  fullscreen_cancel = 'fullscreen_cancel',
-  webfullscreen = 'webfullscreen',
-  webfullscreen_cancel = 'webfullscreen_cancel',
+  screenshot = 'screenshot',
+
+  // fullscreen = 'fullscreen',
+  // fullscreen_cancel = 'fullscreen_cancel',
+  // webfullscreen = 'webfullscreen',
+  // webfullscreen_cancel = 'webfullscreen_cancel',
 }
 
-class Events {
+export type EventsList = keyof typeof PlayerEventsEnum | keyof typeof VideoEventsEnum
+
+export default class TinyPlayEvents {
   private events: { [key: string]: Function[] }
   private videoEvents: VideoEventsEnum[]
-  private playerEvents: string[]
+  private playerEvents: PlayerEventsEnum[]
   constructor() {
     this.events = {}
 
+    // 视频相关事件
     this.videoEvents = Object.keys(VideoEventsEnum).map((key) => VideoEventsEnum[key as keyof typeof VideoEventsEnum])
-
-    this.playerEvents = Object.keys(playerEvents).map((key) => playerEvents[key as keyof typeof playerEvents])
+    // 播放器相关事件
+    this.playerEvents = Object.keys(PlayerEventsEnum).map(
+      (key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum],
+    )
   }
 
-  on(name: string, callback: Function) {
+  on(name: EventsList, callback: Function) {
     if (this.type(name) && typeof callback === 'function') {
       if (!this.events[name]) {
         this.events[name] = []
@@ -62,10 +68,10 @@ class Events {
     }
   }
 
-  type(name: any) {
-    if (this.playerEvents.indexOf(name) !== -1) {
+  type(name: EventsList) {
+    if (this.playerEvents.indexOf(name as PlayerEventsEnum) !== -1) {
       return 'player'
-    } else if (this.videoEvents.indexOf(name) !== -1) {
+    } else if (this.videoEvents.indexOf(name as VideoEventsEnum) !== -1) {
       return 'video'
     }
 
@@ -73,5 +79,3 @@ class Events {
     return null
   }
 }
-
-export default Events

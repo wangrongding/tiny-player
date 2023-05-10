@@ -1,33 +1,48 @@
 import playerTemplate from '../template/player.ejs'
-import controlTemplate from '../template/control.ejs'
-import '../style/index.scss'
 import pkg from '../../package.json'
 import Icons from './icons'
-import utils from '../utils/index'
-import { PlayerOptions } from '../index'
+import Controller from './controller'
+import Events from './events'
+import { EventsList } from './events'
+
+export interface Player {
+  playPause(): void
+  mute(): void
+  seek(): void
+  setVolume(): void
+  // fullScreen(): void
+}
+
+export interface PlayerOptions {
+  container: HTMLElement // 播放器容器
+  src: string // 视频地址
+  poster?: string // 视频封面
+  loop?: boolean // 是否循环播放
+  autoplay?: boolean // 是否自动播放
+  controls?: boolean // 是否显示控制条
+  muted?: boolean // 是否静音
+  volume?: number // 音量
+  playbackRate?: number // 播放速率
+  width?: string // 播放器宽度 "123px"
+  height?: string // 播放器高度 "123px"
+}
 
 const { name, version } = pkg
 export default class TinyPlayer {
   static title: string = name // 播放器名称
   static version: string = version // 版本号
   options: PlayerOptions // 播放器配置
-  targetElement: HTMLElement // 挂载目标元素
-  videoContainer!: HTMLElement // 视频节点
-  video?: HTMLVideoElement // 播放器
-  // 控制器
-  controls: {
-    playButton?: HTMLElement // 播放按钮
-    seekBar?: HTMLInputElement // 进度条
-    playTime?: HTMLElement // 播放时间
-    volumeBar?: HTMLInputElement // 声音控制栏
-    muteButton?: HTMLElement // 静音按钮
-    fullScreenButton?: HTMLElement // 全屏按钮
-  } = {}
-  controlNode?: HTMLElement // 控制器节点
+  container: HTMLElement // 挂载目标元素
+  videoContainer!: HTMLElement // 视频容器
+  video!: HTMLVideoElement // 播放器
+  controller!: Controller // 控制器
+  events!: Events // 事件
+  paused: boolean = true // 是否暂停
+
   playRaf = 0 // 播放 requestAnimationFrame Id
 
   constructor(options: PlayerOptions) {
-    this.targetElement = options.container
+    this.container = options.container
     this.options = options
     this.setup()
   }
@@ -40,81 +55,59 @@ export default class TinyPlayer {
     // 播放器模板
     this.videoContainer.innerHTML = playerTemplate(this.options)
     // 将 player 添加到指定容器中
-    this.targetElement.appendChild(this.videoContainer)
+    this.container.appendChild(this.videoContainer)
+    // 视频节点
+    this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
+    // 播放器事件系统
+    this.events = new Events()
+    // 播放器控制器
+    this.controller = new Controller(this)
+    // 初始化视频
     this.initVideo()
-    this.initControls()
   }
 
   // 初始化播放器
   private initVideo() {
     // 设置视频相关回调函数
-    this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
-    this.video.addEventListener('loadedmetadata', this.onLoadedMetadata)
-    this.video.addEventListener('play', this.onPlay)
-    this.video.addEventListener('pause', this.onPause)
-    this.video.addEventListener('timeupdate', this.onTimeupdate)
+    // this.video.addEventListener('play', this.onPlay)
+    // this.video.addEventListener('pause', this.onPause)
+    // this.video.addEventListener('loadedmetadata', this.onLoadedMetadata)
+    // this.video.addEventListener('timeupdate', this.controller.onTimeupdate)
 
-    // TODO 测试用
-    const eventList = [
-      'audioprocess', // 当音频处理程序处理缓冲区时触发。(The input buffer of a ScriptProcessorNode is ready to be processed.)
-      'canplay', // 浏览器可以播放媒体文件了，但估计没有足够的数据来支撑播放到结束，不必停下来进一步缓冲内容。
-      'canplaythrough', // 浏览器估计它可以在不停止内容缓冲的情况下播放媒体直到结束。
-      'complete', // OfflineAudioContext 渲染完成。
-      'durationchange', // duration 属性的值改变时触发。
-      'emptied', // 媒体内容变为空；例如，当这个 media 已经加载完成（或者部分加载完成），则发送此事件，并调用 load() 方法重新加载它。
-      'ended', // 视频停止播放，因为 media 已经到达结束点。
-      'loadeddata', // media 中的首帧已经完成加载。
-      'loadedmetadata', // 已加载元数据。
-      'play', // 播放已开始。
-      'pause', // 播放已暂停。
-      'progress', // 在浏览器加载资源时周期性触发。
-      'ratechange', // currentTime 属性指定的时间发生变化。
-      'seeked', // 跳帧（seek）操作完成。
-      'seeking', // 跳帧（seek）操作开始。
-      'stalled', // 用户代理（user agent）正在尝试获取媒体数据，但数据意外未出现。
-      'suspend', // 媒体数据加载已暂停。
-      'timeupdate', // currentTime 属性指定的时间发生变化。
-      'volumechange', // 音量发生变化。
-      'waiting', // 由于暂时缺少数据，播放已停止。
-      'error',
-      'abort',
-    ]
-    eventList.forEach((eventName) => {
-      this.video!.addEventListener(eventName, (e) => {
-        console.log(eventName, e.type)
-      })
+    // 播放回调
+    this.on('play', () => {
+      if (this.paused) {
+        this.onPlay
+      }
+    })
+    // 暂停播放
+    this.on('pause', () => {
+      if (!this.paused) {
+        this.onPause()
+      }
+    })
+    // 更新播放时间
+    this.on('timeupdate', this.controller.onTimeupdate)
+
+    // video end
+    this.on('ended', () => {
+      // if (!this.options.loop) {
+      //   this.seek(0)
+      //   this.pause()
+      //   this.bezel.switch(Icons.play)
+      // } else {
+      //   this.seek(0)
+      //   this.play()
+      // }
+      // if (this.danmaku) {
+      //   this.danmaku.danIndex = 0
+      // }
     })
   }
-  
-  // 初始化播放器控制条
-  private initControls() {
-    this.controlNode = document.createElement('div')
-    this.controlNode.innerHTML = controlTemplate(this.options)
-    document.querySelector('.tiny-player-container')!.appendChild(this.controlNode)
 
-    // 设置控制条按钮的事件处理函数
-    this.controls.playButton = this.videoContainer.querySelector('.tiny-player-play-icon') as HTMLElement
-    this.controls.playButton && (this.controls.playButton.innerHTML = Icons.play)
-    this.controls.playButton.addEventListener('click', this.togglePlay)
-
-    // 设置控制条滑块的事件处理函数
-    this.controls.seekBar = this.videoContainer.querySelector('.tiny-player-seek-bar') as HTMLInputElement
-    this.controls.seekBar.addEventListener('input', this.seek)
-    this.controls.playTime = this.videoContainer.querySelector('.tiny-player-play-time') as HTMLInputElement
-
-    // 设置控制条声音控制栏的事件处理函数
-    this.controls.muteButton = this.videoContainer.querySelector('.tiny-player-volume') as HTMLButtonElement
-    this.controls.muteButton.addEventListener('click', this.mute)
-    this.controls.muteButton && (this.controls.muteButton.innerHTML = Icons.volumeUp)
-    this.controls.volumeBar = this.videoContainer.querySelector('.tiny-player-volume-bar') as HTMLInputElement
-    this.controls.volumeBar.addEventListener('input', this.setVolume)
-
-    // 设置控制条全屏按钮的事件处理函数
-    this.controls.fullScreenButton = this.videoContainer.querySelector('.tiny-player-fullscreen') as HTMLElement
-    this.controls.fullScreenButton.addEventListener('click', this.fullScreen)
-    this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
-
-    if (!this.options.controls) return
+  // 注册事件
+  on(name: EventsList, callback: Function) {
+    this.events.on(name, callback)
   }
 
   // 当视频元数据加载完成时，设置视频播放器控制条
@@ -122,15 +115,23 @@ export default class TinyPlayer {
 
   // 当视频开始播放时，
   private onPlay = () => {
+    console.log('🚀🚀🚀 / onPlay:')
+
+    this.paused = false
+    const playButton = this.controller.controls.playButton
     // 更新播放器状态
-    this.controls.playButton && (this.controls.playButton.innerHTML = Icons.pause)
-    this.updateSeekBar()
+    playButton && (playButton.innerHTML = Icons.pause)
+    this.controller.updateSeekBar()
   }
 
   // 当视频暂停播放时
   private onPause = () => {
+    console.log('🚀🚀🚀 / onPause:')
+
+    this.paused = true
+    const playButton = this.controller.controls.playButton
     // 更新播放器状态
-    this.controls.playButton && (this.controls.playButton.innerHTML = Icons.play)
+    playButton && (playButton.innerHTML = Icons.play)
     cancelAnimationFrame(this.playRaf)
   }
 
@@ -143,49 +144,25 @@ export default class TinyPlayer {
     }
   }
 
-  // 更新播放进度条
-  private updateSeekBar = () => {
-    this.controls.seekBar!.value = (this.video!.currentTime / this.video!.duration) * 100 + ''
-    this.playRaf = window.requestAnimationFrame(() => {
-      this.updateSeekBar()
-    })
-  }
-
-  // 更新播放时间
-  private onTimeupdate = () => {
-    this.controls.playTime!.textContent = `${utils.secondToTime(this.video!.currentTime)} / ${utils.secondToTime(
-      this.video!.duration,
-    )}`
-  }
-
   // 调整视频播放进度
   private seek = () => {
     // 调整视频播放进度
-    this.video!.currentTime = (Number(this.controls.seekBar!.value) / 100) * this.video!.duration
+    this.video!.currentTime = (Number(this.controller.controls.seekBar!.value) / 100) * this.video!.duration
     this.video!.play()
   }
 
   // 调整视频音量
   private setVolume = () => {
     // 调整视频音量
-    this.video!.volume = Number(this.controls.volumeBar!.value)
+    this.video!.volume = Number(this.controller.controls.volumeBar!.value)
   }
 
   // 静音或取消静音
   private mute = () => {
     // 静音或取消静音
     this.video!.muted = !this.video!.muted
-    this.controls.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
-    this.controls.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
-    this.controls.muteButton!.querySelector('svg')?.setAttribute('fill', 'white')
-  }
-
-  private fullScreen = () => {
-    // 进入或退出全屏模式
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    } else {
-      this.videoContainer!.requestFullscreen()
-    }
+    this.controller.controls.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
+    this.controller.controls.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
+    this.controller.controls.muteButton!.querySelector('svg')?.setAttribute('fill', 'white')
   }
 }
