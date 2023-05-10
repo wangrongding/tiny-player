@@ -1,3 +1,5 @@
+import type TinyPlayer from './player'
+
 export enum VideoEventsEnum {
   abort = 'abort',
   canplay = 'canplay',
@@ -37,12 +39,13 @@ export enum PlayerEventsEnum {
 export type EventsList = keyof typeof PlayerEventsEnum | keyof typeof VideoEventsEnum
 
 export default class TinyPlayEvents {
-  private events: { [key: string]: Function[] }
-  private videoEvents: VideoEventsEnum[]
-  private playerEvents: PlayerEventsEnum[]
-  constructor() {
-    this.events = {}
+  events: { [key: string]: Function[] } = {}
+  player: TinyPlayer
+  videoEvents: VideoEventsEnum[]
+  playerEvents: PlayerEventsEnum[]
 
+  constructor(player: TinyPlayer) {
+    this.player = player
     // 视频相关事件
     this.videoEvents = Object.keys(VideoEventsEnum).map((key) => VideoEventsEnum[key as keyof typeof VideoEventsEnum])
     // 播放器相关事件
@@ -51,16 +54,38 @@ export default class TinyPlayEvents {
     )
   }
 
-  on(name: EventsList, callback: Function) {
-    if (this.type(name) && typeof callback === 'function') {
-      if (!this.events[name]) {
-        this.events[name] = []
-      }
+  on(name: EventsList, callback: any) {
+    const type = this.type(name)
+    if (type && typeof callback === 'function') {
+      if (!this.events[name]) this.events[name] = []
       this.events[name].push(callback)
+
+      if (type === 'player') {
+        // console.log('🚀🚀🚀 ', name, this.events[name])
+      }
+      // video 事件，直接绑定到 video 元素上
+      if (type === 'video') {
+        // this.player.video.addEventListener(name, () => {
+        //   callback()
+        // })
+        this.player.video.addEventListener(name, callback)
+      }
+      // console.log('🚀🚀🚀 ', name, this.events[name])
     }
   }
 
-  trigger(name: string, info: any) {
+  off(name: EventsList, callback: Function) {
+    if (this.type(name) && this.events[name] && this.events[name].length) {
+      for (let i = 0; i < this.events[name].length; i++) {
+        if (this.events[name][i] === callback) {
+          this.events[name].splice(i, 1)
+          break
+        }
+      }
+    }
+  }
+
+  trigger(name: string, info?: any) {
     if (this.events[name] && this.events[name].length) {
       for (let i = 0; i < this.events[name].length; i++) {
         this.events[name][i](info)
@@ -75,7 +100,7 @@ export default class TinyPlayEvents {
       return 'video'
     }
 
-    console.error(`Unknown event name: ${name}`)
+    console.error(`${name} 事件不存在，可以查看下文档：https://baidu.com `)
     return null
   }
 }

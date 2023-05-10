@@ -13,15 +13,15 @@ export interface Controls {
 }
 
 export default class Controller {
-  player: TinyPlayer
+  player: TinyPlayer // 播放器实例
   autoHideTimer: number // 自动隐藏计时器
   disableAutoHide: boolean = false // 禁用自动隐藏
-
-  // 控制器
-  controls: Controls = {}
+  controls: Controls = {} // 控制器
   controlNode?: HTMLElement // 控制器节点
   container: HTMLElement = document.createElement('div')
-  constructor(player: any) {
+  playRaf = 0 // 播放 requestAnimationFrame Id
+
+  constructor(player: TinyPlayer) {
     this.player = player
 
     this.autoHideTimer = 0
@@ -103,23 +103,23 @@ export default class Controller {
     // 设置控制条按钮的事件处理函数
     this.controls.playButton = this.player.videoContainer.querySelector('.tiny-player-play-icon') as HTMLElement
     this.controls.playButton && (this.controls.playButton.innerHTML = Icons.play)
-    this.controls.playButton.addEventListener('click', this.togglePlay)
+    this.controls.playButton.addEventListener('click', this.player.togglePlay)
 
     // 设置控制条滑块的事件处理函数
     this.controls.seekBar = this.player.videoContainer.querySelector('.tiny-player-seek-bar') as HTMLInputElement
-    this.controls.seekBar.addEventListener('input', this.seek)
+    this.controls.seekBar.addEventListener('input', this.player.seek)
     this.controls.playTime = this.player.videoContainer.querySelector('.tiny-player-play-time') as HTMLInputElement
 
     // 设置控制条声音控制栏的事件处理函数
     this.controls.muteButton = this.player.videoContainer.querySelector('.tiny-player-volume') as HTMLButtonElement
-    this.controls.muteButton.addEventListener('click', this.mute)
+    this.controls.muteButton.addEventListener('click', this.player.mute)
     this.controls.muteButton && (this.controls.muteButton.innerHTML = Icons.volumeUp)
     this.controls.volumeBar = this.player.videoContainer.querySelector('.tiny-player-volume-bar') as HTMLInputElement
-    this.controls.volumeBar.addEventListener('input', this.setVolume)
+    this.controls.volumeBar.addEventListener('input', this.player.setVolume)
 
     // 设置控制条全屏按钮的事件处理函数
     this.controls.fullScreenButton = this.player.videoContainer.querySelector('.tiny-player-fullscreen') as HTMLElement
-    this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.fullScreen)
+    this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.player.fullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
 
     if (!this.player.options.controls) return
@@ -197,19 +197,10 @@ export default class Controller {
     }
   }
 
-  // 播放或暂停视频
-  togglePlay = () => {
-    if (this.player.video!.paused) {
-      this.player.video.play()
-    } else {
-      this.player.video.pause()
-    }
-  }
-
   // 更新播放进度条
   updateSeekBar = () => {
     this.controls.seekBar!.value = ((this.player.video!.currentTime / this.player.video.duration) * 100).toString()
-    this.player.playRaf = window.requestAnimationFrame(() => {
+    this.playRaf = window.requestAnimationFrame(() => {
       this.updateSeekBar()
     })
   }
@@ -219,36 +210,6 @@ export default class Controller {
     this.controls.playTime!.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(
       this.player.video.duration,
     )}`
-  }
-
-  // 调整视频播放进度
-  seek = () => {
-    // 调整视频播放进度
-    this.player.video.currentTime = (Number(this.controls.seekBar!.value) / 100) * this.player.video.duration
-    this.player.video.play()
-  }
-
-  // 调整视频音量
-  setVolume = () => {
-    // 调整视频音量
-    this.player.video.volume = Number(this.controls.volumeBar!.value)
-    this.switchVolumeIcon()
-  }
-
-  // 设置音量
-  volume(val: number | string) {
-    let percentage = parseFloat((val || 0) as string)
-    if (!isNaN(percentage)) {
-      percentage = Math.max(percentage, 0)
-      percentage = Math.min(percentage, 1)
-
-      this.player.video.volume = percentage
-      if (this.player.video.muted) {
-        this.player.video.muted = false
-      }
-      this.switchVolumeIcon()
-    }
-    return this.player.video.volume
   }
 
   // 切换音量图标
@@ -262,34 +223,6 @@ export default class Controller {
       this.controls.muteButton!.innerHTML = Icons.volumeUp
     }
   }
-
-  // 静音或取消静音
-  mute = () => {
-    // 静音或取消静音
-    this.player.video.muted = !this.player.video!.muted
-    this.controls.volumeBar!.value = this.player.video.muted ? '0' : this.player.video.volume + ''
-    this.switchVolumeIcon()
-  }
-
-  // TODO: 全屏
-  fullScreen = () => {
-    // 进入或退出全屏模式
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    } else {
-      this.player.videoContainer!.requestFullscreen()
-    }
-  }
-
-  // TODO
-  // initFullButton() {
-  //   this.player.template.browserFullButton.addEventListener('click', () => {
-  //     this.player.fullScreen.toggle('browser')
-  //   })
-  //   this.player.template.webFullButton.addEventListener('click', () => {
-  //     this.player.fullScreen.toggle('web')
-  //   })
-  // }
 
   destroy() {
     clearTimeout(this.autoHideTimer)

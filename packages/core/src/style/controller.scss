@@ -21,14 +21,21 @@
 
   // 播放按钮
   .tiny-player-play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: white;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    display: grid;
+    place-content: center;
+    svg {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   // 底部控制栏
@@ -67,6 +74,7 @@
     .tiny-player-play-time {
       font-size: 14px;
       width: 100px;
+      user-select: none;
     }
   }
 }

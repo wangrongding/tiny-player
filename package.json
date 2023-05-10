@@ -11,7 +11,7 @@
     "pre:dev": "wait-on ./packages/core/dist/index.min.js",
     "dev": "concurrently --kill-others-on-fail \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
     "dev:parallel": "pnpm -r --no-sort dev",
-    "dev:player": "pnpm -F \"tiny-player\" dev",
+    "dev:player": "pnpm -F \"tiny-player\" dev-w",
     "dev:doc": "pnpm -F doc dev",
     "--  build  ------------------------------------------------": "",
     "build": "pnpm -r --sort build",

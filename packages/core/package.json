@@ -12,8 +12,8 @@
     "README.md"
   ],
   "scripts": {
-    "dev": "node ./custom-dev.js",
-    "dev-w": "rollup -c -w",
+    "dev-w": "node ./custom-dev.js",
+    "dev": "rollup -c -w",
     "build": "rollup -c"
   },
   "keywords": [
