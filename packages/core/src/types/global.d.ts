@@ -22,3 +22,8 @@ declare module '*.json' {
   const value: Record<string, any>
   export default value
 }
+
+declare module 'hls.js' {
+  import Hls from 'node_modules/hls.js/dist/hls.js'
+  export default Hls
+}
