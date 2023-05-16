@@ -20,7 +20,8 @@
   left: 0;
 
   // 播放按钮
-  .tiny-player-play-icon {
+  .tiny-player-play-icon,
+  .tiny-player-loading {
     color: white;
     cursor: pointer;
     overflow: hidden;
@@ -35,6 +36,27 @@
     svg {
       width: 50px;
       height: 50px;
+    }
+  }
+
+  @keyframes tiny-player-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .tiny-player-loading {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.4);
+
+    // 加载动画
+    svg {
+      animation: tiny-player-loading 1s infinite;
+      width: 40px;
+      height: 40px;
     }
   }
 

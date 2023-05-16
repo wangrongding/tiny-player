@@ -10,6 +10,7 @@ export interface Controls {
   volumeBar?: HTMLInputElement // 声音控制栏
   muteButton?: HTMLElement // 静音按钮
   fullScreenButton?: HTMLElement // 全屏按钮
+  loading?: HTMLElement // 加载动画
 }
 
 export default class Controller {
@@ -80,6 +81,7 @@ export default class Controller {
       'timeupdate', // currentTime 属性指定的时间发生变化。
       'volumechange', // 音量发生变化。
       'waiting', // 由于暂时缺少数据，播放已停止。
+      'playing', //由于缺乏数据而暂停或延迟后，播放准备开始。
       'error',
       'abort',
     ]
@@ -101,26 +103,32 @@ export default class Controller {
     document.querySelector('.tiny-player-container')!.appendChild(this.controlNode)
 
     // 设置控制条按钮的事件处理函数
-    this.controls.playButton = this.player.videoContainer.querySelector('.tiny-player-play-icon') as HTMLElement
+    this.controls.playButton = this.controlNode.querySelector('.tiny-player-play-icon') as HTMLElement
     this.controls.playButton && (this.controls.playButton.innerHTML = Icons.play)
     this.controls.playButton.addEventListener('click', this.player.togglePlay)
 
     // 设置控制条滑块的事件处理函数
-    this.controls.seekBar = this.player.videoContainer.querySelector('.tiny-player-seek-bar') as HTMLInputElement
+    this.controls.seekBar = this.controlNode.querySelector('.tiny-player-seek-bar') as HTMLInputElement
     this.controls.seekBar.addEventListener('input', this.player.seek)
-    this.controls.playTime = this.player.videoContainer.querySelector('.tiny-player-play-time') as HTMLInputElement
+    this.controls.playTime = this.controlNode.querySelector('.tiny-player-play-time') as HTMLInputElement
 
     // 设置控制条声音控制栏的事件处理函数
-    this.controls.muteButton = this.player.videoContainer.querySelector('.tiny-player-volume') as HTMLButtonElement
+    this.controls.muteButton = this.controlNode.querySelector('.tiny-player-volume') as HTMLButtonElement
     this.controls.muteButton.addEventListener('click', this.player.mute)
     this.controls.muteButton && (this.controls.muteButton.innerHTML = Icons.volumeUp)
-    this.controls.volumeBar = this.player.videoContainer.querySelector('.tiny-player-volume-bar') as HTMLInputElement
+    this.controls.volumeBar = this.controlNode.querySelector('.tiny-player-volume-bar') as HTMLInputElement
     this.controls.volumeBar.addEventListener('input', this.player.setVolume)
 
     // 设置控制条全屏按钮的事件处理函数
-    this.controls.fullScreenButton = this.player.videoContainer.querySelector('.tiny-player-fullscreen') as HTMLElement
+    this.controls.fullScreenButton = this.controlNode.querySelector('.tiny-player-fullscreen') as HTMLElement
     this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.player.fullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
+
+    // 其他
+    // loading 动画
+    this.controls.loading = this.controlNode.querySelector('.tiny-player-loading') as HTMLElement
+    this.controls.loading.innerHTML = Icons.loading
+    this.controls.loading!.style.opacity = '0'
 
     if (!this.player.options.controls) return
   }
@@ -210,6 +218,29 @@ export default class Controller {
     this.controls.playTime!.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(
       this.player.video.duration,
     )}`
+  }
+
+  // waiting 事件处理函数
+  onWaiting = () => {
+    if (!this.player.paused) this.player.paused = true
+    this.toggleLoading(true)
+  }
+
+  //
+  onPlaying = () => {
+    if (this.player.paused) this.player.paused = false
+    this.toggleLoading(false)
+  }
+
+  // 控制 loading 动画的显示与隐藏
+  toggleLoading = (show: boolean) => {
+    if (show) {
+      this.controls.loading!.style.opacity = '1'
+      this.controls.playButton!.style.opacity = '0'
+    } else {
+      this.controls.loading!.style.opacity = '0'
+      this.controls.playButton!.style.opacity = '1'
+    }
   }
 
   // 切换音量图标
