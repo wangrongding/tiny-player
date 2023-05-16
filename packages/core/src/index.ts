@@ -1,4 +1,4 @@
-import playerTemplate from './template/player.ejs'
+import playerTemplate from '@/assets/template/player.ejs'
 import pkg from '../package.json'
 import './style/index.scss'
 import Icons from '@/assets/icons/index'

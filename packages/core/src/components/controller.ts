@@ -1,4 +1,4 @@
-import controlTemplate from '../template/control.ejs'
+import controlTemplate from '@/assets/template/control.ejs'
 import { isMobile, throttle, secondToTime } from '@/utils/index'
 import Icons from '@/assets/icons/index'
 import type TinyPlayer from '../index'
