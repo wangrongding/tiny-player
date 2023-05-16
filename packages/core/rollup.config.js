@@ -8,6 +8,8 @@ import del from 'rollup-plugin-delete'
 import alias from '@rollup/plugin-alias'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 
+const isDev = process.env.IS_DEV
+console.log('🌸🌸🌸isDev:', isDev)
 export default {
   input: 'src/index.ts',
   // external: ['hls.js'], // 不被打包到库中，沿用外部依赖
@@ -41,14 +43,9 @@ export default {
   ],
 
   plugins: [
-    nodeResolve(),
-    alias({
-      entries: [{ find: '@', replacement: 'src' }],
-    }),
-    del({
-      targets: 'dist/*',
-      runOnce: true,
-    }),
+    !isDev && del({ targets: 'dist/*' }),
+    !isDev && nodeResolve(),
+    alias({ entries: [{ find: '@', replacement: 'src' }] }),
     svg({
       stringify: true, // process SVG to DOM Node or String. Default: false
     }),

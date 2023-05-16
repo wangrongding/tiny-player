@@ -107,15 +107,6 @@ export default class TinyPlayer {
     this.on('pause', () => {
       !this.paused && this.onPause()
     })
-
-    // 由于暂时缺少数据，播放已停止。
-    this.on('waiting', this.controller.onWaiting)
-    // 更新播放时间
-    this.on('timeupdate', this.controller.onTimeupdate)
-    // 视频元数据加载完成
-    this.on('loadedmetadata', this.onLoadedMetadata)
-    this.on('playing', this.controller.onPlaying)
-
     // 播放结束
     this.on('ended', () => {
       if (!this.options.loop) {
@@ -127,11 +118,6 @@ export default class TinyPlayer {
         this.play()
       }
     })
-  }
-
-  // 当视频元数据加载完成时，设置视频播放器控制条
-  private onLoadedMetadata = () => {
-    // this.controller.hide()
   }
 
   // 当视频开始播放时，

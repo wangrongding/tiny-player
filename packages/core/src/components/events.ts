@@ -52,6 +52,38 @@ export default class TinyPlayEvents {
     this.playerEvents = Object.keys(PlayerEventsEnum).map(
       (key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum],
     )
+
+    // TODO 测试用
+    const eventList = [
+      'audioprocess', // 当音频处理程序处理缓冲区时触发。(The input buffer of a ScriptProcessorNode is ready to be processed.)
+      'canplay', // 浏览器可以播放媒体文件了，但估计没有足够的数据来支撑播放到结束，不必停下来进一步缓冲内容。
+      'canplaythrough', // 浏览器估计它可以在不停止内容缓冲的情况下播放媒体直到结束。
+      'complete', // OfflineAudioContext 渲染完成。
+      'durationchange', // duration 属性的值改变时触发。
+      'emptied', // 媒体内容变为空；例如，当这个 media 已经加载完成（或者部分加载完成），则发送此事件，并调用 load() 方法重新加载它。
+      'ended', // 视频停止播放，因为 media 已经到达结束点。
+      'loadeddata', // media 中的首帧已经完成加载。
+      'loadedmetadata', // 已加载元数据。
+      'play', // 播放已开始。
+      'pause', // 播放已暂停。
+      'progress', // 在浏览器加载资源时周期性触发。
+      'ratechange', // currentTime 属性指定的时间发生变化。
+      'seeked', // 跳帧（seek）操作完成。
+      'seeking', // 跳帧（seek）操作开始。
+      'stalled', // 用户代理（user agent）正在尝试获取媒体数据，但数据意外未出现。
+      'suspend', // 媒体数据加载已暂停。
+      'timeupdate', // currentTime 属性指定的时间发生变化。
+      'volumechange', // 音量发生变化。
+      'waiting', // 由于暂时缺少数据，播放已停止。
+      'playing', //由于缺乏数据而暂停或延迟后，播放准备开始。
+      'error',
+      'abort',
+    ]
+    eventList.forEach((eventName) => {
+      this.player.video.addEventListener(eventName, (e: Event) => {
+        console.log(eventName, e.type)
+      })
+    })
   }
 
   on(name: EventsList, callback: () => void) {

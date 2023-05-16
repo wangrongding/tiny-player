@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "dev": "rollup -c -w",
-    "dev-w": "node ./custom-dev.js",
+    "dev-w": "cross-env IS_DEV=true node ./custom-dev.js",
     "build": "rollup -c"
   },
   "keywords": [
@@ -31,6 +31,7 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "chokidar": "^3.5.3",
+    "cross-env": "^7.0.3",
     "rollup": "^3.20.6",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-ejs": "^4.0.0",
