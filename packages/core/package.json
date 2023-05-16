@@ -12,8 +12,8 @@
     "README.md"
   ],
   "scripts": {
-    "dev-w": "node ./custom-dev.js",
     "dev": "rollup -c -w",
+    "dev-w": "node ./custom-dev.js",
     "build": "rollup -c"
   },
   "keywords": [
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "chokidar": "^3.5.3",
     "rollup": "^3.20.6",
     "rollup-plugin-delete": "^2.0.0",

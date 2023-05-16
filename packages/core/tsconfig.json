@@ -13,11 +13,11 @@
     "baseUrl": "./", // 解析非相对模块名的基准目录
     "paths": {
       "@/*": ["src/*"] // 路径映射
-      // "hls.js": ["node_modules/hls.js"]
     }
-    // "moduleResolution": "nodenext", // 指定模块解析策略
-    // "allowImportingTsExtensions": true, // 允许从没有指定扩展名的非JavaScript文件导入时，该文件将被当成TypeScript文件处理
+    // "allowImportingTsExtensions": true // 允许从没有指定扩展名的非JavaScript文件导入时，该文件将被当成TypeScript文件处理
     // "noEmit": true, // 不生成输出文件
+    // "emitDeclarationOnly": true,
+    // "moduleResolution": "nodenext", // 指定模块解析策略
     // "removeComments": false // 是否删除注释
     // "skipLibCheck": true // 忽略依赖包的类型检查
     // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
