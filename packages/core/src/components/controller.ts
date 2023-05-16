@@ -1,7 +1,7 @@
 import { isMobile, throttle, secondToTime } from '@/utils/index'
 import controlTemplate from '../template/control.ejs'
-import Icons from './icons'
-import type TinyPlayer from './player'
+import Icons from '@/assets/icons/index'
+import type TinyPlayer from '../index'
 
 export interface Controls {
   playButton?: HTMLElement // 播放按钮
@@ -26,17 +26,17 @@ export default class Controller {
 
     this.autoHideTimer = 0
     if (!isMobile) {
-      this.player.container.addEventListener('mousemove', throttle(this.setAutoHide.bind(this), 100))
-      this.player.container.addEventListener('click', () => {
-        this.setAutoHide()
-      })
-      this.player.on('play', () => {
-        this.setAutoHide()
-      })
-      this.player.on('pause', () => {
-        this.setAutoHide()
-      })
-      this.player.container.addEventListener('mouseleave', throttle(this.hide.bind(this), 100))
+      // this.player.container.addEventListener('mousemove', throttle(this.setAutoHide.bind(this), 100))
+      // this.player.container.addEventListener('click', () => {
+      //   this.setAutoHide()
+      // })
+      // this.player.on('play', () => {
+      //   this.setAutoHide()
+      // })
+      // this.player.on('pause', () => {
+      //   this.setAutoHide()
+      // })
+      // this.player.container.addEventListener('mouseleave', throttle(this.hide.bind(this), 100))
     } else {
       this.player.on('play', () => {
         this.setAutoHide()

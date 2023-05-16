@@ -6,7 +6,7 @@ export default defineConfig({
   title: 'Tiny Player',
   lang: 'en-US',
   description: 'A sparrow has all five organs.',
-  head: [['link', { rel: 'icon', href: '/vite.svg' }]],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   // markdown 配置
   markdown: {
     lineNumbers: true, // 代码块显示行号

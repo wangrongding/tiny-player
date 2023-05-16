@@ -1,4 +1,4 @@
-import type TinyPlayer from './player'
+import type TinyPlayer from '../index'
 
 export enum VideoEventsEnum {
   abort = 'abort',
@@ -54,23 +54,19 @@ export default class TinyPlayEvents {
     )
   }
 
-  on(name: EventsList, callback: any) {
+  on(name: EventsList, callback: () => void) {
     const type = this.type(name)
     if (type && typeof callback === 'function') {
       if (!this.events[name]) this.events[name] = []
       this.events[name].push(callback)
 
-      if (type === 'player') {
-        // console.log('🚀🚀🚀 ', name, this.events[name])
-      }
       // video 事件，直接绑定到 video 元素上
       if (type === 'video') {
-        // this.player.video.addEventListener(name, () => {
-        //   callback()
-        // })
         this.player.video.addEventListener(name, callback)
       }
-      // console.log('🚀🚀🚀 ', name, this.events[name])
+      // 播放器的事件
+      if (type === 'player') {
+      }
     }
   }
 
