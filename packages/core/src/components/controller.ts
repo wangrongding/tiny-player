@@ -24,13 +24,14 @@ export default class Controller {
 
   constructor(player: TinyPlayer) {
     this.player = player
+    console.log('🚀🚀🚀 / this.player:', this.player)
 
     this.initControls()
     this.initControlsEvent()
   }
 
   // 初始化播放器控制条
-  private initControls() {
+  private initControls = () => {
     // 控制面板节点
     this.controlNode = document.createElement('div')
     this.controlNode.className = 'tiny-player-control-panel'
@@ -51,7 +52,7 @@ export default class Controller {
   }
 
   // 初始化控制栏相关事件
-  private initControlsEvent() {
+  private initControlsEvent = () => {
     if (isMobile) {
       this.player.on('play', () => this.setAutoHide())
       this.player.on('pause', () => this.setAutoHide())
@@ -63,7 +64,7 @@ export default class Controller {
     } else {
       // 播放，暂停后自动隐藏控制栏
       // this.player.on('pause', this.setAutoHide)
-      this.player.on('play', () => this.setAutoHide())
+      // this.player.on('play', () => this.setAutoHide())
       // 由于暂时缺少数据，播放已停止。
       this.player.on('waiting', this.onWaiting)
       // 更新播放时间
@@ -78,7 +79,7 @@ export default class Controller {
   }
 
   // 初始化播放按钮
-  private initPlayButton() {
+  private initPlayButton = () => {
     // 设置控制条按钮的事件处理函数
     this.controls.playButton = this.controlNode.querySelector('.tiny-player-play-icon') as HTMLElement
     this.controls.playButton && (this.controls.playButton.innerHTML = Icons.play)
@@ -86,7 +87,7 @@ export default class Controller {
   }
 
   // 初始化播放进度条
-  private initSeekBar() {
+  private initSeekBar = () => {
     // 设置控制条滑块的事件处理函数
     this.controls.seekBar = this.controlNode.querySelector('.tiny-player-seek-bar') as HTMLInputElement
     this.controls.seekBar.addEventListener('input', this.player.seek)
@@ -94,7 +95,7 @@ export default class Controller {
   }
 
   // 初始化音量控制栏
-  private initVolumeButton() {
+  private initVolumeButton = () => {
     // 设置控制条声音控制栏的事件处理函数
     this.controls.muteButton = this.controlNode.querySelector('.tiny-player-volume') as HTMLButtonElement
     this.controls.muteButton.addEventListener('click', this.player.mute)
@@ -104,14 +105,14 @@ export default class Controller {
   }
 
   // 初始化全屏按钮
-  private initFullScreenButton() {
+  private initFullScreenButton = () => {
     // 设置控制条全屏按钮的事件处理函数
     this.controls.fullScreenButton = this.controlNode.querySelector('.tiny-player-fullscreen') as HTMLElement
     this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.player.fullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
   }
 
-  setAutoHide() {
+  setAutoHide = () => {
     this.show()
     clearTimeout(this.autoHideTimer)
     this.autoHideTimer = setTimeout(() => {
@@ -121,14 +122,14 @@ export default class Controller {
     }, 3000)
   }
 
-  show() {
+  show = () => {
     if (!isMobile) {
       this.player.container.classList.remove('tiny-player-hide-controller')
     }
     this.setVisible(true)
   }
 
-  hide() {
+  hide = () => {
     this.player.container.classList.add('tiny-player-hide-controller')
   }
 
@@ -138,7 +139,7 @@ export default class Controller {
     if (!val && isMobile) this.container.style.display = 'none'
   }
 
-  toggle() {
+  toggle = () => {
     if (!this.player.container.classList.contains('tiny-player-hide-controller')) {
       this.hide()
     } else {
@@ -147,7 +148,7 @@ export default class Controller {
   }
 
   // 更新播放进度条
-  updateSeekBar() {
+  updateSeekBar = () => {
     this.controls.seekBar!.value = ((this.player.video!.currentTime / this.player.video.duration) * 100).toString()
     this.playRaf = window.requestAnimationFrame(() => {
       this.updateSeekBar()
@@ -155,20 +156,20 @@ export default class Controller {
   }
 
   // 更新播放时间
-  onTimeupdate() {
+  onTimeupdate = () => {
     this.controls.playTime!.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(
       this.player.video.duration,
     )}`
   }
 
   // waiting 事件处理函数
-  onWaiting() {
+  onWaiting = () => {
     if (!this.player.paused) this.player.paused = true
     this.toggleLoading(true)
   }
 
-  //
-  onPlaying() {
+  // playing 事件处理函数
+  onPlaying = () => {
     if (this.player.paused) this.player.paused = false
     this.toggleLoading(false)
   }
@@ -185,8 +186,7 @@ export default class Controller {
   }
 
   // 切换音量图标
-  switchVolumeIcon() {
-    console.log('🚀🚀🚀 / this.player.video.volume:', this.player.video.volume)
+  switchVolumeIcon = () => {
     if (this.player.video.muted || this.player.video.volume === 0) {
       this.controls.muteButton!.innerHTML = Icons.volumeOff
     } else if (this.player.video.volume > 0 && this.player.video.volume <= 0.5) {
@@ -196,7 +196,8 @@ export default class Controller {
     }
   }
 
-  destroy() {
+  // 销毁事件
+  destroy = () => {
     clearTimeout(this.autoHideTimer)
   }
 }
