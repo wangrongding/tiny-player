@@ -110,11 +110,10 @@ export default class TinyPlayer {
     // 播放结束
     this.on('ended', () => {
       if (!this.options.loop) {
-        // this.seek(0)
+        this.seek(0)
         this.pause()
-        // this.bezel.switch(Icons.play)
       } else {
-        // this.seek(0)
+        this.seek(0)
         this.play()
       }
     })
@@ -123,9 +122,9 @@ export default class TinyPlayer {
   // 当视频开始播放时，
   private onPlay = () => {
     console.log('🚀🚀🚀 / onPlay')
+    // 更新播放器状态
     this.paused = false
     const playButton = this.controller.controls.playButton
-    // 更新播放器状态
     playButton && (playButton.innerHTML = Icons.pause)
     this.controller.updateSeekBar()
   }
@@ -133,10 +132,11 @@ export default class TinyPlayer {
   // 当视频暂停播放时
   private onPause = () => {
     console.log('🚀🚀🚀 / onPause')
+    // 更新播放器状态
     this.paused = true
     const playButton = this.controller.controls.playButton
-    // 更新播放器状态
     playButton && (playButton.innerHTML = Icons.play)
+    // 取消动画
     cancelAnimationFrame(this.controller.playRaf)
   }
 
@@ -162,11 +162,9 @@ export default class TinyPlayer {
     }
   }
 
-  // 调整视频播放进度
-  seek = () => {
-    // 调整视频播放进度
-    this.video!.currentTime = (Number(this.controller.controls.seekBar!.value) / 100) * this.video!.duration
-    // this.video!.play()
+  // 跳转到视频指定位置，调整视频播放进度
+  seek = (time: number) => {
+    this.video!.currentTime = time
   }
 
   // 调整视频音量
@@ -197,25 +195,14 @@ export default class TinyPlayer {
     this.video!.muted = !this.video!.muted
     this.controller.controls.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
     this.controller.controls.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
-    this.controller.controls.muteButton!.querySelector('svg')?.setAttribute('fill', 'white')
   }
 
-  // TODO
-  // initFullButton() {
-  //   this.player.template.browserFullButton.addEventListener('click', () => {
-  //     this.player.fullScreen.toggle('browser')
-  //   })
-  //   this.player.template.webFullButton.addEventListener('click', () => {
-  //     this.player.fullScreen.toggle('web')
-  //   })
-  // }
-  // TODO: 全屏
-  fullScreen = () => {
-    // 进入或退出全屏模式
-    // if (document.fullscreenElement) {
-    //   document.exitFullscreen()
-    // } else {
-    //   this.player.videoContainer!.requestFullscreen()
-    // }
+  // 进入或退出全屏模式
+  toggleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      this.videoContainer.requestFullscreen()
+    }
   }
 }

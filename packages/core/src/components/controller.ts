@@ -90,7 +90,7 @@ export default class Controller {
   private initSeekBar = () => {
     // 设置控制条滑块的事件处理函数
     this.controls.seekBar = this.controlNode.querySelector('.tiny-player-seek-bar') as HTMLInputElement
-    this.controls.seekBar.addEventListener('input', this.player.seek)
+    this.controls.seekBar.addEventListener('input', this.onSeeking)
     this.controls.playTime = this.controlNode.querySelector('.tiny-player-play-time') as HTMLInputElement
   }
 
@@ -108,7 +108,8 @@ export default class Controller {
   private initFullScreenButton = () => {
     // 设置控制条全屏按钮的事件处理函数
     this.controls.fullScreenButton = this.controlNode.querySelector('.tiny-player-fullscreen') as HTMLElement
-    this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.player.fullScreen)
+    this.controls.fullScreenButton &&
+      this.controls.fullScreenButton.addEventListener('click', this.player.toggleFullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
   }
 
@@ -153,6 +154,13 @@ export default class Controller {
     this.playRaf = window.requestAnimationFrame(() => {
       this.updateSeekBar()
     })
+  }
+
+  // 拖动进度条
+  onSeeking = (event: Event) => {
+    const target = event.target as HTMLInputElement
+    const seekTime = (parseFloat(target.value) / 100) * this.player.video.duration
+    this.player.seek(seekTime)
   }
 
   // 更新播放时间
