@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import VueTypeImports from 'vite-plugin-vue-type-imports'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -64,6 +63,6 @@ export default defineConfig({
       open: false,
       hmr: true,
     },
-    plugins: [VueTypeImports()],
+    plugins: [],
   },
 })
