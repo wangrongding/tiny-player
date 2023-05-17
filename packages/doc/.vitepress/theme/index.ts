@@ -3,8 +3,8 @@ import '../style/index.scss'
 import './tailwind.postcss'
 import 'element-plus/dist/index.css'
 
-import HomePlayer from '../components/HomePlayer.vue'
-import TinyPlayer from '../components/TinyPlayer.vue'
+import HomePlayer from '../../components/HomePlayer.vue'
+import TinyPlayer from '../../components/TinyPlayer.vue'
 
 export default {
   extends: DefaultTheme,

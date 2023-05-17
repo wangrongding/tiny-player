@@ -10,6 +10,8 @@
     ".vitepress/**/*.d.ts",
     ".vitepress/**/*.tsx",
     ".vitepress/**/*.vue",
+    "page/**/*.vue",
+    "components/**/*.vue",
     "types/**/*.d.ts"
   ],
   "types": ["element-plus/global"],

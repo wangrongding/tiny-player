@@ -4,6 +4,6 @@ layout: page
 ---
 
 <script setup lang="ts">
-  import Playground from '../.vitepress/components/Playground.vue'
+  import Playground from '../components/Playground.vue'
 </script>
 <Playground />
