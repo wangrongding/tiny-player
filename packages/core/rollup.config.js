@@ -12,7 +12,6 @@ const isDev = process.env.IS_DEV
 console.log('🌸🌸🌸isDev:', isDev)
 export default {
   input: 'src/index.ts',
-  // external: ['hls.js'], // 不被打包到库中，沿用外部依赖
   output: [
     {
       file: 'dist/index.js',
@@ -28,23 +27,24 @@ export default {
       file: 'dist/index.umd.js',
       format: 'umd', // umd是兼容amd/cjs/iife的通用打包格式，适合浏览器
       name: 'TinyPlayer', // cdn方式引入时挂载在window上的名字
-      // globals: {
-      //   'hls.js': 'Hls',
-      // },
+      globals: {
+        'hls.js': 'Hls',
+      },
     },
     {
       file: 'dist/index.iife.js',
       format: 'iife',
       name: 'iife',
-      // globals: {
-      //   'hls.js': 'Hls',
-      // },
+      globals: {
+        'hls.js': 'Hls',
+      },
     },
   ],
+  // external: !isDev ? ['hls.js'] : [], // 不被打包到库中，沿用外部依赖
 
   plugins: [
-    !isDev && del({ targets: 'dist/*' }),
     !isDev && nodeResolve(),
+    !isDev && del({ targets: 'dist/*' }),
     alias({ entries: [{ find: '@', replacement: 'src' }] }),
     svg({
       stringify: true, // process SVG to DOM Node or String. Default: false

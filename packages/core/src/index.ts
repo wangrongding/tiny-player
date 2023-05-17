@@ -11,13 +11,13 @@ import Hls from 'hls.js'
 export interface PlayerOptions {
   container: HTMLElement // 播放器容器
   src: string // 视频地址
+  controls?: boolean // 是否显示控制条
+  autoplay?: boolean // 是否自动播放
+  loop?: boolean // 是否循环播放
   width?: string // 播放器宽度 "123px"
   height?: string // 播放器高度 "123px"
-  controls?: boolean // 是否显示控制条
   poster?: string // 视频封面
-  loop?: boolean // 是否循环播放
-  autoplay?: boolean // 是否自动播放
-  preload: 'auto' | 'metadata' | 'none' // 预加载
+  preload?: 'auto' | 'metadata' | 'none' // 预加载
   muted?: boolean // 是否静音
   volume?: number // 音量
   playbackRate?: number // 播放速率
@@ -145,10 +145,17 @@ export default class TinyPlayer {
     this.events.on(name, callback)
   }
 
+  // 移除事件
+  off(name: EventsList, callback: () => void) {
+    this.events.off(name, callback)
+  }
+
+  // 播放视频
   play = () => {
     this.video.play()
   }
 
+  // 暂停视频
   pause = () => {
     this.video.pause()
   }
