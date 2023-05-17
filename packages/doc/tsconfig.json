@@ -12,5 +12,6 @@
     ".vitepress/**/*.vue",
     "types/**/*.d.ts"
   ],
+  "types": ["element-plus/global"],
   "exclude": ["node_modules", "dist", "**/*.js"] // 排除的文件
 }
