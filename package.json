@@ -20,6 +20,7 @@
     "--  publish  ----------------------------------------------": "",
     "pub": "pnpm -F \"tiny-player\" publish",
     "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks",
+    "format": "prettier --write .",
     "commit": "cz"
   },
   "lint-staged": {
