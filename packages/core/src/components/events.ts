@@ -87,6 +87,7 @@ export default class TinyPlayEvents {
       }
       // 播放器的事件
       if (type === 'player') {
+        this.events[name].push(callback)
       }
     }
   }
@@ -106,11 +107,10 @@ export default class TinyPlayEvents {
   }
 
   // 触发事件
-  emit(name: string, info?: any) {
-    if (this.events[name] && this.events[name].length) {
-      for (let i = 0; i < this.events[name].length; i++) {
-        this.events[name][i](info)
-      }
-    }
+  emit(name: string, data?: any) {
+    if (!this.events[name] || !this.events[name].length) return
+    this.events[name].forEach((callback) => {
+      callback(data)
+    })
   }
 }

@@ -7,7 +7,7 @@ import Events from './components/events'
 import { EventsList } from './components/events'
 import Hls from 'hls.js'
 
-// 播放器配置
+// 播放器入参配置
 export interface PlayerOptions {
   container: HTMLElement // 播放器容器
   src: string // 视频地址
@@ -22,21 +22,7 @@ export interface PlayerOptions {
   volume?: number // 音量
   playbackRate?: number // 播放速率
   type: 'auto' | 'normal' | 'hls' | 'flv' | 'dash' // 视频类型
-}
-
-// 使用 hls 播放视频
-const useHls = (video: any) => {
-  const hls = new Hls()
-  hls.loadSource(video.src)
-  hls.attachMedia(video)
-
-  // 走外部依赖的形式
-  // console.log('🚀🚀🚀 / window.Hls:', window.Hls)
-  // if (!window.Hls) return console.error("Error: Can't find Hls.")
-  // if (window.Hls.isSupported()) return console.error('Hls is not supported')
-  // const hls = new window.Hls()
-  // hls.loadSource(video.src)
-  // hls.attachMedia(video)
+  waterMarkShow?: boolean // 是否显示水印
 }
 
 // 播放器名称和版本号
@@ -45,6 +31,9 @@ const { name, version } = pkg
 // 控制台 banner
 console.log(`${'\n'} %c ${name} v${version} ${'\n'}`, `color: white; font-size: 18px; background: linear-gradient(45deg, #ff0000 0%, #0092ff 80%);`)
 
+let index = 0
+const instances: TinyPlayer[] = []
+
 export default class TinyPlayer {
   static title: string = name // 播放器名称
   static version: string = version // 版本号
@@ -52,10 +41,12 @@ export default class TinyPlayer {
   container: HTMLElement // 挂载目标元素
   videoContainer!: HTMLElement // 视频容器
   video!: HTMLVideoElement // 播放器
-  controller!: Controller // 控制器
-  events!: Events // 事件
   paused: boolean = true // 是否暂停
   videoType: PlayerOptions['type'] = 'auto' // 视频类型
+  hls?: Hls // hls 实例
+  controller!: Controller // 控制器
+  events!: Events // 事件
+  waterMark?: HTMLElement // 水印节点
 
   constructor(options: PlayerOptions) {
     this.container = options.container
@@ -74,44 +65,18 @@ export default class TinyPlayer {
     this.container.appendChild(this.videoContainer)
     // 视频节点
     this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
+    // 水印节点
+    this.waterMark = this.videoContainer.querySelector('.tiny-player-watermark') as HTMLElement
     // 播放器事件系统
     this.events = new Events(this)
     // 播放器控制器
     this.controller = new Controller(this)
     // 初始化视频
     this.initVideo()
-  }
+    this.handleWaterMarkShow(this.options.waterMarkShow)
 
-  initMSE(video: any, type: PlayerOptions['type']) {
-    this.videoType = type
-    if (type === 'hls') {
-      this.videoType = 'hls'
-      // 如果浏览器支持播放 HLS 视频流。
-      if (video.canPlayType('application/x-mpegURL') || video.canPlayType('application/vnd.apple.mpegURL')) this.videoType = 'normal'
-      // 错误传参时，纠正播放类型
-      if (/.mp4(#|\?|$)/i.exec(video.src)) this.videoType = 'normal'
-    }
-    if (type === 'auto') {
-      if (/m3u8(#|\?|$)/i.exec(video.src)) this.videoType = 'hls'
-      if (/.flv(#|\?|$)/i.exec(video.src)) this.videoType = 'flv'
-      if (/.mpd(#|\?|$)/i.exec(video.src)) this.videoType = 'dash'
-      this.videoType = 'normal'
-    }
-    console.log('🚀🚀🚀 MSE:', type, this.videoType, video.src)
-    switch (this.videoType) {
-      case 'normal':
-        console.log('以默认形式播放 video')
-        break
-      case 'flv':
-        console.error('暂不支持 flv 格式视频')
-        break
-      case 'dash':
-        console.error('暂不支持 dash 格式视频')
-        break
-      case 'hls':
-        useHls(video)
-        break
-    }
+    // 保存实例
+    instances.push(this)
   }
 
   // 初始化播放器,设置视频相关回调函数
@@ -164,9 +129,68 @@ export default class TinyPlayer {
     this.events.on(name, callback)
   }
 
+  // 手动触发事件
+  emit(name: EventsList, data?: any) {
+    this.events.emit(name, data)
+  }
+
   // 移除事件
   off(name: EventsList, callback: () => void) {
     this.events.off(name, callback)
+  }
+
+  // MSE 支持
+  initMSE(video: any, type: PlayerOptions['type']) {
+    this.videoType = type
+    if (type === 'hls') {
+      this.videoType = 'hls'
+      // 如果浏览器支持播放 HLS 视频流。
+      if (video.canPlayType('application/x-mpegURL') || video.canPlayType('application/vnd.apple.mpegURL')) this.videoType = 'normal'
+      // 错误传参时，纠正播放类型
+      if (/.mp4(#|\?|$)/i.exec(video.src)) this.videoType = 'normal'
+    }
+    if (type === 'auto') {
+      if (/m3u8(#|\?|$)/i.exec(video.src)) this.videoType = 'hls'
+      if (/.flv(#|\?|$)/i.exec(video.src)) this.videoType = 'flv'
+      if (/.mpd(#|\?|$)/i.exec(video.src)) this.videoType = 'dash'
+      this.videoType = 'normal'
+    }
+    console.log('🚀🚀🚀 MSE:', type, this.videoType, video.src)
+    switch (this.videoType) {
+      case 'normal':
+        console.log('以默认形式播放 video')
+        break
+      case 'flv':
+        console.error('暂不支持 flv 格式视频')
+        break
+      case 'dash':
+        console.error('暂不支持 dash 格式视频')
+        break
+      case 'hls':
+        console.log('以 hls 播放 video')
+        this.useHls(video)
+        break
+    }
+  }
+
+  // 使用 hls 播放视频
+  useHls = (video: any) => {
+    this.hls = new Hls()
+    this.hls.loadSource(video.src)
+    this.hls.attachMedia(video)
+
+    // TODO 走外部依赖的形式
+    // console.log('🚀🚀🚀 / window.Hls:', window.Hls)
+    // if (!window.Hls) return console.error("Error: Can't find Hls.")
+    // if (window.Hls.isSupported()) return console.error('Hls is not supported')
+    // const hls = new window.Hls()
+    // hls.loadSource(video.src)
+    // hls.attachMedia(video)
+  }
+
+  // 销毁 hls 实例
+  destroyHls = () => {
+    this.hls && this.hls.destroy()
   }
 
   // 播放视频
@@ -179,7 +203,7 @@ export default class TinyPlayer {
     this.video.pause()
   }
 
-  // 播放或暂停视频
+  // 切换播放状态
   togglePlay = () => {
     if (this.video!.paused) {
       this.video!.play()
@@ -230,5 +254,24 @@ export default class TinyPlayer {
     } else {
       this.videoContainer.requestFullscreen()
     }
+  }
+
+  // 控制水印的显示与隐藏
+  handleWaterMarkShow = (show: boolean | undefined) => {
+    console.log('🚀🚀🚀 / show:', show)
+
+    if (this.waterMark) this.waterMark.style.display = show ? 'block' : 'none'
+  }
+
+  // 销毁播放器
+  destroy = () => {
+    this.destroyHls()
+    instances.splice(instances.indexOf(this), 1)
+    this.pause()
+    this.video.src = ''
+    this.container.innerHTML = ''
+    this.controller.destroy()
+    // this.timer.destroy()
+    // this.events.trigger('destroy')
   }
 }

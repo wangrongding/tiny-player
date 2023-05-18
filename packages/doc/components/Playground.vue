@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref, toRefs, unref, toValue, toRaw } from 'vue'
 import type { PlayerOptions } from 'tiny-player'
 import poster from '/movie.png'
 import movie from '/movie.mp4'
@@ -16,27 +16,37 @@ async function initPlayer(options: PlayerOptions) {
   player = new TinyPlayer(options)
 }
 
-onMounted(() => {
-  const options: PlayerOptions = {
-    container: document.querySelector('#tiny-player'),
-    width: '800px', // 宽度
-    controls: true, // 是否显示控制栏
-    loop: true, // 循环播放
-    volume: 0.9, // 音量
-    preload: 'metadata', // 预加载
-    poster: poster, // 封面地址
-    src: videoSource, // 视频地址
-    type: 'hls', // 视频类型
-  }
-  initPlayer(options)
+const playOptions: PlayerOptions = reactive({
+  container: null,
+  width: '800px', // 宽度
+  controls: true, // 是否显示控制栏
+  loop: true, // 循环播放
+  volume: 0.9, // 音量
+  preload: 'metadata', // 预加载
+  poster: poster, // 封面地址
+  src: videoSource, // 视频地址
+  type: 'hls', // 视频类型
+  waterMarkShow: true, // 是否显示水印
 })
 
+// 测试事件绑定注销用
 function aaa() {
   console.log('aaaaaaaaaaaaaa')
 }
 function bbb() {
   console.log('bbbbbbbbbbbbbb')
 }
+
+// 显示隐藏水印
+function toggleWaterMark(val) {
+  player.handleWaterMarkShow(val)
+}
+
+onMounted(() => {
+  playOptions.container = document.getElementById('tiny-player')
+  const options = toRaw(playOptions)
+  initPlayer(options)
+})
 </script>
 <template>
   <div class="page-warp grid place-content-center mt-10">
@@ -48,7 +58,22 @@ function bbb() {
         <el-button type="primary" @click="() => player.on('timeupdate', bbb)">挂载事件 bbb 到 timeupdate</el-button>
         <el-button type="danger" @click="() => player.off('timeupdate', aaa)">从 timeupdate 回调，移除 aaa</el-button>
       </div>
-      <div class="flex gap-8 my-4">开关水印</div>
+      <div class="flex gap-8 my-4">
+        <el-switch
+          style="--el-switch-on-color: #13ce66; --el-switch-off-color: #686767"
+          v-model="playOptions.waterMarkShow"
+          class="px-4 select-none w-[240px]"
+          active-text="显示水印"
+          inactive-text="隐藏水印"
+          @change="toggleWaterMark"
+        />
+        <el-switch class="px-4 select-none w-[240px]" active-text="显示时间" inactive-text=" wip..." />
+        <el-switch class="px-4 select-none w-[240px]" active-text="显示音量" inactive-text="wip..." />
+      </div>
+      <div class="gap-8 my-4 flex flex-col">
+        <el-button type="primary" @click="() => player.on('timeupdate', aaa)">转移控制栏到目标节点</el-button>
+        <div class="bg-slate-600 h-[120px] control-target"></div>
+      </div>
     </div>
   </div>
 </template>
