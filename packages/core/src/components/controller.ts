@@ -24,7 +24,6 @@ export default class Controller {
 
   constructor(player: TinyPlayer) {
     this.player = player
-    console.log('🚀🚀🚀 / this.player:', this.player)
 
     this.initControls()
     this.initControlsEvent()
@@ -108,8 +107,7 @@ export default class Controller {
   private initFullScreenButton = () => {
     // 设置控制条全屏按钮的事件处理函数
     this.controls.fullScreenButton = this.controlNode.querySelector('.tiny-player-fullscreen') as HTMLElement
-    this.controls.fullScreenButton &&
-      this.controls.fullScreenButton.addEventListener('click', this.player.toggleFullScreen)
+    this.controls.fullScreenButton && this.controls.fullScreenButton.addEventListener('click', this.player.toggleFullScreen)
     this.controls.fullScreenButton && (this.controls.fullScreenButton.innerHTML = Icons.fullWeb)
   }
 
@@ -165,9 +163,7 @@ export default class Controller {
 
   // 更新播放时间
   onTimeupdate = () => {
-    this.controls.playTime!.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(
-      this.player.video.duration,
-    )}`
+    this.controls.playTime!.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(this.player.video.duration)}`
   }
 
   // waiting 事件处理函数

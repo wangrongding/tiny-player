@@ -52,9 +52,7 @@ export default class TinyPlayEvents {
     // 视频相关事件
     this.videoEvents = Object.keys(VideoEventsEnum).map((key) => VideoEventsEnum[key as keyof typeof VideoEventsEnum])
     // 播放器相关事件
-    this.playerEvents = Object.keys(PlayerEventsEnum).map(
-      (key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum],
-    )
+    this.playerEvents = Object.keys(PlayerEventsEnum).map((key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum])
 
     // TODO 测试用
     this.videoEvents.forEach((eventName) => {

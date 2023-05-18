@@ -12,6 +12,7 @@ const options: Omit<PlayerOptions, 'container'> = {
   controls: true, // 是否显示控制栏
   loop: true, // 循环播放
   volume: 0.9, // 音量
+  type: 'auto',
 }
 const { Layout } = DefaultTheme
 </script>

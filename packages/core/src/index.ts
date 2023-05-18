@@ -21,7 +21,7 @@ export interface PlayerOptions {
   muted?: boolean // 是否静音
   volume?: number // 音量
   playbackRate?: number // 播放速率
-  type: 'auto' | 'normal' | 'hls' // 视频类型
+  type: 'auto' | 'normal' | 'hls' | 'flv' | 'dash' // 视频类型
 }
 
 // 使用 hls 播放视频
@@ -29,16 +29,21 @@ const useHls = (video: any) => {
   const hls = new Hls()
   hls.loadSource(video.src)
   hls.attachMedia(video)
+
+  // 走外部依赖的形式
+  // console.log('🚀🚀🚀 / window.Hls:', window.Hls)
+  // if (!window.Hls) return console.error("Error: Can't find Hls.")
+  // if (window.Hls.isSupported()) return console.error('Hls is not supported')
+  // const hls = new window.Hls()
+  // hls.loadSource(video.src)
+  // hls.attachMedia(video)
 }
 
 // 播放器名称和版本号
 const { name, version } = pkg
 
 // 控制台 banner
-console.log(
-  `${'\n'} %c ${name} v${version} ${'\n'}`,
-  `color: white; font-size: 18px; background: linear-gradient(45deg, #ff0000 0%, #0092ff 80%);`,
-)
+console.log(`${'\n'} %c ${name} v${version} ${'\n'}`, `color: white; font-size: 18px; background: linear-gradient(45deg, #ff0000 0%, #0092ff 80%);`)
 
 export default class TinyPlayer {
   static title: string = name // 播放器名称
@@ -50,6 +55,7 @@ export default class TinyPlayer {
   controller!: Controller // 控制器
   events!: Events // 事件
   paused: boolean = true // 是否暂停
+  videoType: PlayerOptions['type'] = 'auto' // 视频类型
 
   constructor(options: PlayerOptions) {
     this.container = options.container
@@ -77,22 +83,35 @@ export default class TinyPlayer {
   }
 
   initMSE(video: any, type: PlayerOptions['type']) {
-    // this.options.type = type
-    console.log('🚀🚀🚀 / type:', video, type)
+    this.videoType = type
     if (type === 'hls') {
-      return useHls(video)
+      this.videoType = 'hls'
+      // 如果浏览器支持播放 HLS 视频流。
+      if (video.canPlayType('application/x-mpegURL') || video.canPlayType('application/vnd.apple.mpegURL')) this.videoType = 'normal'
+      // 错误传参时，纠正播放类型
+      if (/.mp4(#|\?|$)/i.exec(video.src)) this.videoType = 'normal'
     }
-    if (this.options.type === 'auto' && /m3u8(#|\?|$)/i.exec(video.src)) {
-      return useHls(video)
+    if (type === 'auto') {
+      if (/m3u8(#|\?|$)/i.exec(video.src)) this.videoType = 'hls'
+      if (/.flv(#|\?|$)/i.exec(video.src)) this.videoType = 'flv'
+      if (/.mpd(#|\?|$)/i.exec(video.src)) this.videoType = 'dash'
+      this.videoType = 'normal'
     }
-
-    if (
-      this.options.type === 'hls' &&
-      (video.canPlayType('application/x-mpegURL') || video.canPlayType('application/vnd.apple.mpegURL'))
-    ) {
-      this.options.type = 'normal'
+    console.log('🚀🚀🚀 MSE:', type, this.videoType, video.src)
+    switch (this.videoType) {
+      case 'normal':
+        console.log('以默认形式播放 video')
+        break
+      case 'flv':
+        console.error('暂不支持 flv 格式视频')
+        break
+      case 'dash':
+        console.error('暂不支持 dash 格式视频')
+        break
+      case 'hls':
+        useHls(video)
+        break
     }
-    this.options.type = 'normal'
   }
 
   // 初始化播放器,设置视频相关回调函数
