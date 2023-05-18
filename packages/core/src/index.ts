@@ -10,6 +10,7 @@ import Hls from 'hls.js'
 // 播放器入参配置
 export interface PlayerOptions {
   container: HTMLElement // 播放器容器
+  controlTarget?: HTMLElement // 控制器挂载目标
   src: string // 视频地址
   controls?: boolean // 是否显示控制条
   autoplay?: boolean // 是否自动播放
@@ -261,6 +262,12 @@ export default class TinyPlayer {
     console.log('🚀🚀🚀 / show:', show)
 
     if (this.waterMark) this.waterMark.style.display = show ? 'block' : 'none'
+  }
+
+  // 挂载控制器到目标节点
+  mountController = (target: HTMLElement) => {
+    console.log('🚀🚀🚀 / this.controller:', this.controller)
+    target.appendChild(this.controller.controlNode)
   }
 
   // 销毁播放器
