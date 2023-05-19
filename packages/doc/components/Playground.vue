@@ -4,6 +4,7 @@ import type { PlayerOptions } from 'tiny-player'
 import TinyPlayer from 'tiny-player'
 import poster from '/movie.png'
 import movie from '/movie.mp4'
+import ResizeBox from './ResizeBox.vue'
 
 // const videoSource = 'https://vip.lz-cdn10.com/20220808/2194_085d3e14/1200k/hls/mixed.m3u8'
 // const videoSource = 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
@@ -63,6 +64,10 @@ onMounted(() => {
     <div id="tiny-player"></div>
     <div>
       <p class="text-black bg-amber-200 leading-8 box-border my-4">💡 调试栏</p>
+      <div class="gap-4 my-4 flex flex-col">
+        <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>
+        <ResizeBox />
+      </div>
       <div class="flex gap-8 my-4 justify-between">
         <el-button type="primary" @click="() => player.on('timeupdate', aaa)">挂载事件 A 到 timeupdate</el-button>
         <el-button type="primary" @click="() => player.on('timeupdate', bbb)">挂载事件 B 到 timeupdate</el-button>
@@ -79,10 +84,6 @@ onMounted(() => {
         />
         <el-switch class="px-4 select-none" active-text="显示时间" inactive-text=" wip..." />
         <el-switch class="px-4 select-none" active-text="显示音量" inactive-text="wip..." />
-      </div>
-      <div class="gap-4 my-4 flex flex-col">
-        <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>
-        <div class="bg-gradient-to-r from-red-500 to-sky-500 h-[120px] control-target relative grid place-content-center">目标节点</div>
       </div>
     </div>
   </div>

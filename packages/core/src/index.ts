@@ -259,14 +259,11 @@ export default class TinyPlayer {
 
   // 控制水印的显示与隐藏
   handleWaterMarkShow = (show: boolean | undefined) => {
-    console.log('🚀🚀🚀 / show:', show)
-
     if (this.waterMark) this.waterMark.style.display = show ? 'block' : 'none'
   }
 
   // 挂载控制器到目标节点
   mountController = (target: HTMLElement) => {
-    console.log('🚀🚀🚀 / this.controller:', this.controller)
     target.appendChild(this.controller.controlNode)
   }
 
