@@ -2,12 +2,8 @@
 @import './controller.scss';
 @import './input-range.scss';
 
-.tiny-player,
-#tiny-player {
-  width: fit-content;
-}
 // 视频容器
-.tiny-player-container {
+.tp-container {
   position: relative;
   overflow: hidden;
   width: fit-content;

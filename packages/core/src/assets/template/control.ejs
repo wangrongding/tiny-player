@@ -1,18 +1,30 @@
 <!-- 控制面板 -->
-<% if(locals.controls && !locals.nativeControl){ %>
+
 <!-- 播放按钮 -->
-<div class="tiny-player-play-icon"></div>
+<div class="tp-play-icon"></div>
 <!-- 底部控制栏 -->
-<div class="tiny-player-control-bar">
+<div class="tp-control-bar">
   <!-- 进度条 -->
-  <input type="range" class="tiny-player-seek-bar" min="0" max="100" step="any" value="0" />
-  <span class="tiny-player-play-time">00:00 / 00:00</span>
+  <input type="range" class="tp-seek-slider" min="0" max="100" step="any" value="0" />
+  <span class="tp-play-time-tip">0</span>
+
+  <!-- 播放时间 -->
+  <% if(locals.controlOptions.playTime){ %>
+  <span class="tp-play-time">00:00 / 00:00</span>
+  <% } %>
+
   <!-- 音量控制 -->
-  <i class="tiny-player-volume"></i>
-  <input type="range" class="tiny-player-volume-bar" min="0" max="1" step="0.01" value="<%= locals.volume %>" />
+  <% if(locals.controlOptions.volumeBar){ %>
+  <div class="tp-volume-bar">
+    <i class="tp-volume-icon"></i>
+    <input type="range" class="tp-volume-slider" min="0" max="1" step="0.01" value="<%= locals.volume %>" />
+  </div>
+  <% } %>
+
   <!-- 全屏 -->
-  <!-- <i class="tiny-player-fullscreen"></i> -->
+  <% if(locals.controlOptions.fullScreenButton){ %>
+  <i class="tp-fullscreen"></i>
+  <% } %>
 </div>
 <!-- 加载动画 -->
-<div class="tiny-player-loading"></div>
-<% } %>
+<div class="tp-loading"></div>

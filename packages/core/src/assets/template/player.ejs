@@ -1,13 +1,13 @@
 <!-- prettier-ignore -->
 <video 
-  class="tiny-player-video"
+  class="tp-video"
   crossorigin="anonymous"
   webkit-playsinline
   playsinline
-  width="<%= locals.width %>" 
-  height="<%= locals.height %>" 
+  width="100%" 
+  height="100%" 
   src="<%= locals.src %>" 
-  <% if(locals.nativeControl){ %> controls <% } %> 
+  <% if(locals.controlOptions.nativeControls){ %> controls <% } %> 
   <% if(locals.loop){ %> loop <% } %> 
   <% if(locals.autoplay){ %> autoplay <% } %> 
   <% if(locals.muted){ %> muted <% } %> 
@@ -22,4 +22,4 @@
   你的浏览器不支持 video 标签，换个浏览器试试？
 </video>
 <!-- 水印 -->
-<div class="tiny-player-watermark" style="display: none"></div>
+<div class="tp-watermark" style="display: none"></div>

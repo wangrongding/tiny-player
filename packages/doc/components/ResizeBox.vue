@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-let startX
-let startY
-let startWidth
-let startHeight
-let resizableDiv
+let startX, startY, startWidth, startHeight, resizableDiv, dragDiv
 
 function initResize(e) {
   startX = e.clientX
@@ -30,26 +26,17 @@ function stopResize() {
 
 onMounted(() => {
   resizableDiv = document.getElementById('resizable-div')
-  resizableDiv.addEventListener('mousedown', initResize)
+  dragDiv = document.querySelector('.drag-el')
+  dragDiv.addEventListener('mousedown', initResize)
 })
 </script>
 <template>
   <div
-    class="control-target bg-gradient-to-r border-blue-400 border-2 border-solid from-red-500 to-sky-500 h-[200px] relative grid place-content-center"
+    class="control-target max-w-[800px] min-w-[200px] min-h-[50px] select-none bg-gradient-to-r border-blue-400 border-2 border-solid from-red-500 to-sky-500 h-[200px] relative grid place-content-center"
     id="resizable-div"
   >
-    目标节点
+    <span class="placeholder">目标节点</span>
+    <div class="drag-el absolute right-[-5px] bottom-[-5px] w-[10px] h-[10px] bg-yellow-400 cursor-nwse-resize"></div>
   </div>
 </template>
-<style lang="scss" scoped>
-#resizable-div::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  right: -5px;
-  width: 10px;
-  height: 10px;
-  background-color: #ccc;
-  cursor: nwse-resize;
-}
-</style>
+<style lang="scss" scoped></style>

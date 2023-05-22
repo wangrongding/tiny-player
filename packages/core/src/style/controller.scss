@@ -1,18 +1,18 @@
 // 控制面板
-.tiny-player-hide-controller {
-  .tiny-player-control-panel {
+.tp-hide-controller {
+  .tp-control-panel {
     cursor: none;
     opacity: 0;
     transform: translateY(100%);
   }
 }
-.tiny-player-show-controller {
-  .tiny-player-control-panel {
+.tp-show-controller {
+  .tp-control-panel {
     opacity: 1;
   }
 }
 
-.tiny-player-control-panel {
+.tp-control-panel {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -20,8 +20,8 @@
   left: 0;
 
   // 播放按钮
-  .tiny-player-play-icon,
-  .tiny-player-loading {
+  .tp-play-icon,
+  .tp-loading {
     color: white;
     cursor: pointer;
     overflow: hidden;
@@ -39,7 +39,7 @@
     }
   }
 
-  @keyframes tiny-player-loading {
+  @keyframes tp-loading {
     0% {
       transform: rotate(0deg);
     }
@@ -48,20 +48,20 @@
     }
   }
 
-  .tiny-player-loading {
+  .tp-loading {
     pointer-events: none;
     background-color: rgba(255, 255, 255, 0.4);
 
     // 加载动画
     svg {
-      animation: tiny-player-loading 1s infinite;
+      animation: tp-loading 1s infinite;
       width: 40px;
       height: 40px;
     }
   }
 
   // 底部控制栏
-  .tiny-player-control-bar {
+  .tp-control-bar {
     position: absolute;
     bottom: 0px;
     left: 0;
@@ -75,32 +75,62 @@
     padding: 0 10px;
     box-sizing: border-box;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: space-between;
     align-items: center;
 
     // 播放进度条
-    .tiny-player-seek-bar {
+    .tp-seek-slider {
       flex: 1;
     }
 
-    .tiny-player-volume,
-    .tiny-player-fullscreen {
+    .tp-volume-bar {
+      width: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tp-volume-icon,
+    .tp-fullscreen {
+      display: inline-block;
       width: 20px;
       height: 20px;
       text-align: center;
       color: white;
     }
 
-    .tiny-player-volume-bar {
+    .tp-volume-slider {
       width: 60px;
     }
 
-    .tiny-player-play-time {
+    .tp-play-time {
+      font-family: Menlo, Courier New, Consolas, Lucida Console, Courier, monospace;
       font-size: 14px;
-      width: 130px;
       text-align: center;
       user-select: none;
+    }
+    .tp-play-time-tip {
+      display: none;
+      position: absolute;
+      top: -30px;
+      pointer-events: none;
+      background-color: #000;
+      color: #fff;
+      padding: 5px;
+      border-radius: 4px;
+      font-size: 14px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 6px;
+        border-style: solid;
+        border-color: #000 transparent transparent transparent;
+      }
     }
   }
 }

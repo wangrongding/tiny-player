@@ -3,7 +3,8 @@ import pkg from '../package.json'
 import './style/index.scss'
 import Icons from '@/assets/icons/index'
 import Controller from './components/controller'
-import Events from './components/events'
+import { ControlOptions } from './components/controller'
+import TinyPlayEvents from './components/events'
 import { EventsList } from './components/events'
 import Hls from 'hls.js'
 
@@ -12,7 +13,7 @@ export interface PlayerOptions {
   container: HTMLElement // 播放器容器
   controlTarget?: HTMLElement // 控制器挂载目标
   src: string // 视频地址
-  controls?: boolean // 是否显示控制条
+  controlOptions: ControlOptions // 是否显示控制条
   autoplay?: boolean // 是否自动播放
   loop?: boolean // 是否循环播放
   width?: string // 播放器宽度 "123px"
@@ -46,7 +47,7 @@ export default class TinyPlayer {
   videoType: PlayerOptions['type'] = 'auto' // 视频类型
   hls?: Hls // hls 实例
   controller!: Controller // 控制器
-  events!: Events // 事件
+  events!: TinyPlayEvents // 事件
   waterMark?: HTMLElement // 水印节点
 
   constructor(options: PlayerOptions) {
@@ -59,7 +60,9 @@ export default class TinyPlayer {
     // 初始化视频播放器
     // this.videoContainer = document.createDocumentFragment().appendChild(document.createElement('div'))
     this.videoContainer = document.createElement('div') as HTMLElement
-    this.videoContainer.className = 'tiny-player-container'
+    this.videoContainer.className = 'tp-container'
+    this.videoContainer.style.width = this.options.width || '100%'
+    this.videoContainer.style.height = this.options.height || '100%'
     // 播放器模板
     this.videoContainer.innerHTML = playerTemplate(this.options)
     // 将 player 添加到指定容器中
@@ -67,9 +70,9 @@ export default class TinyPlayer {
     // 视频节点
     this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
     // 水印节点
-    this.waterMark = this.videoContainer.querySelector('.tiny-player-watermark') as HTMLElement
+    this.waterMark = this.videoContainer.querySelector('.tp-watermark') as HTMLElement
     // 播放器事件系统
-    this.events = new Events(this)
+    this.events = new TinyPlayEvents(this)
     // 播放器控制器
     this.controller = new Controller(this)
     // 初始化视频
@@ -102,6 +105,13 @@ export default class TinyPlayer {
         this.play()
       }
     })
+    // 视频元数据加载完成
+    this.on('loadedmetadata', this.onLoadedMetadata.bind(this))
+  }
+
+  private onLoadedMetadata() {
+    // 更新视频时长
+    this.controller.onTimeupdate()
   }
 
   // 当视频开始播放时，
@@ -109,7 +119,7 @@ export default class TinyPlayer {
     console.log('🚀🚀🚀 / onPlay')
     // 更新播放器状态
     this.paused = false
-    const playButton = this.controller.controls.playButton
+    const playButton = this.controller.playButton
     playButton && (playButton.innerHTML = Icons.pause)
     this.controller.updateSeekBar()
   }
@@ -119,14 +129,14 @@ export default class TinyPlayer {
     console.log('🚀🚀🚀 / onPause')
     // 更新播放器状态
     this.paused = true
-    const playButton = this.controller.controls.playButton
+    const playButton = this.controller.playButton
     playButton && (playButton.innerHTML = Icons.play)
     // 取消动画
     cancelAnimationFrame(this.controller.playRaf)
   }
 
   // 注册事件
-  on(name: EventsList, callback: () => void) {
+  on(name: EventsList, callback: (...arg: any) => void) {
     this.events.on(name, callback)
   }
 
@@ -136,7 +146,7 @@ export default class TinyPlayer {
   }
 
   // 移除事件
-  off(name: EventsList, callback: () => void) {
+  off(name: EventsList, callback: (...arg: any) => void) {
     this.events.off(name, callback)
   }
 
@@ -156,11 +166,7 @@ export default class TinyPlayer {
       if (/.mpd(#|\?|$)/i.exec(video.src)) this.videoType = 'dash'
       this.videoType = 'normal'
     }
-    console.log('🚀🚀🚀 MSE:', type, this.videoType, video.src)
     switch (this.videoType) {
-      case 'normal':
-        console.log('以默认形式播放 video')
-        break
       case 'flv':
         console.error('暂不支持 flv 格式视频')
         break
@@ -168,10 +174,10 @@ export default class TinyPlayer {
         console.error('暂不支持 dash 格式视频')
         break
       case 'hls':
-        console.log('以 hls 播放 video')
         this.useHls(video)
         break
     }
+    console.log(`🚀🚀🚀 MSE: 预设播放模式：${type},实际播放模式：${this.videoType}, 视频链接：${video.src}`)
   }
 
   // 使用 hls 播放视频
@@ -218,12 +224,6 @@ export default class TinyPlayer {
     this.video!.currentTime = time
   }
 
-  // 调整视频音量
-  setVolume = () => {
-    // 调整视频音量
-    this.volume(Number(this.controller.controls.volumeBar!.value))
-  }
-
   // 设置音量
   volume(val: number | string) {
     let percentage = parseFloat((val || 0) as string)
@@ -244,8 +244,8 @@ export default class TinyPlayer {
   mute = () => {
     // 静音或取消静音
     this.video!.muted = !this.video!.muted
-    this.controller.controls.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
-    this.controller.controls.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
+    this.controller.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
+    this.controller.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
   }
 
   // 进入或退出全屏模式
@@ -263,8 +263,12 @@ export default class TinyPlayer {
   }
 
   // 挂载控制器到目标节点
-  mountController = (target: HTMLElement) => {
-    target.appendChild(this.controller.controlNode)
+  mountController = (mountTarget: HTMLElement) => {
+    if (this.options.controlOptions.nativeControls) return
+    this.controller.removeMountTargetEvent()
+    this.controller.mountTarget = mountTarget
+    this.controller.initMountTargetEvent()
+    mountTarget.appendChild(this.controller.controlElement)
   }
 
   // 销毁播放器

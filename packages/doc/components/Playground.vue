@@ -21,7 +21,13 @@ async function initPlayer(options: PlayerOptions) {
 const playOptions: PlayerOptions = reactive({
   container: null,
   width: '800px', // 宽度
-  controls: true, // 是否显示控制栏
+  controlOptions: {
+    playTime: true, // 是否显示播放时间
+    volumeBar: true, // 是否显示音量控制条
+    fullScreenButton: true, // 是否显示全屏按钮
+    mountTarget: null, // 挂载目标节点
+    nativeControls: false, // 是否使用原生控制条
+  },
   loop: true, // 循环播放
   volume: 0.9, // 音量
   preload: 'metadata', // 预加载
@@ -46,11 +52,13 @@ function toggleWaterMark(val) {
 
 // 挂载 control 到目标节点
 function mountControl() {
+  document.querySelector('.placeholder')?.remove()
   const target: HTMLElement = document.querySelector('.control-target')
-  console.log('🚀🚀🚀 / target:', target)
-  // 清空 target
-  target.innerHTML = ''
   player.mountController(target)
+}
+// 恢复 control
+function resetControl() {
+  player.mountController(player.videoContainer)
 }
 
 onMounted(() => {
@@ -65,25 +73,25 @@ onMounted(() => {
     <div>
       <p class="text-black bg-amber-200 leading-8 box-border my-4">💡 调试栏</p>
       <div class="gap-4 my-4 flex flex-col">
-        <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>
+        <div>
+          <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>
+          <el-button type="primary" @click="resetControl">恢复控制栏</el-button>
+        </div>
         <ResizeBox />
       </div>
-      <div class="flex gap-8 my-4 justify-between">
-        <el-button type="primary" @click="() => player.on('timeupdate', aaa)">挂载事件 A 到 timeupdate</el-button>
-        <el-button type="primary" @click="() => player.on('timeupdate', bbb)">挂载事件 B 到 timeupdate</el-button>
-        <el-button type="danger" @click="() => player.off('timeupdate', aaa)">从 timeupdate 回调，移除 A</el-button>
-      </div>
-      <div class="flex justify-between gap-8 my-4">
+      <div class="flex my-4 justify-between">
         <el-switch
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #686767"
           v-model="playOptions.waterMarkShow"
           class="px-4 select-none"
+          inline-prompt
           active-text="显示水印"
           inactive-text="隐藏水印"
           @change="toggleWaterMark"
         />
-        <el-switch class="px-4 select-none" active-text="显示时间" inactive-text=" wip..." />
-        <el-switch class="px-4 select-none" active-text="显示音量" inactive-text="wip..." />
+        <el-button type="primary" @click="() => player.on('timeupdate', aaa)">挂载事件 A 到 timeupdate</el-button>
+        <el-button type="primary" @click="() => player.on('timeupdate', bbb)">挂载事件 B 到 timeupdate</el-button>
+        <el-button type="danger" @click="() => player.off('timeupdate', aaa)">从 timeupdate 回调，移除 A</el-button>
       </div>
     </div>
   </div>

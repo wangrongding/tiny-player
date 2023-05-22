@@ -23,10 +23,10 @@ export enum VideoEventsEnum {
   volumechange = 'volumechange', // 音量发生变化。
   waiting = 'waiting', // 由于暂时缺少数据，播放已停止。
 
-  mozaudioavailable = 'mozaudioavailable', // 当音频数据可用时触发。
   error = 'error', // 在发生错误时触发。
   abort = 'abort', // 在视频/音频（audio/video）终止加载时触发。
-  // loadstart = 'loadstart', // 在浏览器开始加载媒体数据时触发。
+  loadstart = 'loadstart', // 在浏览器开始加载媒体数据时触发。
+  mozaudioavailable = 'mozaudioavailable', // 当音频数据可用时触发。
 }
 export enum PlayerEventsEnum {
   destroy = 'destroy',
@@ -64,31 +64,25 @@ export default class TinyPlayEvents {
 
   // 判断事件类型
   type(name: EventsList) {
-    if (this.playerEvents.indexOf(name as PlayerEventsEnum) !== -1) {
-      return 'player'
-    } else if (this.videoEvents.indexOf(name as VideoEventsEnum) !== -1) {
-      return 'video'
-    }
-
+    if (this.playerEvents.indexOf(name as PlayerEventsEnum) !== -1) return 'player'
+    if (this.videoEvents.indexOf(name as VideoEventsEnum) !== -1) return 'video'
     console.error(`${name} 事件不存在，可以查看下文档：https://baidu.com `)
     return null
   }
 
   // 绑定事件
-  on(name: EventsList, callback: () => void) {
+  on(name: EventsList, callback: (...arg: any) => void) {
     const type = this.type(name)
-    if (type && typeof callback === 'function') {
-      if (!this.events[name]) this.events[name] = []
+    if (type && typeof callback !== 'function') return console.error(`${name} 事件的回调函数必须是一个函数`)
+    if (!this.events[name]) this.events[name] = []
+    this.events[name].push(callback)
+    // video 事件，直接绑定到 video 元素上
+    if (type === 'video') {
+      this.player.video.addEventListener(name, callback)
+    }
+    // 播放器的事件
+    if (type === 'player') {
       this.events[name].push(callback)
-
-      // video 事件，直接绑定到 video 元素上
-      if (type === 'video') {
-        this.player.video.addEventListener(name, callback)
-      }
-      // 播放器的事件
-      if (type === 'player') {
-        this.events[name].push(callback)
-      }
     }
   }
 
