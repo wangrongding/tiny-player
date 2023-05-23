@@ -18,7 +18,7 @@
     "tailwindcss": "^3.3.2",
     "tiny-player": "workspace:*",
     "vite": "^4.3.0",
-    "vitepress": "1.0.0-alpha.74"
+    "vitepress": "1.0.0-beta.1"
   },
   "dependencies": {
     "element-plus": "^2.3.4",
