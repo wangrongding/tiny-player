@@ -38,7 +38,7 @@ module.exports = {
   // override the messages, defaults are as follows
   messages: {
     type: '选择一种你的提交类型:',
-    scope: '选择一个scope (可选):',
+    scope: '输入你的提交 scope (可选,无可直接回车):',
     customScope: 'Denote the SCOPE of this change:', // used if allowCustomScopes is true
     subject: '简短说明(最多40个字):',
     body: '长说明，使用"|"换行(可选):\n',
@@ -55,7 +55,7 @@ module.exports = {
   askForBreakingChangeFirst: true, // default is false
 
   // 跳过你想要填写的问题
-  skipQuestions: ['scope', 'body', 'breaking', 'footer'],
+  skipQuestions: ['body', 'breaking', 'footer'],
 }
 
 // 为什么使用规范的提交: https://www.conventionalcommits.org/en/v1.0.0/#summary

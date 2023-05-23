@@ -1,0 +1,83 @@
+diff --git a/lib/questions.js b/lib/questions.js
+index 9275b1c53c8fc69d35d897f41f1cc3d70c69e868..7069c3411e8220c273447a5909256c97b212e310 100644
+--- a/lib/questions.js
++++ b/lib/questions.js
+@@ -78,40 +78,46 @@ module.exports = {
+         choices: config.types,
+       },
+       {
+-        type: 'list',
++        type: 'input',
+         name: 'scope',
++        askAnswered: true,
+         message: messages.scope,
+-        choices(answers) {
+-          let scopes = [];
+-          if (scopeOverrides[answers.type]) {
+-            scopes = scopes.concat(scopeOverrides[answers.type]);
+-          } else {
+-            scopes = scopes.concat(config.scopes);
+-          }
+-          if (config.allowCustomScopes || scopes.length === 0) {
+-            scopes = scopes.concat([
+-              new cz.Separator(),
+-              { name: 'empty', value: false },
+-              { name: 'custom', value: 'custom' },
+-            ]);
+-          }
+-          return scopes;
+-        },
+-        when(answers) {
+-          let hasScope = false;
+-          if (scopeOverrides[answers.type]) {
+-            hasScope = !!(scopeOverrides[answers.type].length > 0);
+-          } else {
+-            hasScope = !!(config.scopes && config.scopes.length > 0);
+-          }
+-          if (!hasScope) {
+-            // TODO: Fix when possible
+-            // eslint-disable-next-line no-param-reassign
+-            answers.scope = skipEmptyScopes ? '' : 'custom';
+-            return false;
+-          }
+-          return isNotWip(answers);
+-        },
++
++        /* 
++          https://github.com/leoforfree/cz-customizable/pull/214
++          https://github.com/leoforfree/cz-customizable/issues/212
++        */
++        // choices(answers) {
++        //   let scopes = [];
++        //   if (scopeOverrides[answers.type]) {
++        //     scopes = scopes.concat(scopeOverrides[answers.type]);
++        //   } else {
++        //     scopes = scopes.concat(config.scopes);
++        //   }
++        //   if (config.allowCustomScopes || scopes.length === 0) {
++        //     scopes = scopes.concat([
++        //       new cz.Separator(),
++        //       { name: 'empty', value: false },
++        //       { name: 'custom', value: 'custom' },
++        //     ]);
++        //   }
++        //   return scopes;
++        // },
++        // when(answers) {
++        //   let hasScope = false;
++        //   if (scopeOverrides[answers.type]) {
++        //     hasScope = !!(scopeOverrides[answers.type].length > 0);
++        //   } else {
++        //     hasScope = !!(config.scopes && config.scopes.length > 0);
++        //   }
++        //   if (!hasScope) {
++        //     // TODO: Fix when possible
++        //     // eslint-disable-next-line no-param-reassign
++        //     answers.scope = skipEmptyScopes ? '' : 'custom';
++        //     return false;
++        //   }
++        //   return isNotWip(answers);
++        // },
+       },
+       {
+         type: 'input',

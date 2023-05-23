@@ -52,5 +52,10 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "wait-on": "^7.0.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "cz-customizable@7.0.0": "patches/cz-customizable@7.0.0.patch"
+    }
   }
 }
