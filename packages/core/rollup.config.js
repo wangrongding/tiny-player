@@ -10,6 +10,10 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 const isDev = process.env.IS_DEV
 console.log('🌸🌸🌸isDev:', isDev)
+
+/**
+ * @type {import('rollup').RollupOptions}
+ */
 export default {
   input: 'src/index.ts',
   output: [
@@ -63,4 +67,16 @@ export default {
       compilerOptions: { client: true }, // optional, any options supported by ejs compiler
     }),
   ],
+  // 无法观察到部分非 js/ts 文件的变化
+  // watch: {
+  //   include: 'src/**',
+  //   clearScreen: true, // 清除控制台
+  //   // buildDelay: 1000, // 延迟多少毫秒后再次构建
+  //   chokidar: {
+  //     depth: 99,
+  //     usePolling: true, // 底层实际是：选择 fs.watchFile（由轮询支持）还是 fs.watch。如果轮询导致 CPU 使用率较高，请考虑将其设置为 false 。
+  //     interval: 2000, // 文件系统轮询的间隔，以毫秒为单位。
+  //     binaryInterval: 2000, // 文件系统轮询二进制文件的间隔。
+  //   },
+  // },
 }

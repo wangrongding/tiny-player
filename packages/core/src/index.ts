@@ -3,37 +3,18 @@ import pkg from '../package.json'
 import './style/index.scss'
 import Icons from '@/assets/icons/index'
 import Controller from './components/controller'
-import { ControlOptions } from './components/controller'
 import TinyPlayEvents from './components/events'
 import { EventsList } from './components/events'
+import { PlayerOptions as Options } from './types/index'
 import Hls from 'hls.js'
 
-// 播放器入参配置
-export interface PlayerOptions {
-  container: HTMLElement // 播放器容器
-  controlTarget?: HTMLElement // 控制器挂载目标
-  src: string // 视频地址
-  controlOptions: ControlOptions // 是否显示控制条
-  autoplay?: boolean // 是否自动播放
-  loop?: boolean // 是否循环播放
-  width?: string // 播放器宽度 "123px"
-  height?: string // 播放器高度 "123px"
-  poster?: string // 视频封面
-  preload?: 'auto' | 'metadata' | 'none' // 预加载
-  muted?: boolean // 是否静音
-  volume?: number // 音量
-  playbackRate?: number // 播放速率
-  type: 'auto' | 'normal' | 'hls' | 'flv' | 'dash' // 视频类型
-  waterMarkShow?: boolean // 是否显示水印
-}
-
+export type PlayerOptions = Options
 // 播放器名称和版本号
 const { name, version } = pkg
 
 // 控制台 banner
 console.log(`${'\n'} %c ${name} v${version} ${'\n'}`, `color: white; font-size: 18px; background: linear-gradient(45deg, #ff0000 0%, #0092ff 80%);`)
 
-let index = 0
 const instances: TinyPlayer[] = []
 
 export default class TinyPlayer {
@@ -49,6 +30,7 @@ export default class TinyPlayer {
   controller!: Controller // 控制器
   events!: TinyPlayEvents // 事件
   waterMark?: HTMLElement // 水印节点
+  duration: number = 0 // 视频时长
 
   constructor(options: PlayerOptions) {
     this.container = options.container
@@ -112,6 +94,7 @@ export default class TinyPlayer {
 
   private onLoadedMetadata() {
     // 更新视频时长
+    this.duration = this.video.duration
     this.controller.onTimeupdate()
   }
 
@@ -270,6 +253,11 @@ export default class TinyPlayer {
     this.controller.mountTarget = mountTarget
     this.controller.initMountTargetEvent()
     mountTarget.appendChild(this.controller.controlElement)
+  }
+
+  // 选取视频片段
+  cutVideo = (start: number, end: number) => {
+    // player.cutVideo(start, end)
   }
 
   // 销毁播放器

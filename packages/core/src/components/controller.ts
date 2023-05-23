@@ -1,16 +1,8 @@
 import controlTemplate from '@/assets/template/control.ejs'
 import { isMobile, throttle, secondToTime } from '@/utils/index'
 import Icons from '@/assets/icons/index'
+import { ControlOptions } from '../types/index'
 import type TinyPlayer from '../index'
-
-// 控制器配置
-export interface ControlOptions {
-  playTime?: boolean // 是否显示播放时间
-  volumeControl?: boolean // 是否显示音量控制栏
-  fullScreenControl?: boolean // 是否显示全屏按钮
-  mountTarget?: HTMLElement // 控制器挂载目标
-  nativeControls?: boolean // 是否使用原生控制条
-}
 
 export default class Controller {
   player: TinyPlayer // 播放器实例
@@ -271,9 +263,8 @@ export default class Controller {
 
   // 更新播放时间
   onTimeupdate = () => {
-    if (this.playTime) {
-      this.playTime.textContent = `${secondToTime(this.player.video!.currentTime)} / ${secondToTime(this.player.video.duration)}`
-    }
+    if (!this.playTime) return
+    this.playTime.textContent = `${secondToTime(this.player.video.currentTime)} / ${secondToTime(this.player.duration)}`
   }
 
   // waiting 事件处理函数
