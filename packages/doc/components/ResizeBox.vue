@@ -36,7 +36,9 @@ onMounted(() => {
     id="resizable-div"
   >
     <span class="placeholder">目标节点</span>
-    <div class="drag-el absolute right-[-5px] bottom-[-5px] w-[10px] h-[10px] bg-yellow-400 cursor-nwse-resize"></div>
+    <div class="drag-el absolute right-[-8px] bottom-[-8px] w-[16px] h-[16px] grid place-content-center bg-blue-500 cursor-nwse-resize font-bold text-lg">
+      ⤡
+    </div>
   </div>
 </template>
 <style lang="scss" scoped></style>

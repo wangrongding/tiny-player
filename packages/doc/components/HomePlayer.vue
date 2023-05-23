@@ -11,8 +11,8 @@ const options: Omit<PlayerOptions, 'container'> = {
   width: '600px', // 宽度
   controlOptions: {
     playTime: true, // 是否显示播放时间
-    volumeBar: true, // 是否显示音量控制条
-    fullScreenButton: true, // 是否显示全屏按钮
+    volumeControl: true, // 是否显示音量控制条
+    fullScreenControl: true, // 是否显示全屏按钮
     mountTarget: null, // 挂载目标节点
     nativeControls: false, // 是否使用原生控制条
   },

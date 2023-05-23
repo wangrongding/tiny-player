@@ -9,12 +9,12 @@
   <span class="tp-play-time-tip">0</span>
 
   <!-- 播放时间 -->
-  <% if(locals.controlOptions.playTime){ %>
+  <% if(locals.playTime){ %>
   <span class="tp-play-time">00:00 / 00:00</span>
   <% } %>
 
   <!-- 音量控制 -->
-  <% if(locals.controlOptions.volumeBar){ %>
+  <% if(locals.volumeControl){ %>
   <div class="tp-volume-bar">
     <i class="tp-volume-icon"></i>
     <input type="range" class="tp-volume-slider" min="0" max="1" step="0.01" value="<%= locals.volume %>" />
@@ -22,7 +22,7 @@
   <% } %>
 
   <!-- 全屏 -->
-  <% if(locals.controlOptions.fullScreenButton){ %>
+  <% if(locals.fullScreenControl){ %>
   <i class="tp-fullscreen"></i>
   <% } %>
 </div>

@@ -6,8 +6,8 @@ import type TinyPlayer from '../index'
 // 控制器配置
 export interface ControlOptions {
   playTime?: boolean // 是否显示播放时间
-  volumeBar?: boolean // 是否显示音量控制栏
-  fullScreenButton?: boolean // 是否显示全屏按钮
+  volumeControl?: boolean // 是否显示音量控制栏
+  fullScreenControl?: boolean // 是否显示全屏按钮
   mountTarget?: HTMLElement // 控制器挂载目标
   nativeControls?: boolean // 是否使用原生控制条
 }
@@ -22,7 +22,7 @@ export default class Controller {
   seekBar!: HTMLInputElement // 进度条
 
   playTime?: HTMLElement // 播放时间
-  volumeBar?: HTMLInputElement // 是否显示音量控制栏
+  volumeSlider?: HTMLInputElement // 是否显示音量控制栏
   volumeControlBar?: HTMLInputElement // 声音控制栏
   muteButton?: HTMLElement // 静音按钮
   fullScreenButton?: HTMLElement // 全屏按钮
@@ -35,7 +35,7 @@ export default class Controller {
   controlOptions: ControlOptions
   constructor(player: TinyPlayer) {
     this.player = player
-    this.controlOptions = player.options.controlOptions
+    this.controlOptions = player.options.controlOptions || {}
     this.mountTarget = this.controlOptions.mountTarget || this.player.videoContainer
 
     this.initControls()
@@ -47,7 +47,7 @@ export default class Controller {
     // 控制面板节点
     this.controlElement = document.createElement('div')
     this.controlElement.className = 'tp-control-panel'
-    this.controlElement.innerHTML = controlTemplate(this.player.options)
+    this.controlElement.innerHTML = controlTemplate({ ...(this.player.options.controlOptions || {}), volume: this.player.options.volume })
     // 将控制面板添加到目标容器中
     !this.controlOptions.nativeControls && this.mountTarget.appendChild(this.controlElement)
     // loading 动画
@@ -68,7 +68,7 @@ export default class Controller {
   private initPlayButton = () => {
     // 设置控制条按钮的事件处理函数
     this.playButton = this.controlElement.querySelector('.tp-play-icon') as HTMLElement
-    this.playButton && (this.playButton.innerHTML = Icons.play)
+    this.playButton.innerHTML = Icons.play
     this.playButton.addEventListener('click', this.player.togglePlay)
   }
 
@@ -82,13 +82,14 @@ export default class Controller {
 
   // 初始化音量控制栏
   private initVolumeButton = () => {
-    if (!this.controlOptions.volumeBar) return
+    this.player.video.volume = this.player.options.volume || 1
+    if (!this.controlOptions.volumeControl) return
     // 设置控制条声音控制栏的事件处理函数
     this.muteButton = this.controlElement.querySelector('.tp-volume-icon') as HTMLButtonElement
     this.muteButton.addEventListener('click', this.player.mute)
-    this.muteButton.innerHTML = Icons.volumeUp
-    this.volumeBar = this.controlElement.querySelector('.tp-volume-slider') as HTMLInputElement
-    this.volumeBar.addEventListener('input', throttle(this.onVolumeChange, 100))
+    this.switchVolumeIcon()
+    this.volumeSlider = this.controlElement.querySelector('.tp-volume-slider') as HTMLInputElement
+    this.volumeSlider.addEventListener('input', throttle(this.onVolumeChange, 100))
     this.volumeControlBar = this.controlElement.querySelector('.tp-volume-bar') as HTMLInputElement
   }
 
@@ -96,27 +97,24 @@ export default class Controller {
   private initFullScreenButton = () => {
     // 设置控制条全屏按钮的事件处理函数
     this.fullScreenButton = this.controlElement.querySelector('.tp-fullscreen') as HTMLElement
-    this.fullScreenButton && this.fullScreenButton.addEventListener('click', this.player.toggleFullScreen)
-    this.fullScreenButton && (this.fullScreenButton.innerHTML = Icons.fullWeb)
+    if (!this.fullScreenButton) return
+    this.fullScreenButton.addEventListener('click', this.player.toggleFullScreen)
+    this.fullScreenButton.innerHTML = Icons.fullWeb
   }
 
   // 监听控制栏的尺寸变化, 控制显示隐藏 播放按钮，视频时间和音量控制栏
   private watchControlResize = () => {
-    const playButton = this.playButton
-    const playTime = this.playTime
-    const volumeBar = this.volumeBar
     const resizeObserver = new ResizeObserver(
       throttle((entries: ResizeObserverEntry[]) => {
-        console.log('Size changed', entries)
         for (const entry of entries) {
           if (!entry.contentBoxSize) return
 
           const { inlineSize, blockSize } = entry.contentBoxSize[0]
           // 控制播放按钮的显示隐藏
           if (blockSize < 120) {
-            playButton.style.display = 'none'
+            this.playButton.style.display = 'none'
           } else {
-            playButton.style.display = 'grid'
+            this.playButton.style.display = 'grid'
           }
           // 控制全屏按钮的显示隐藏
           if (this.fullScreenButton && inlineSize < 200) {
@@ -125,10 +123,10 @@ export default class Controller {
             this.fullScreenButton && (this.fullScreenButton.style.display = 'block')
           }
           // 控制播放时间显示隐藏
-          if (playTime && inlineSize < 330) {
-            playTime.style.display = 'none'
+          if (this.playTime && inlineSize < 330) {
+            this.playTime.style.display = 'none'
           } else {
-            playTime && (playTime.style.display = 'block')
+            this.playTime && (this.playTime.style.display = 'block')
           }
           // 控制音量控制栏的显示隐藏
           if (this.volumeControlBar && inlineSize < 400) {
@@ -136,7 +134,6 @@ export default class Controller {
           } else {
             this.volumeControlBar && (this.volumeControlBar.style.display = 'flex')
           }
-          console.log('🚀🚀🚀 / inlineSize, blockSize:', inlineSize, blockSize)
         }
       }, 50),
     )
@@ -306,7 +303,7 @@ export default class Controller {
   switchVolumeIcon = () => {
     if (this.player.video.muted || this.player.video.volume === 0) {
       this.muteButton!.innerHTML = Icons.volumeOff
-    } else if (this.player.video.volume > 0 && this.player.video.volume <= 0.5) {
+    } else if (this.player.video.volume > 0 && this.player.video.volume < 1) {
       this.muteButton!.innerHTML = Icons.volumeDown
     } else {
       this.muteButton!.innerHTML = Icons.volumeUp

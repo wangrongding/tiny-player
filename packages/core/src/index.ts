@@ -85,6 +85,7 @@ export default class TinyPlayer {
 
   // 初始化播放器,设置视频相关回调函数
   private initVideo() {
+    // 初始化 MSE 支持
     this.initMSE(this.video, this.options.type)
 
     // 播放回调
@@ -244,7 +245,7 @@ export default class TinyPlayer {
   mute = () => {
     // 静音或取消静音
     this.video!.muted = !this.video!.muted
-    this.controller.volumeBar!.value = this.video!.muted ? '0' : this.video!.volume + ''
+    this.controller.volumeSlider!.value = this.video!.muted ? '0' : this.video!.volume + ''
     this.controller.muteButton!.innerHTML = this.video!.muted ? Icons.volumeOff : Icons.volumeUp
   }
 

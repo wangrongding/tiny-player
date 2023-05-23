@@ -23,13 +23,13 @@ const playOptions: PlayerOptions = reactive({
   width: '800px', // 宽度
   controlOptions: {
     playTime: true, // 是否显示播放时间
-    volumeBar: true, // 是否显示音量控制条
-    fullScreenButton: true, // 是否显示全屏按钮
+    volumeControl: true, // 是否显示音量控制条
+    fullScreenControl: true, // 是否显示全屏按钮
     mountTarget: null, // 挂载目标节点
     nativeControls: false, // 是否使用原生控制条
   },
   loop: true, // 循环播放
-  volume: 0.9, // 音量
+  volume: 1, // 音量
   preload: 'metadata', // 预加载
   poster: poster, // 封面地址
   src: videoSource, // 视频地址
@@ -71,7 +71,7 @@ onMounted(() => {
   <div class="page-warp grid place-content-center mt-10">
     <div id="tiny-player"></div>
     <div>
-      <p class="text-black bg-amber-200 leading-8 box-border my-4">💡 调试栏</p>
+      <p class="text-black bg-amber-200 leading-8 box-border my-4 select-none">💡 调试栏</p>
       <div class="gap-4 my-4 flex flex-col">
         <div>
           <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>

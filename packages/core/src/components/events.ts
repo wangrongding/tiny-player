@@ -90,7 +90,6 @@ export default class TinyPlayEvents {
   off(name: EventsList, callback: () => void) {
     if (this.type(name) && this.events[name] && this.events[name].length) {
       const index = this.events[name].indexOf(callback)
-      console.log('🚀🚀🚀 / index:', index)
       if (index === -1) return
       this.events[name].splice(index, 1)
       // 移除事件监听器
