@@ -118,6 +118,12 @@ export default class Controller {
           } else {
             playButton.style.display = 'grid'
           }
+          // 控制全屏按钮的显示隐藏
+          if (this.fullScreenButton && inlineSize < 200) {
+            this.fullScreenButton.style.display = 'none'
+          } else {
+            this.fullScreenButton && (this.fullScreenButton.style.display = 'block')
+          }
           // 控制播放时间显示隐藏
           if (playTime && inlineSize < 330) {
             playTime.style.display = 'none'
@@ -125,12 +131,12 @@ export default class Controller {
             playTime && (playTime.style.display = 'block')
           }
           // 控制音量控制栏的显示隐藏
-          if (volumeBar && inlineSize < 400) {
-            volumeBar.style.display = 'none'
+          if (this.volumeControlBar && inlineSize < 400) {
+            this.volumeControlBar.style.display = 'none'
           } else {
-            volumeBar && (volumeBar.style.display = 'block')
+            this.volumeControlBar && (this.volumeControlBar.style.display = 'flex')
           }
-          // console.log('🚀🚀🚀 / inlineSize, blockSize:', inlineSize, blockSize)
+          console.log('🚀🚀🚀 / inlineSize, blockSize:', inlineSize, blockSize)
         }
       }, 50),
     )
@@ -172,7 +178,6 @@ export default class Controller {
 
     this.seekBar.addEventListener('mousemove', (event) => {
       const positionX = event.offsetX - tooltip.clientWidth / 2 + 10
-      console.log('🚀🚀🚀 / event.offsetX:', event.offsetX)
       tooltip.style.left = positionX + 'px'
       tooltip.style.display = 'block'
 

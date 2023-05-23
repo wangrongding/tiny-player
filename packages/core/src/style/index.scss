@@ -6,5 +6,8 @@
 .tp-container {
   position: relative;
   overflow: hidden;
-  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // width: fit-content;
 }
