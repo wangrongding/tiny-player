@@ -19,15 +19,15 @@ hero:
 
 features:
   - title: 🧩 兼容性好
-    details: 不依赖任何框架，任何浏览器都可以使用，支持移动端。
+    details: 0 依赖，任何框架和浏览器都可以使用，支持移动端。
   - title: 🌸 多格式支持
     details: 支持 mp4、webm、ogg 等多种常见格式，支持 m3u8，支持自动切换。
   - title: 🌟 控制栏可插拔
-    details: 支持自定义控制栏挂载目标节点，支持自定义控制栏组件显示隐藏。
+    details: 支持自定义控制栏，控制栏挂载到目标节点，支持自定义控制栏组件显示隐藏。
+  - title: 🎬 支持指定片段播放
+    details: 通过入参指定片段播放，类裁剪。
   - title: 🎨 轻量
     details: 仅 10kb 大小，gzip 压缩后仅 4kb 大小。
-  - title: 🎨 xx
-    details: ....
-  - title: 🎨 xxx
-    details: .......
+  - title: 🥳 软解（wip）
+    details: 支持音视频软解，支持自定义解码器，解决各个浏览器的兼容性问题。（开发中）
 ---

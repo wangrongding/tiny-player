@@ -63,11 +63,11 @@ export interface PlayerOptions {
    */
   waterMarkShow?: boolean
   /**
-   * @description 裁剪开始时间
+   * @description 视频片段的开始时间
    */
   clipStart?: number
   /**
-   * @description 裁剪结束时间
+   * @description 视频片段的结束时间
    */
   clipEnd?: number
 }

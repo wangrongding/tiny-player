@@ -32,9 +32,14 @@ export default class TinyPlayer {
   waterMark?: HTMLElement // 水印节点
   duration: number = 0 // 视频时长
 
+  clipStart: number // 视频片段的开始时间
+  clipEnd: number // 视频片段的结束时间
+
   constructor(options: PlayerOptions) {
     this.container = options.container
     this.options = options
+    this.clipStart = options.clipStart || 0
+    this.clipEnd = options.clipEnd || 0
     this.setup()
   }
 
@@ -55,11 +60,12 @@ export default class TinyPlayer {
     this.waterMark = this.videoContainer.querySelector('.tp-watermark') as HTMLElement
     // 播放器事件系统
     this.events = new TinyPlayEvents(this)
-    // 播放器控制器
-    this.controller = new Controller(this)
     // 初始化视频
     this.initVideo()
+    // 播放器控制器
+    this.controller = new Controller(this)
     this.handleWaterMarkShow(this.options.waterMarkShow)
+    this.seek(this.clipStart)
 
     // 保存实例
     instances.push(this)
@@ -80,21 +86,22 @@ export default class TinyPlayer {
     })
     // 播放结束
     this.on('ended', () => {
+      if (this.clipEnd) return
       if (!this.options.loop) {
-        this.seek(0)
+        this.seek(this.clipStart)
         this.pause()
       } else {
-        this.seek(0)
+        this.seek(this.clipStart)
         this.play()
       }
     })
     // 视频元数据加载完成
-    this.on('loadedmetadata', this.onLoadedMetadata.bind(this))
+    this.on('loadedmetadata', this.onLoadedMetadata)
   }
 
-  private onLoadedMetadata() {
+  private onLoadedMetadata = () => {
     // 更新视频时长
-    this.duration = this.video.duration
+    this.duration = this.clipEnd - this.clipStart || this.video.duration
     this.controller.onTimeupdate()
   }
 
@@ -205,7 +212,7 @@ export default class TinyPlayer {
 
   // 跳转到视频指定位置，调整视频播放进度
   seek = (time: number) => {
-    this.video!.currentTime = time
+    this.video.currentTime = time
   }
 
   // 设置音量
@@ -257,7 +264,12 @@ export default class TinyPlayer {
 
   // 选取视频片段
   cutVideo = (start: number, end: number) => {
-    // player.cutVideo(start, end)
+    console.log('🚀🚀🚀 / cutVideo:', start, end)
+    this.clipStart = start
+    this.clipEnd = end
+    this.duration = end - start
+    this.seek(start)
+    this.controller.initTimeTip()
   }
 
   // 销毁播放器

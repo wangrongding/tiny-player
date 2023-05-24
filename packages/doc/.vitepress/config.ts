@@ -40,7 +40,7 @@ export default defineConfig({
           { text: '参数与事件', link: '/page/002-参数与事件' },
           { text: 'MSE支持', link: '/page/003-MSE支持' },
           { text: 'Playground', link: '/page/playground' },
-          { text: '常见问题', link: '/page/009-常见问题' },
+          { text: 'Q&A', link: '/page/009-常见问题' },
           { text: '开发记录', link: '/page/开发记录' },
           // { text: 'Markdown Examples', link: '/page/markdown-examples' },
           // { text: 'Runtime API Examples', link: '/page/api-examples' },

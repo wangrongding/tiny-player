@@ -159,7 +159,7 @@ export default class Controller {
   initTimeTip = () => {
     const tooltip = this.controlElement.querySelector('.tp-play-time-tip') as HTMLElement
     const seekBarWidth = this.seekBar.clientWidth
-    const duration = this.player.video.duration
+    const duration = this.player.duration
     this.seekBar.addEventListener('input', (event: Event) => {
       const target = event.target as HTMLInputElement
       tooltip.textContent = secondToTime((+target.value / 100) * duration)
@@ -170,8 +170,8 @@ export default class Controller {
       tooltip.style.left = positionX + 'px'
       tooltip.style.display = 'block'
 
-      const text = (event.offsetX / seekBarWidth) * duration
-      tooltip.textContent = secondToTime(text)
+      const timeStamp = (event.offsetX / seekBarWidth) * duration
+      tooltip.textContent = secondToTime(timeStamp)
 
       if (event.offsetX < 0 || event.offsetX > seekBarWidth) {
         tooltip.style.display = 'none'
@@ -241,7 +241,7 @@ export default class Controller {
 
   // 更新播放进度条
   updateSeekBar = () => {
-    this.seekBar!.value = ((this.player.video!.currentTime / this.player.video.duration) * 100).toString()
+    this.seekBar.value = (((this.player.video.currentTime - this.player.clipStart) / this.player.duration) * 100).toString()
     this.playRaf = window.requestAnimationFrame(() => {
       this.updateSeekBar()
     })
@@ -250,8 +250,23 @@ export default class Controller {
   // 拖动进度条
   onSeeking = (event: Event) => {
     const target = event.target as HTMLInputElement
-    const seekTime = (parseFloat(target.value) / 100) * this.player.video.duration
+    const seekTime = (parseFloat(target.value) / 100) * this.player.duration
     this.player.seek(seekTime)
+  }
+
+  // 更新播放时间
+  onTimeupdate = () => {
+    if (!this.playTime) return
+    const progress = +this.seekBar.value
+    const currentTime = progress * this.player.duration * 0.01
+    this.playTime.textContent = `${secondToTime(currentTime < 0 ? 0 : currentTime)} / ${secondToTime(this.player.duration)}`
+    const videoCurrentTime = this.player.video.currentTime
+
+    // 当前播放时间大于结束时间时，暂停播放 / 循环播放
+    if (!this.player.clipEnd || !(videoCurrentTime >= this.player.clipEnd)) return
+    this.player.seek(this.player.clipStart)
+    if (!this.player.options.loop) return this.player.pause()
+    this.player.play()
   }
 
   // 调整视频音量
@@ -259,12 +274,6 @@ export default class Controller {
     const target = event.target as HTMLInputElement
     // 调整视频音量
     this.player.volume(Number(target.value))
-  }
-
-  // 更新播放时间
-  onTimeupdate = () => {
-    if (!this.playTime) return
-    this.playTime.textContent = `${secondToTime(this.player.video.currentTime)} / ${secondToTime(this.player.duration)}`
   }
 
   // waiting 事件处理函数

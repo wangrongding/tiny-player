@@ -1,7 +1,7 @@
 import type TinyPlayer from '../index'
 import { VideoEventsEnum, PlayerEventsEnum } from '../types/index'
 
-export type EventsList = keyof typeof PlayerEventsEnum | keyof typeof VideoEventsEnum
+export type EventsList = keyof typeof VideoEventsEnum | keyof typeof PlayerEventsEnum
 
 export default class TinyPlayEvents {
   events: { [key: string]: Function[] } = {}
