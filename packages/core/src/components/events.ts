@@ -17,18 +17,20 @@ export default class TinyPlayEvents {
     this.playerEvents = Object.keys(PlayerEventsEnum).map((key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum])
 
     // TODO 测试用
-    this.videoEvents.forEach((eventName) => {
-      this.player.video.addEventListener(eventName, (e: Event) => {
-        console.log(eventName, e.type)
-      })
-    })
+    // this.videoEvents.forEach((eventName) => this.once(eventName, () => console.log(eventName)))
+    // this.on('timeupdate', (e) => console.log('timeupdate',e.target.currentTime))
+    // this.videoEvents.forEach((eventName) => {
+    //   this.on(eventName, (e: Event) => {
+    //     console.log(eventName, e.type)
+    //   })
+    // })
   }
 
   // 判断事件类型
   type(name: EventsList) {
     if (this.playerEvents.indexOf(name as PlayerEventsEnum) !== -1) return 'player'
     if (this.videoEvents.indexOf(name as VideoEventsEnum) !== -1) return 'video'
-    console.error(`${name} 事件不存在，可以查看下文档：https://baidu.com `)
+    console.error(`${name} 事件不存在，请查看下文档`)
     return null
   }
 
@@ -67,5 +69,14 @@ export default class TinyPlayEvents {
     this.events[name].forEach((callback) => {
       callback(data)
     })
+  }
+
+  // 触发一次后自动注销
+  once(name: EventsList, callback: (...arg: any) => void) {
+    const fn = (...arg: any) => {
+      callback(...arg)
+      this.off(name, fn)
+    }
+    this.on(name, fn)
   }
 }
