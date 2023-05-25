@@ -27,7 +27,7 @@ features:
   - title: 🎬 支持指定片段播放
     details: 通过入参指定片段播放，类裁剪。
   - title: 🎨 轻量
-    details: 仅 10kb 大小，gzip 压缩后仅 4kb 大小。
+    details: 仅 25kb 大小，gzip 压缩后仅 7kb 大小。
   - title: 🥳 软解（wip）
     details: 支持音视频软解，支持自定义解码器，解决各个浏览器的兼容性问题。（开发中）
 ---
