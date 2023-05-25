@@ -107,7 +107,6 @@ export default class TinyPlayer {
 
   // 当视频开始播放时，
   private onPlay = () => {
-    console.log('🚀🚀🚀 / onPlay')
     // 更新播放器状态
     this.paused = false
     const playButton = this.controller.playButton
@@ -117,7 +116,6 @@ export default class TinyPlayer {
 
   // 当视频暂停播放时
   private onPause = () => {
-    console.log('🚀🚀🚀 / onPause')
     // 更新播放器状态
     this.paused = true
     const playButton = this.controller.playButton
@@ -178,7 +176,6 @@ export default class TinyPlayer {
     this.hls.attachMedia(video)
 
     // TODO 走外部依赖的形式
-    // console.log('🚀🚀🚀 / window.Hls:', window.Hls)
     // if (!window.Hls) return console.error("Error: Can't find Hls.")
     // if (window.Hls.isSupported()) return console.error('Hls is not supported')
     // const hls = new window.Hls()
@@ -264,7 +261,6 @@ export default class TinyPlayer {
 
   // 选取视频片段
   cutVideo = (start: number, end: number) => {
-    console.log('🚀🚀🚀 / cutVideo:', start, end)
     this.clipStart = start
     this.clipEnd = end
     this.duration = end - start
