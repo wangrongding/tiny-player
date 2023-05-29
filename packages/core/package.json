@@ -12,8 +12,8 @@
     "README.md"
   ],
   "scripts": {
-    "dev": "node ./custom-dev.js",
-    "dev-w": "rollup -c -w",
+    "dev": "rollup -c -w",
+    "dev-w": "cross-env IS_DEV=true node ./custom-dev.js",
     "build": "rollup -c"
   },
   "keywords": [
@@ -27,8 +27,11 @@
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "chokidar": "^3.5.3",
+    "cross-env": "^7.0.3",
     "rollup": "^3.20.6",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-ejs": "^4.0.0",
@@ -37,6 +40,10 @@
     "rollup-plugin-svg-import": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.5.2",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "hls.js": "^1.4.3"
   }
 }

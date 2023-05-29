@@ -1,8 +1,8 @@
 # ./pnpm-workspace.yaml
 packages:
-  # all packages in subdirs of packages/
-  - "packages/*"
-  # root directory
-  # - "."
-  # exclude packages that are inside test/ directories
-  # - "!**/test/**" # '!' means exclude
+  # packages/目录下的所有包
+  - 'packages/*'
+  # 根目录
+  - '.'
+  # 工作区需要排除的包，'!' means exclude
+  # - "!**/test/**"

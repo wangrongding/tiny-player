@@ -9,9 +9,16 @@ const options: Omit<PlayerOptions, 'container'> = {
   src: movie, // 视频地址
   poster: poster, // 封面地址
   width: '600px', // 宽度
-  controls: true, // 是否显示控制栏
+  controlOptions: {
+    playTime: true, // 是否显示播放时间
+    volumeControl: true, // 是否显示音量控制条
+    fullScreenControl: true, // 是否显示全屏按钮
+    mountTarget: null, // 挂载目标节点
+    nativeControls: false, // 是否使用原生控制条
+  },
   loop: true, // 循环播放
   volume: 0.9, // 音量
+  type: 'auto',
 }
 const { Layout } = DefaultTheme
 </script>

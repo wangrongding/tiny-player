@@ -1,5 +1,18 @@
 // 控制面板
-.tiny-player-control-panel {
+.tp-hide-controller {
+  .tp-control-panel {
+    cursor: none;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+.tp-show-controller {
+  .tp-control-panel {
+    opacity: 1;
+  }
+}
+
+.tp-control-panel {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -7,133 +20,119 @@
   left: 0;
 
   // 播放按钮
-  .tiny-player-play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .tp-play-icon,
+  .tp-loading {
     color: white;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    display: grid;
+    place-content: center;
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @keyframes tp-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .tp-loading {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0.4);
+
+    // 加载动画
+    svg {
+      animation: tp-loading 1s infinite;
+      width: 40px;
+      height: 40px;
+    }
   }
 
   // 底部控制栏
-  .tiny-player-control-bar {
+  .tp-control-bar {
     position: absolute;
     bottom: 0px;
     left: 0;
     width: 100%;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.5);
+    height: 35px;
+    user-select: none;
+    transition: all 0.3s ease;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45));
+    // background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 0 10px;
     box-sizing: border-box;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: space-between;
     align-items: center;
 
     // 播放进度条
-    .tiny-player-seek-bar {
+    .tp-seek-slider {
+      width: 100%;
       flex: 1;
     }
 
-    .tiny-player-volume,
-    .tiny-player-fullscreen {
+    .tp-volume-bar {
+      width: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tp-volume-icon,
+    .tp-fullscreen {
+      display: inline-block;
       width: 20px;
       height: 20px;
       text-align: center;
       color: white;
     }
 
-    .tiny-player-volume-bar {
+    .tp-volume-slider {
       width: 60px;
     }
 
-    .tiny-player-play-time {
+    .tp-play-time {
+      font-family: Menlo, Courier New, Consolas, Lucida Console, Courier, monospace;
       font-size: 14px;
-      width: 100px;
+      text-align: center;
+      user-select: none;
+      min-width: 120px;
     }
-  }
-}
+    .tp-play-time-tip {
+      display: none;
+      position: absolute;
+      top: -30px;
+      pointer-events: none;
+      background-color: #000;
+      color: #fff;
+      padding: 5px;
+      border-radius: 4px;
+      font-size: 14px;
 
-// 控制栏中的 range bar 样式
-.tiny-player-control-bar input[type='range'] {
-  height: 25px;
-  // 控制 UI 控件的基于操作系统主题的原生外观
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  margin: 10px 0;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: #2497e3;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  &::-webkit-slider-thumb {
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid #2497e3;
-    height: 15px;
-    width: 15px;
-    border-radius: 25px;
-    background: #a1d0ff;
-    -webkit-appearance: none;
-    margin-top: -5px;
-  }
-  &:focus::-webkit-slider-runnable-track {
-    background: #2497e3;
-  }
-  &::-moz-range-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    box-shadow: 0px 0px 0px #000000;
-    background: #2497e3;
-    border-radius: 1px;
-    border: 0px solid #000000;
-  }
-  &::-ms-track {
-    width: 100%;
-    height: 5px;
-    animate: 0.2s;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
-  &::-ms-fill-lower {
-    background: #2497e3;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  &::-ms-fill-upper {
-    background: #2497e3;
-    border: 0px solid #000000;
-    border-radius: 2px;
-    box-shadow: 0px 0px 0px #000000;
-  }
-  &::-ms-thumb {
-    margin-top: 1px;
-    box-shadow: 0px 0px 0px #000000;
-    border: 1px solid #2497e3;
-    height: 18px;
-    width: 18px;
-    border-radius: 25px;
-    background: #a1d0ff;
-  }
-  &:focus::-ms-fill-lower {
-    background: #2497e3;
-  }
-  &:focus::-ms-fill-upper {
-    background: #2497e3;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 6px;
+        border-style: solid;
+        border-color: #000 transparent transparent transparent;
+      }
+    }
   }
 }

@@ -1,0 +1,64 @@
+@mixin track() {
+  width: 100%;
+  height: 4px;
+  box-shadow: 0px 0px 0px #000000;
+  background: #a8a9aa;
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+@mixin thumb() {
+  -webkit-appearance: none; // 清除系统默认样式
+  appearance: none;
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #0163a5;
+  height: 12px;
+  width: 12px;
+  border-radius: 20px;
+
+  margin-top: -4px;
+  // background-color: #2497e3;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-image: linear-gradient(#fff, #fff) 0 fill / 4 12 4 0 / 0px 0px 0 3000px;
+}
+
+// 控制栏中的 range bar 样式
+.tp-control-bar input[type='range'] {
+  height: 20px;
+  // 控制 UI 控件的基于操作系统主题的原生外观
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  margin: 10px 0;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+
+  // 逗号联合选择不生效，这里用 mixin 减少重复代码量
+  &::-webkit-slider-runnable-track {
+    @include track;
+  }
+  &::-moz-range-track {
+    @include track;
+  }
+  &::-ms-track {
+    @include track;
+  }
+
+  // 滑块的样式
+  &::-webkit-slider-thumb {
+    @include thumb;
+  }
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+  &::-ms-thumb {
+    @include thumb;
+  }
+
+  // 滑动条的容器的样式
+  &::-webkit-slider-container {
+    overflow: hidden;
+  }
+}

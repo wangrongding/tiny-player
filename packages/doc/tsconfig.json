@@ -10,7 +10,10 @@
     ".vitepress/**/*.d.ts",
     ".vitepress/**/*.tsx",
     ".vitepress/**/*.vue",
+    "page/**/*.vue",
+    "components/**/*.vue",
     "types/**/*.d.ts"
   ],
+  "types": ["element-plus/global"],
   "exclude": ["node_modules", "dist", "**/*.js"] // 排除的文件
 }

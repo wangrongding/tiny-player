@@ -1,5 +1,6 @@
 {
   "private": "true",
+  "name":"root",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset:init": "npx changeset init",
@@ -9,16 +10,18 @@
     "preinstall": "npx only-allow pnpm",
     "--  dev  --------------------------------------------------": "",
     "pre:dev": "wait-on ./packages/core/dist/index.min.js",
-    "dev": "concurrently \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
+    "dev": "concurrently --kill-others-on-fail \"pnpm dev:player\" \"pnpm run pre:dev && pnpm dev:doc\"",
     "dev:parallel": "pnpm -r --no-sort dev",
-    "dev:player": "pnpm -F \"tiny-player\" dev",
+    "dev:player": "pnpm -F \"tiny-player\" dev-w",
     "dev:doc": "pnpm -F doc dev",
     "--  build  ------------------------------------------------": "",
     "build": "pnpm -r --sort build",
     "build:player": "pnpm -F \"tiny-player\" build",
+    "preview": "pnpm -F doc preview",
     "--  publish  ----------------------------------------------": "",
     "pub": "pnpm -F \"tiny-player\" publish",
     "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks",
+    "format": "prettier --write .",
     "commit": "cz"
   },
   "lint-staged": {
@@ -31,6 +34,10 @@
     "commitizen": {
       "path": "node_modules/cz-customizable"
     }
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16.15.0"
   },
   "author": "荣顶",
   "license": "MIT",
@@ -46,5 +53,10 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "wait-on": "^7.0.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "cz-customizable@7.0.0": "patches/cz-customizable@7.0.0.patch"
+    }
   }
 }

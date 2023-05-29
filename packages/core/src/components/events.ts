@@ -1,77 +1,82 @@
-enum VideoEventsEnum {
-  abort = 'abort',
-  canplay = 'canplay',
-  canplaythrough = 'canplaythrough',
-  durationchange = 'durationchange',
-  emptied = 'emptied',
-  ended = 'ended',
-  error = 'error',
-  loadeddata = 'loadeddata',
-  loadedmetadata = 'loadedmetadata',
-  loadstart = 'loadstart',
-  mozaudioavailable = 'mozaudioavailable',
-  pause = 'pause',
-  play = 'play',
-  playing = 'playing',
-  progress = 'progress',
-  ratechange = 'ratechange',
-  seeked = 'seeked',
-  seeking = 'seeking',
-  stalled = 'stalled',
-  suspend = 'suspend',
-  timeupdate = 'timeupdate',
-  volumechange = 'volumechange',
-  waiting = 'waiting',
-}
-enum playerEvents {
-  screenshot = 'screenshot',
-  destroy = 'destroy',
-  resize = 'resize',
-  fullscreen = 'fullscreen',
-  fullscreen_cancel = 'fullscreen_cancel',
-  webfullscreen = 'webfullscreen',
-  webfullscreen_cancel = 'webfullscreen_cancel',
-}
+import type TinyPlayer from '../index'
+import { VideoEventsEnum, PlayerEventsEnum } from '../types/index'
 
-class Events {
-  private events: { [key: string]: Function[] }
-  private videoEvents: VideoEventsEnum[]
-  private playerEvents: string[]
-  constructor() {
-    this.events = {}
+export type EventsList = keyof typeof VideoEventsEnum | keyof typeof PlayerEventsEnum
 
+export default class TinyPlayEvents {
+  events: { [key: string]: Function[] } = {}
+  player: TinyPlayer
+  videoEvents: VideoEventsEnum[]
+  playerEvents: PlayerEventsEnum[]
+
+  constructor(player: TinyPlayer) {
+    this.player = player
+    // 视频相关事件
     this.videoEvents = Object.keys(VideoEventsEnum).map((key) => VideoEventsEnum[key as keyof typeof VideoEventsEnum])
+    // 播放器相关事件
+    this.playerEvents = Object.keys(PlayerEventsEnum).map((key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum])
 
-    this.playerEvents = Object.keys(playerEvents).map((key) => playerEvents[key as keyof typeof playerEvents])
+    // TODO 测试用
+    // this.videoEvents.forEach((eventName) => this.once(eventName, () => console.log(eventName)))
+    // this.on('timeupdate', (e) => console.log('timeupdate',e.target.currentTime))
+    // this.videoEvents.forEach((eventName) => {
+    //   this.on(eventName, (e: Event) => {
+    //     console.log(eventName, e.type)
+    //   })
+    // })
   }
 
-  on(name: string, callback: Function) {
-    if (this.type(name) && typeof callback === 'function') {
-      if (!this.events[name]) {
-        this.events[name] = []
-      }
+  // 判断事件类型
+  type(name: EventsList) {
+    if (this.playerEvents.indexOf(name as PlayerEventsEnum) !== -1) return 'player'
+    if (this.videoEvents.indexOf(name as VideoEventsEnum) !== -1) return 'video'
+    console.error(`${name} 事件不存在，请查看下文档`)
+    return null
+  }
+
+  // 绑定事件
+  on(name: EventsList, callback: (...arg: any) => void) {
+    const type = this.type(name)
+    if (type && typeof callback !== 'function') return console.error(`${name} 事件的回调函数必须是一个函数`)
+    if (!this.events[name]) this.events[name] = []
+    this.events[name].push(callback)
+    // video 事件，直接绑定到 video 元素上
+    if (type === 'video') {
+      this.player.video.addEventListener(name, callback)
+    }
+    // 播放器的事件
+    if (type === 'player') {
       this.events[name].push(callback)
     }
   }
 
-  trigger(name: string, info: any) {
-    if (this.events[name] && this.events[name].length) {
-      for (let i = 0; i < this.events[name].length; i++) {
-        this.events[name][i](info)
+  // 移除事件
+  off(name: EventsList, callback: () => void) {
+    if (this.type(name) && this.events[name] && this.events[name].length) {
+      const index = this.events[name].indexOf(callback)
+      if (index === -1) return
+      this.events[name].splice(index, 1)
+      // 移除事件监听器
+      if (this.type(name) === 'video') {
+        this.player.video.removeEventListener(name, callback)
       }
     }
   }
 
-  type(name: any) {
-    if (this.playerEvents.indexOf(name) !== -1) {
-      return 'player'
-    } else if (this.videoEvents.indexOf(name) !== -1) {
-      return 'video'
-    }
+  // 触发事件
+  emit(name: string, data?: any) {
+    if (!this.events[name] || !this.events[name].length) return
+    this.events[name].forEach((callback) => {
+      callback(data)
+    })
+  }
 
-    console.error(`Unknown event name: ${name}`)
-    return null
+  // 触发一次后自动注销
+  once(name: EventsList, callback: (...arg: any) => void) {
+    const fn = (...arg: any) => {
+      callback(...arg)
+      this.off(name, fn)
+    }
+    this.on(name, fn)
   }
 }
-
-export default Events

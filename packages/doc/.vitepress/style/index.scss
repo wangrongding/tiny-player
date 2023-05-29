@@ -21,7 +21,7 @@
 
 // 首页特性
 .VPFeatures.VPHomeFeatures {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 // 首页底部
 .VPContent.is-home {
@@ -76,4 +76,11 @@ h1 {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+}
+
+h2 {
+  color: var(--vp-c-brand-dark);
+}
+.dark h2 {
+  color: var(--vp-c-brand-lighter);
 }
