@@ -146,6 +146,8 @@ export default class Controller {
       // 由于缺乏数据而暂停或延迟后，播放准备开始。
       this.player.on('playing', this.onPlaying)
       this.player.on('loadedmetadata', this.initTimeTip)
+      this.player.on('canplay', () => this.toggleLoading(false))
+      this.player.on('seeked', () => this.updateSeekBar(true))
       // 播放，暂停后自动隐藏控制栏
       // this.player.on('pause', this.setAutoHide)
       // this.player.on('play', this.setAutoHide)
@@ -198,8 +200,8 @@ export default class Controller {
 
   // 移除控制栏容器相关事件
   removeMountTargetEvent = () => {
-    this.mountTarget.removeEventListener('mousemove', this.setAutoHide)
-    this.mountTarget.removeEventListener('mouseleave', this.hide)
+    // this.mountTarget?.removeEventListener('mousemove', this.setAutoHide)
+    // this.mountTarget?.removeEventListener('mouseleave', this.hide)
   }
 
   // 设置控制栏的自动隐藏
@@ -207,10 +209,12 @@ export default class Controller {
     this.show()
     clearTimeout(this.autoHideTimer)
     this.autoHideTimer = setTimeout(() => {
-      if (this.player.video.played.length && !this.player.paused && !this.disableAutoHide) {
-        this.hide()
-      }
-    }, 3000)
+      // if (this.player.video.played.length && !this.player.paused && !this.disableAutoHide) {
+      //   this.hide()
+      // }
+      // this.hide()
+      !this.player.paused && !this.disableAutoHide && this.hide()
+    }, 2.5 * 1000)
   }
 
   // 显示控制栏
@@ -240,8 +244,9 @@ export default class Controller {
   }
 
   // 更新播放进度条
-  updateSeekBar = () => {
+  updateSeekBar = (once?: boolean) => {
     this.seekBar.value = (((this.player.video.currentTime - this.player.clipStart) / this.player.duration) * 100).toString()
+    if (once) return
     this.playRaf = window.requestAnimationFrame(() => {
       this.updateSeekBar()
     })
