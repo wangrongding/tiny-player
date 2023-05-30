@@ -93,6 +93,11 @@ export interface ControlOptions {
    */
   mountTarget?: HTMLElement
   /**
+   * @description  是否手动挂载
+   * @default false
+   */
+  manualMount?: boolean
+  /**
    * @description 是否使用原生控制条
    */
   nativeControls?: boolean

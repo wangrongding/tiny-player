@@ -94,6 +94,7 @@ export default class TinyPlayer {
         this.seek(this.clipStart)
         this.play()
       }
+      this.controller.updateSeekBar(true)
     })
     // 视频元数据加载完成
     this.on('loadedmetadata', this.onLoadedMetadata)
@@ -189,22 +190,24 @@ export default class TinyPlayer {
   }
 
   // 播放视频
-  play = () => {
-    this.video.play()
+  play = async () => {
+    await this.video.play()
   }
 
   // 暂停视频
-  pause = () => {
-    this.video.pause()
+  pause = async () => {
+    await this.video.pause()
   }
 
   // 切换播放状态
-  togglePlay = () => {
+  togglePlay = async (event?: Event) => {
     if (this.video!.paused) {
-      this.video!.play()
+      await this.play()
     } else {
-      this.video!.pause()
+      await this.pause()
     }
+    // event.preventDefault()
+    // event.stopPropagation()
   }
 
   // 跳转到视频指定位置，调整视频播放进度
