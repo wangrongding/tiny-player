@@ -44,11 +44,11 @@ export default {
       },
     },
   ],
-  // external: !isDev ? ['hls.js'] : [], // 不被打包到库中，沿用外部依赖
+  external: ['hls.js'], // 不被打包到库中，沿用外部依赖
+  // external: !isDev ? ['hls.js'] : [],
 
   plugins: [
-    !isDev && nodeResolve(),
-    !isDev && del({ targets: 'dist/*' }),
+    del({ targets: 'dist/*' }),
     alias({ entries: [{ find: '@', replacement: 'src' }] }),
     svg({
       stringify: true, // process SVG to DOM Node or String. Default: false
