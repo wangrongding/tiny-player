@@ -73,12 +73,16 @@ export default class Controller {
     this.seekBar = this.controlElement.querySelector('.tp-seek-slider') as HTMLInputElement
     this.seekBar.addEventListener('input', this.onSeeking)
     this.seekBar.addEventListener('mousedown', (event) => event.stopPropagation())
+    this.seekBar.addEventListener('touchstart', (event) => event.stopPropagation())
+    this.seekBar.addEventListener('touchmove', (event) => event.stopPropagation())
+    this.seekBar.addEventListener('touchend', (event) => event.stopPropagation())
     this.playTime = this.controlElement.querySelector('.tp-play-time') as HTMLInputElement
   }
 
   // 初始化音量控制栏
   private initVolumeButton = () => {
-    this.player.video.volume = this.player.options.volume || 1
+    const volume = this.player.options.volume ? (this.player.options.volume > 1 ? this.player.options.volume / 100 : this.player.options.volume) : 1
+    this.player.video.volume = volume
     if (!this.controlOptions.volumeControl) return
     // 设置控制条声音控制栏的事件处理函数
     this.muteButton = this.controlElement.querySelector('.tp-volume-icon') as HTMLButtonElement
@@ -100,30 +104,29 @@ export default class Controller {
 
   // 监听控制栏的尺寸变化, 控制显示隐藏 播放按钮，视频时间和音量控制栏
   private watchControlResize = () => {
-    const palySvg = this.playButton.querySelector('svg') as SVGElement
     const resizeObserver = new ResizeObserver(
       throttle((entries: ResizeObserverEntry[]) => {
         for (const entry of entries) {
           if (!entry.contentBoxSize) return
 
           const { inlineSize, blockSize } = entry.contentBoxSize[0]
-          // 控制播放按钮的显示隐藏
-          if (blockSize < 50) {
+          // 播放按钮的显示隐藏
+          if (blockSize < 30 || inlineSize < 40) {
             this.playButton.style.display = 'none'
           } else {
             this.playButton.style.display = 'grid'
           }
-          // 控制播放按钮的缩放
-          if (blockSize < 80) {
-            palySvg.style.width = '20px'
-          } else {
-            palySvg.style.width = '50px'
-          }
           // 控制栏的显示隐藏
-          if (blockSize < 120) {
+          if (blockSize < 75 || inlineSize < 60) {
             this.bottomControlBar.style.display = 'none'
           } else {
             this.bottomControlBar.style.display = 'flex'
+          }
+          // 播放按钮的缩放
+          if (blockSize < 100 || inlineSize < 100) {
+            this.playButton.style.scale = '0.5'
+          } else {
+            this.playButton.style.scale = '1'
           }
           // 控制全屏按钮的显示隐藏
           if (this.fullScreenButton && inlineSize < 200) {
@@ -153,8 +156,7 @@ export default class Controller {
   // 初始化控制栏相关事件
   private initControlsEvent = () => {
     if (isMobile) {
-      this.player.on('play', () => this.setAutoHide())
-      this.player.on('pause', () => this.setAutoHide())
+      // do something
     } else {
       // 由于暂时缺少数据，播放已停止。
       this.player.on('waiting', this.onWaiting)
@@ -162,14 +164,14 @@ export default class Controller {
       this.player.on('timeupdate', this.onTimeupdate)
       // 由于缺乏数据而暂停或延迟后，播放准备开始。
       this.player.on('playing', this.onPlaying)
-      this.player.on('loadedmetadata', this.initTimeTip)
       this.player.on('canplay', () => this.toggleLoading(false))
       this.player.on('seeked', () => this.onSeeked)
-      // 播放，暂停后自动隐藏控制栏
-      this.player.on('pause', this.setAutoHide)
-      this.player.on('play', this.setAutoHide)
-      this.initMountTargetEvent()
     }
+    this.player.on('loadedmetadata', this.initTimeTip)
+    // 播放，暂停后自动隐藏控制栏
+    this.player.on('pause', this.setAutoHide)
+    this.player.on('play', this.setAutoHide)
+    this.initMountTargetEvent()
     // 监听控制栏的尺寸变化
     this.watchControlResize()
   }
@@ -177,43 +179,48 @@ export default class Controller {
   // 初始化时间 tip 逻辑
   initTimeTip = () => {
     const tooltip = this.controlElement.querySelector('.tp-play-time-tip') as HTMLElement
-    const seekBarWidth = this.seekBar.clientWidth
     const duration = this.player.duration
     this.seekBar.addEventListener('input', (event: Event) => {
       const target = event.target as HTMLInputElement
       tooltip.textContent = secondToTime((+target.value / 100) * duration)
     })
 
-    this.seekBar.addEventListener('mousemove', (event) => {
-      const positionX = event.offsetX - tooltip.clientWidth / 2 + 10
-      tooltip.style.left = positionX + 'px'
+    let seekBarWidth = 0
+    // 显示 tip
+    const showTip = (event: MouseEvent | TouchEvent) => {
+      seekBarWidth = seekBarWidth || this.seekBar.clientWidth
+      let positionX = 0
       tooltip.style.display = 'block'
-
-      const timeStamp = (event.offsetX / seekBarWidth) * duration
+      if (event instanceof MouseEvent) {
+        positionX = event.offsetX
+      }
+      if (event instanceof TouchEvent) {
+        const touch = event.touches[0]
+        const target = event.target as HTMLElement
+        let rect = target.getBoundingClientRect()
+        positionX = touch.clientX - rect.left
+      }
+      const timeStamp = (positionX / seekBarWidth) * duration
       tooltip.textContent = secondToTime(timeStamp)
-
-      if (event.offsetX < 0 || event.offsetX > seekBarWidth) {
+      if (positionX < 0 || positionX > seekBarWidth) {
         tooltip.style.display = 'none'
       }
-    })
-    this.seekBar.addEventListener('mouseleave', function () {
-      tooltip.style.display = 'none'
-    })
+      tooltip.style.left = positionX - tooltip.clientWidth / 2 + 10 + 'px'
+    }
+
+    this.seekBar.addEventListener('touchmove', showTip)
+    this.seekBar.addEventListener('mousemove', showTip)
+    // 隐藏 tip
+    const hideTip = () => (tooltip.style.display = 'none')
+    this.seekBar.addEventListener('mouseleave', hideTip)
+    this.seekBar.addEventListener('touchend', hideTip)
   }
 
   // 初始化控制栏容器相关事件
   initMountTargetEvent = () => {
-    // if (isMobile) {
-    //   this.mountTarget.addEventListener('touchstart', (e: any) => {
-    //     e.stopPropagation()
-    //     if (this.player.isDisabled) return
-    //     this.setAutoHide()
-    //   })
-    // }
+    if (isMobile) this.mountTarget.addEventListener('touchstart', this.setAutoHide)
     this.mountTarget.addEventListener('click', this.setAutoHide)
-    this.mountTarget.addEventListener('mousemove', this.show)
-    // this.mountTarget.addEventListener('mousemove', this.setAutoHide)
-    // this.mountTarget.addEventListener('mouseleave', this.hide)
+    this.mountTarget.addEventListener('mousemove', this.setAutoHide)
   }
 
   // 移除控制栏容器相关事件
@@ -227,19 +234,15 @@ export default class Controller {
     this.show()
     clearTimeout(this.autoHideTimer)
     this.autoHideTimer = setTimeout(() => {
-      // if (this.player.video.played.length && !this.player.paused && !this.disableAutoHide) {
-      //   this.hide()
-      // }
+      // if (this.player.video.played.length && !this.player.paused && !this.disableAutoHide) this.hide()
       // this.hide()
       !this.player.paused && !this.disableAutoHide && this.hide()
-    }, 2.5 * 1000)
+    }, 2 * 1000)
   }
 
   // 显示控制栏
   show = () => {
-    if (!isMobile) {
-      this.mountTarget.classList.remove('tp-hide-controller')
-    }
+    this.mountTarget.classList.remove('tp-hide-controller')
   }
 
   // 隐藏控制栏
@@ -265,9 +268,7 @@ export default class Controller {
   updateSeekBar = (once?: boolean) => {
     this.seekBar.value = (((this.player.video.currentTime - this.player.clipStart) / this.player.duration) * 100).toString()
     if (once) return
-    this.playRaf = window.requestAnimationFrame(() => {
-      this.updateSeekBar()
-    })
+    this.playRaf = window.requestAnimationFrame(() => this.updateSeekBar())
   }
 
   // 拖动进度条
@@ -335,6 +336,7 @@ export default class Controller {
 
   // 切换音量图标
   switchVolumeIcon = () => {
+    if (!this.controlOptions.volumeControl) return
     if (this.player.video.muted || this.player.video.volume === 0) {
       this.muteButton!.innerHTML = Icons.volumeOff
     } else if (this.player.video.volume > 0 && this.player.video.volume < 1) {

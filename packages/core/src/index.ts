@@ -77,13 +77,9 @@ export default class TinyPlayer {
     this.initMSE(this.video, this.options.type)
 
     // 播放回调
-    this.on('play', () => {
-      this.paused && this.onPlay()
-    })
+    this.on('play', this.onPlay)
     // 暂停播放
-    this.on('pause', () => {
-      !this.paused && this.onPause()
-    })
+    this.on('pause', this.onPause)
     // 播放结束
     this.on('ended', () => {
       if (this.clipEnd) return

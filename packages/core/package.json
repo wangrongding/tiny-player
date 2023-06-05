@@ -1,6 +1,6 @@
 {
   "name": "tiny-player",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "type": "module",
   "types": "./dist/types/index.d.ts",
@@ -8,13 +8,17 @@
   "module": "./dist/index.js",
   "files": [
     "dist",
-    "package.json",
-    "README.md"
+    "package.json"
   ],
   "scripts": {
     "dev": "rollup -c -w",
     "dev-w": "cross-env IS_DEV=true node ./custom-dev.js",
     "build": "rollup -c"
+  },
+  "homepage": "https://tiny-player.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangrongding/tiny-player"
   },
   "keywords": [
     "player",
