@@ -265,6 +265,7 @@ export default class TinyPlayer {
     this.duration = end - start
     this.seek(start)
     this.controller.initTimeTip()
+    this.controller.updateSeekBar(true)
   }
 
   // 销毁播放器

@@ -158,15 +158,15 @@ export default class Controller {
     if (isMobile) {
       // do something
     } else {
-      // 由于暂时缺少数据，播放已停止。
-      this.player.on('waiting', this.onWaiting)
-      // 更新播放时间
-      this.player.on('timeupdate', this.onTimeupdate)
-      // 由于缺乏数据而暂停或延迟后，播放准备开始。
-      this.player.on('playing', this.onPlaying)
-      this.player.on('canplay', () => this.toggleLoading(false))
-      this.player.on('seeked', () => this.onSeeked)
     }
+    // 由于暂时缺少数据，播放已停止。
+    this.player.on('waiting', this.onWaiting)
+    // 更新播放时间
+    this.player.on('timeupdate', this.onTimeupdate)
+    // 由于缺乏数据而暂停或延迟后，播放准备开始。
+    this.player.on('playing', this.onPlaying)
+    this.player.on('canplay', () => this.toggleLoading(false))
+    this.player.on('seeked', () => this.onSeeked)
     this.player.on('loadedmetadata', this.initTimeTip)
     // 播放，暂停后自动隐藏控制栏
     this.player.on('pause', this.setAutoHide)
@@ -296,7 +296,7 @@ export default class Controller {
     const videoCurrentTime = this.player.video.currentTime
 
     // 当前播放时间大于结束时间时，暂停播放 / 循环播放
-    if (this.player.clipEnd && videoCurrentTime >= this.player.clipEnd - 0.1) {
+    if (this.player.clipEnd && videoCurrentTime >= this.player.clipEnd /* - 0.1 */) {
       this.player.pause()
       this.player.seek(this.player.clipStart)
       this.updateSeekBar(true)
