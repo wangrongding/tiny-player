@@ -9,10 +9,10 @@
   </a>
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://github.com/wangrongding/tiny-player"><img alt="stars" src="https://img.shields.io/github/stars/wangrongding/ding-trans?style=flat" /></a>
   <a href="https://www.npmjs.com/package/tiny-player"><img alt="npm" src="https://img.shields.io/npm/dt/tiny-player?style=flat&label=downloads&color=cb3837&labelColor=cb0000&logo=npm" /></a>
-</p>
+</p> -->
 
 ---
 
