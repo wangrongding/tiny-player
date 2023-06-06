@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 patchedDependencies:
   cz-customizable@7.0.0:
@@ -44,10 +48,6 @@ importers:
         version: 7.0.1
 
   packages/core:
-    dependencies:
-      hls.js:
-        specifier: ^1.4.3
-        version: 1.4.3
     devDependencies:
       '@rollup/plugin-alias':
         specifier: ^5.0.0
@@ -64,6 +64,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      hls.js:
+        specifier: ^1.4.5
+        version: 1.4.5
       rollup:
         specifier: ^3.20.6
         version: 3.20.6
@@ -3444,9 +3447,9 @@ packages:
     hasBin: true
     dev: true
 
-  /hls.js@1.4.3:
-    resolution: {integrity: sha512-EE1MjIYDNO+ynbmCpAWfhUwQpyG8gUcKKuGDGgYgfRmW/g+inQUQ8sVVVY5WZaCxEGxDMGLbXhXGepkmDIMvdw==}
-    dev: false
+  /hls.js@1.4.5:
+    resolution: {integrity: sha512-xb7IiSM9apU3tJWb5rdSStobXPNJJykHTwSy7JnLF5y/kLJXWjoR/fEpNBlwYxkKcDiiSfO9SQI8yFravZJxIg==}
+    dev: true
 
   /homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
