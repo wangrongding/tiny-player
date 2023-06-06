@@ -296,7 +296,7 @@ export default class Controller {
     const videoCurrentTime = this.player.video.currentTime
 
     // 当前播放时间大于结束时间时，暂停播放 / 循环播放
-    if (this.player.clipEnd && videoCurrentTime >= this.player.clipEnd /* - 0.1 */) {
+    if (!this.player.handleVideoEndByOuter && this.player.clipEnd && videoCurrentTime >= this.player.clipEnd /* - 0.1 */) {
       this.player.pause()
       this.player.seek(this.player.clipStart)
       this.updateSeekBar(true)

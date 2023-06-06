@@ -34,12 +34,14 @@ export default class TinyPlayer {
 
   clipStart: number // 视频片段的开始时间
   clipEnd: number // 视频片段的结束时间
+  handleVideoEndByOuter: boolean = false // 是否由外部控制视频结束
 
   constructor(options: PlayerOptions) {
     this.container = options.container
     this.options = options
     this.clipStart = options.clipStart || 0
     this.clipEnd = options.clipEnd || 0
+    this.handleVideoEndByOuter = options.handleVideoEndByOuter || false
     this.setup()
   }
 

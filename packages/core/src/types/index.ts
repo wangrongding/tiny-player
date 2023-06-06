@@ -70,6 +70,11 @@ export interface PlayerOptions {
    * @description 视频片段的结束时间
    */
   clipEnd?: number
+  /**
+   * @description 是否由外部控制视频结束 ,用于视频片段播放 ,为 true 时，视频播放结束时不会触发 video end 事件
+   * @default false
+   */
+  handleVideoEndByOuter?: boolean
 }
 
 /**
