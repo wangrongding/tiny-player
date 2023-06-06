@@ -20,7 +20,7 @@ hero:
 features:
   - title: 🧩 兼容性好
     details: 0 依赖，任何框架和浏览器都可以使用，支持移动端。
-  - title: 🌸 多格式支持
+  - title: 🌸 多格式支持，支持流式播放
     details: 支持 mp4、webm、ogg 等多种常见格式，支持 m3u8，支持自动切换。
   - title: 🌟 控制栏可插拔
     details: 支持自定义控制栏，控制栏挂载到目标节点，支持自定义控制栏组件显示隐藏。
