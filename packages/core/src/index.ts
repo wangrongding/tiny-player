@@ -55,6 +55,7 @@ export default class TinyPlayer {
     // 播放器模板
     this.videoContainer.innerHTML = playerTemplate(this.options)
     // 将 player 添加到指定容器中
+    this.container.innerHTML = ''
     this.container.appendChild(this.videoContainer)
     // 视频节点
     this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
