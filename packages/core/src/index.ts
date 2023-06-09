@@ -61,6 +61,9 @@ export default class TinyPlayer {
     this.video = this.videoContainer.querySelector('video') as HTMLVideoElement
     // 水印节点
     this.waterMark = this.videoContainer.querySelector('.tp-watermark') as HTMLElement
+    // 设置水印图案
+    this.waterMark.style.backgroundImage = `url(${this.options.waterMarkUrl})`
+
     // 播放器事件系统
     this.events = new TinyPlayEvents(this)
     // 初始化视频

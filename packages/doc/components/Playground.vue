@@ -79,6 +79,7 @@ const playOptions: PlayerOptions = reactive({
   src: videoSource, // 视频地址
   type: 'hls', // 视频类型
   waterMarkShow: true, // 是否显示水印
+  waterMarkUrl: '//assets.fedtop.com/picbed/202306091010648.png',
 
   // clipStart: 6,
   // clipEnd: 12,

@@ -63,6 +63,10 @@ export interface PlayerOptions {
    */
   waterMarkShow?: boolean
   /**
+   * @description 自定义水印地址
+   */
+  waterMarkUrl?: string
+  /**
    * @description 视频片段的开始时间
    */
   clipStart?: number
