@@ -22,6 +22,17 @@ export const debounce = (fn: Function, delay: number) => {
   }
 }
 
+// 格式化时间为 00:00 toFixed有值时 则格式化为00:00.x
+export const formatTime = (secondTime: number, fractionDigits?: number) => {
+  const baseFractionDigits = Math.pow(10, fractionDigits ?? 0)
+  if (secondTime < 59.9) {
+    return `${secondTime.toFixed(1)}s`
+  }
+  const m = Math.floor(secondTime / 60)
+  const s = Math.floor((secondTime % 60) * baseFractionDigits) / baseFractionDigits
+  return `${m}:${s < 10 ? `0${s}` : s}`
+}
+
 // 是否是移动端
 export const isMobile = /mobile/i.test(window.navigator.userAgent)
 // 是否是火狐浏览器

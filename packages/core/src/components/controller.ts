@@ -1,5 +1,5 @@
 import controlTemplate from '@/assets/template/control.ejs'
-import { isMobile, throttle, secondToTime } from '@/utils/index'
+import { isMobile, throttle, secondToTime, formatTime } from '@/utils/index'
 import Icons from '@/assets/icons/index'
 import { ControlOptions } from '../types/index'
 import type TinyPlayer from '../index'
@@ -71,11 +71,27 @@ export default class Controller {
   private initSeekBar = () => {
     // 设置控制条滑块的事件处理函数
     this.seekBar = this.controlElement.querySelector('.tp-seek-slider') as HTMLInputElement
-    this.seekBar.addEventListener('input', this.onSeeking)
-    this.seekBar.addEventListener('mousedown', (event) => event.stopPropagation())
-    this.seekBar.addEventListener('touchstart', (event) => event.stopPropagation())
+    let playStatus = false
+    // 记录当前播放状态，并暂停播放
+    const pausePlay = (event: Event) => {
+      event.stopPropagation()
+      // 记录当前播放状态
+      playStatus = !this.player.video.paused
+      // 先暂停播放
+      this.player.pause()
+    }
+    // 恢复播放状态
+    const resumePlay = (event: Event) => {
+      event.stopPropagation()
+      // 恢复播放状态
+      playStatus && this.player.play()
+    }
+    this.seekBar.addEventListener('mousedown', pausePlay)
+    this.seekBar.addEventListener('mouseup', resumePlay)
+    this.seekBar.addEventListener('touchstart', pausePlay)
+    this.seekBar.addEventListener('touchend', resumePlay)
     this.seekBar.addEventListener('touchmove', (event) => event.stopPropagation())
-    this.seekBar.addEventListener('touchend', (event) => event.stopPropagation())
+    this.seekBar.addEventListener('input', this.onSeeking)
     this.playTime = this.controlElement.querySelector('.tp-play-time') as HTMLInputElement
   }
 
@@ -182,7 +198,7 @@ export default class Controller {
     const duration = this.player.duration
     this.seekBar.addEventListener('input', (event: Event) => {
       const target = event.target as HTMLInputElement
-      tooltip.textContent = secondToTime((+target.value / 100) * duration)
+      tooltip.textContent = formatTime((+target.value / 100) * duration)
     })
 
     let seekBarWidth = 0
@@ -201,7 +217,7 @@ export default class Controller {
         positionX = touch.clientX - rect.left
       }
       const timeStamp = (positionX / seekBarWidth) * duration
-      tooltip.textContent = secondToTime(timeStamp)
+      tooltip.textContent = formatTime(timeStamp)
       if (positionX < 0 || positionX > seekBarWidth) {
         tooltip.style.display = 'none'
       }
@@ -276,7 +292,7 @@ export default class Controller {
     event.preventDefault()
     event.stopPropagation()
     const target = event.target as HTMLInputElement
-    const seekTime = (parseFloat(target.value) / 100) * this.player.duration
+    const seekTime = (parseFloat(target.value) / 100) * this.player.duration + this.player.clipStart
     this.player.seek(seekTime)
   }
 
@@ -294,9 +310,8 @@ export default class Controller {
     const currentTime = progress * this.player.duration * 0.01
     this.playTime && (this.playTime.textContent = `${secondToTime(currentTime < 0 ? 0 : currentTime)} / ${secondToTime(this.player.duration)}`)
     const videoCurrentTime = this.player.video.currentTime
-
     // 当前播放时间大于结束时间时，暂停播放 / 循环播放
-    if (!this.player.handleVideoEndByOuter && this.player.clipEnd && videoCurrentTime >= this.player.clipEnd /* - 0.1 */) {
+    if (!this.player.handleVideoEndByOuter && this.player.clipEnd && videoCurrentTime >= this.player.clipEnd - 0.1) {
       this.player.pause()
       this.player.seek(this.player.clipStart)
       this.updateSeekBar(true)
