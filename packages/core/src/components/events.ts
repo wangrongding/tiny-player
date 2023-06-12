@@ -39,7 +39,7 @@ export default class TinyPlayEvents {
     const type = this.type(name)
     if (type && typeof callback !== 'function') return console.error(`${name} 事件的回调函数必须是一个函数`)
     if (!this.events[name]) this.events[name] = []
-    this.events[name].push(callback)
+    // this.events[name].push(callback)
     // video 事件，直接绑定到 video 元素上
     if (type === 'video') {
       this.player.video.addEventListener(name, callback)

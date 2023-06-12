@@ -1,6 +1,6 @@
 {
   "private": "true",
-  "name":"root",
+  "name": "root",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset:init": "npx changeset init",
