@@ -1,14 +1,7 @@
 // 控制面板
 .tp-hide-controller {
   .tp-control-panel {
-    cursor: none;
-    opacity: 0;
-    transform: translateY(100%);
-  }
-}
-.tp-show-controller {
-  .tp-control-panel {
-    opacity: 1;
+    display: none;
   }
 }
 

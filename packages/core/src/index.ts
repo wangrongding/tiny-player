@@ -214,7 +214,7 @@ export default class TinyPlayer {
 
   // 跳转到视频指定位置，调整视频播放进度
   seek = (time: number) => {
-    this.video.currentTime = time
+    this.video.currentTime = Number(time)
   }
 
   // 设置音量

@@ -163,7 +163,7 @@ export default class Controller {
             this.volumeControlBar && (this.volumeControlBar.style.display = 'flex')
           }
         }
-      }, 50),
+      }, 30),
     )
 
     resizeObserver.observe(this.controlElement)
@@ -201,10 +201,9 @@ export default class Controller {
       tooltip.textContent = formatTime((+target.value / 100) * duration)
     })
 
-    let seekBarWidth = 0
     // 显示 tip
     const showTip = (event: MouseEvent | TouchEvent) => {
-      seekBarWidth = seekBarWidth || this.seekBar.clientWidth
+      const seekBarWidth = this.seekBar.clientWidth
       let positionX = 0
       tooltip.style.display = 'block'
       if (event instanceof MouseEvent) {
@@ -250,9 +249,7 @@ export default class Controller {
     this.show()
     clearTimeout(this.autoHideTimer)
     this.autoHideTimer = setTimeout(() => {
-      // if (this.player.video.played.length && !this.player.paused && !this.disableAutoHide) this.hide()
-      // this.hide()
-      !this.player.paused && !this.disableAutoHide && this.hide()
+      !this.player.paused && this.hide()
     }, 2 * 1000)
   }
 
@@ -292,7 +289,7 @@ export default class Controller {
     event.preventDefault()
     event.stopPropagation()
     const target = event.target as HTMLInputElement
-    const seekTime = (parseFloat(target.value) / 100) * this.player.duration + this.player.clipStart
+    const seekTime = Number((parseFloat(target.value) / 100) * this.player.duration) + Number(this.player.clipStart)
     this.player.seek(seekTime)
   }
 
@@ -313,7 +310,7 @@ export default class Controller {
     // 当前播放时间大于结束时间时，暂停播放 / 循环播放
     if (!this.player.handleVideoEndByOuter && this.player.clipEnd && videoCurrentTime >= this.player.clipEnd - 0.1) {
       this.player.pause()
-      this.player.seek(this.player.clipStart)
+      this.player.seek(Number(this.player.clipStart))
       this.updateSeekBar(true)
       if (this.player.options.loop) this.player.play()
     }
