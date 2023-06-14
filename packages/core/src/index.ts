@@ -132,6 +132,11 @@ export default class TinyPlayer {
     this.events.on(name, callback)
   }
 
+  // 注册一次性事件
+  once(name: EventsList, callback: (...arg: any) => void) {
+    this.events.once(name, callback)
+  }
+
   // 手动触发事件
   emit(name: EventsList, data?: any) {
     this.events.emit(name, data)
