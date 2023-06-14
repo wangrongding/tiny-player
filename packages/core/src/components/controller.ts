@@ -127,7 +127,7 @@ export default class Controller {
 
           const { inlineSize, blockSize } = entry.contentBoxSize[0]
           // 播放按钮的显示隐藏
-          if (blockSize < 30 || inlineSize < 40) {
+          if (blockSize < 40 || inlineSize < 40) {
             this.playButton.style.display = 'none'
           } else {
             this.playButton.style.display = 'grid'
@@ -196,37 +196,48 @@ export default class Controller {
   initTimeTip = () => {
     const tooltip = this.controlElement.querySelector('.tp-play-time-tip') as HTMLElement
     const duration = this.player.duration
+    let hasMoved = false
+    let outOfBounds = false
     this.seekBar.addEventListener('input', (event: Event) => {
       const target = event.target as HTMLInputElement
       tooltip.textContent = formatTime((+target.value / 100) * duration)
+      if (isMobile && hasMoved && !outOfBounds) tooltip.style.display = 'block'
     })
 
     // 显示 tip
     const showTip = (event: MouseEvent | TouchEvent) => {
-      const seekBarWidth = this.seekBar.clientWidth
+      const seekBarWidth = this.seekBar.getBoundingClientRect().width
       let positionX = 0
-      tooltip.style.display = 'block'
       if (event instanceof MouseEvent) {
+        tooltip.style.display = 'block'
         positionX = event.offsetX
+        const timeStamp = (positionX / seekBarWidth) * duration
+        tooltip.textContent = formatTime(timeStamp)
       }
       if (event instanceof TouchEvent) {
         const touch = event.touches[0]
         const target = event.target as HTMLElement
         let rect = target.getBoundingClientRect()
         positionX = touch.clientX - rect.left
+        hasMoved = true
       }
-      const timeStamp = (positionX / seekBarWidth) * duration
-      tooltip.textContent = formatTime(timeStamp)
       if (positionX < 0 || positionX > seekBarWidth) {
         tooltip.style.display = 'none'
+        outOfBounds = true
       }
+      outOfBounds = false
       tooltip.style.left = positionX - tooltip.clientWidth / 2 + 10 + 'px'
     }
 
     this.seekBar.addEventListener('touchmove', showTip)
     this.seekBar.addEventListener('mousemove', showTip)
     // 隐藏 tip
-    const hideTip = () => (tooltip.style.display = 'none')
+    const hideTip = () => {
+      setTimeout(() => {
+        tooltip.style.display = 'none'
+        hasMoved = false
+      }, 100)
+    }
     this.seekBar.addEventListener('mouseleave', hideTip)
     this.seekBar.addEventListener('touchend', hideTip)
   }

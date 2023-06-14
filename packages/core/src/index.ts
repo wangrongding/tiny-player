@@ -90,10 +90,10 @@ export default class TinyPlayer {
     this.on('ended', () => {
       if (this.clipEnd) return
       if (!this.options.loop) {
-        this.seek(this.clipStart)
+        !this.paused && this.seek(this.clipStart)
         this.pause()
       } else {
-        this.seek(this.clipStart)
+        !this.paused && this.seek(this.clipStart)
         this.play()
       }
       this.controller.updateSeekBar(true)
