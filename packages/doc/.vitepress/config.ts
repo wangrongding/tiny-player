@@ -39,16 +39,16 @@ export default defineConfig({
           { text: '快速开始', link: '/page/001-快速开始' },
           { text: '参数与事件', link: '/page/002-参数与事件' },
           { text: 'MSE支持', link: '/page/003-MSE支持' },
-          { text: 'Playground', link: '/page/playground' },
           { text: 'Q&A', link: '/page/009-常见问题' },
-          { text: '开发记录', link: '/page/开发记录' },
+          { text: 'Playground', link: '/page/playground' },
+          // { text: '开发记录', link: '/page/开发记录' },
           // { text: 'Markdown Examples', link: '/page/markdown-examples' },
           // { text: 'Runtime API Examples', link: '/page/api-examples' },
         ],
       },
     ],
     // 社交网站
-    socialLinks: [{ icon: 'github', link: 'https://github.com/wangrongding' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/wangrongding/tiny-player' }],
     // 页脚
     footer: {
       message: 'Released under the MIT License.',

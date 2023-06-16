@@ -13,9 +13,12 @@ hero:
     - theme: brand
       text: Get Started
       link: /page/001-快速开始
+    - theme: brand
+      text: Playground
+      link: /page/playground
     - theme: alt
       text: View on GitHub
-      link: https://github.com/wangrongding
+      link: https://github.com/wangrongding/tiny-player
 
 features:
   - title: 🧩 兼容性好

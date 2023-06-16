@@ -64,7 +64,6 @@ function resetControl() {
 
 const playOptions: PlayerOptions = reactive({
   container: null,
-  width: '800px', // 宽度
   controlOptions: {
     playTime: true, // 是否显示播放时间
     volumeControl: true, // 是否显示音量控制条
@@ -80,7 +79,8 @@ const playOptions: PlayerOptions = reactive({
   type: 'hls', // 视频类型
   waterMarkShow: true, // 是否显示水印
   waterMarkUrl: '//assets.fedtop.com/picbed/202306091010648.png',
-
+  width: '800px', // 自定义宽度
+  // height: 'xxxx', // 自定义高度
   // clipStart: 6,
   // clipEnd: 12,
 })
