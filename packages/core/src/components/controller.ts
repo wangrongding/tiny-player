@@ -206,7 +206,7 @@ export default class Controller {
 
     // 显示 tip
     const showTip = (event: MouseEvent | TouchEvent) => {
-      const seekBarWidth = this.seekBar.getBoundingClientRect().width
+      const seekBarWidth = this.seekBar.clientWidth
       let positionX = 0
       if (event instanceof MouseEvent) {
         tooltip.style.display = 'block'
