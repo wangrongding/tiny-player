@@ -48,7 +48,8 @@ export default defineConfig({
       },
     ],
     // 社交网站
-    socialLinks: [{ icon: 'github', link: 'https://github.com/wangrongding/tiny-player' }],
+    // socialLinks: [{ icon: 'github', link: 'https://github.com/wangrongding/tiny-player' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/wangrongding' }],
     // 页脚
     footer: {
       message: 'Released under the MIT License.',

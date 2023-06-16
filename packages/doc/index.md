@@ -18,7 +18,8 @@ hero:
       link: /page/playground
     - theme: alt
       text: View on GitHub
-      link: https://github.com/wangrongding/tiny-player
+      # link: https://github.com/wangrongding/tiny-player
+      link: https://github.com/wangrongding
 
 features:
   - title: 🧩 兼容性好
