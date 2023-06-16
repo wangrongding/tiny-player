@@ -33,9 +33,54 @@
 - 🎨 轻量（仅 25kb 大小，gzip 压缩后仅 7kb 大小。）
 - 🥳 软解【wip】（支持音视频软解，支持自定义解码器，解决各个浏览器的兼容性问题。（开发中））
 
+## Usage
+
+### 安装
+
+```sh
+npm i tiny-player
+# or
+yarn add tiny-player
+# or
+pnpm add tiny-player
+```
+
+### 使用
+
+```js
+import TinyPlayer from 'tiny-player'
+const tp = new TinyPlayer({
+  container: document.querySelector('#tiny-player'), // 挂载节点
+  poster: poster, // 封面地址
+  controls: true, // 是否显示控制栏
+  loop: true, // 循环播放
+  volume: 0.9, // 音量
+  autoplay: false, // 自动播放
+  controlOptions: {
+    playTime: true, // 是否显示播放时间
+    volumeControl: true, // 是否显示音量控制条
+    fullScreenControl: true, // 是否显示全屏按钮
+    mountTarget: null, // 挂载目标节点
+    nativeControls: false, // 是否使用原生控制条
+  },
+  preload: 'metadata', // 预加载
+  src: videoSource, // 视频地址
+  type: 'hls', // 视频类型
+  waterMarkShow: true, // 是否显示水印
+  waterMarkUrl: '//assets.fedtop.com/picbed/202306091010648.png',
+  clipStart: 6, // 视频片段的开始时间
+  clipEnd: 12, // 视频片段的结束时间
+  // width: '800px', // 自定义宽度
+  // height: '800px', // 自定义高度
+  // "...":'...' // 开发中。。。
+})
+```
+
+更多请查看[文档](https://tiny-player.vercel.app)
+
 ## Development
 
-确保 node 版本 >= 16 ，且全局安装 pnpm
+调试或开发本项目：确保 node 版本 >= 16.15.1 ，且全局安装 pnpm
 
 ```sh
 npm install -g pnpm
