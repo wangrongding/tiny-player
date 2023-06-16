@@ -49,6 +49,8 @@ pnpm add tiny-player
 
 ```js
 import TinyPlayer from 'tiny-player'
+
+// 示例：实际使用的时候，很多参数都是可选的，只需要传入必要的参数即可，详情请查看文档
 const tp = new TinyPlayer({
   container: document.querySelector('#tiny-player'), // 挂载节点
   poster: poster, // 封面地址
