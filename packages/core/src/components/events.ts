@@ -17,13 +17,8 @@ export default class TinyPlayEvents {
     this.playerEvents = Object.keys(PlayerEventsEnum).map((key) => PlayerEventsEnum[key as keyof typeof PlayerEventsEnum])
 
     // TODO 测试用
-    // this.videoEvents.forEach((eventName) => this.once(eventName, () => console.log(eventName)))
+    // this.videoEvents.forEach((eventName) => this.on(eventName, () => console.log(eventName)))
     // this.on('timeupdate', (e) => console.log('timeupdate',e.target.currentTime))
-    // this.videoEvents.forEach((eventName) => {
-    //   this.on(eventName, (e: Event) => {
-    //     console.log(eventName, e.type)
-    //   })
-    // })
   }
 
   // 判断事件类型

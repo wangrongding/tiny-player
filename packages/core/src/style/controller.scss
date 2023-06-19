@@ -62,8 +62,7 @@
     height: 35px;
     user-select: none;
     transition: all 0.3s ease;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45));
-    // background: rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.4));
     color: white;
     padding: 0 10px;
     box-sizing: border-box;
