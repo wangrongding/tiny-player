@@ -290,7 +290,7 @@ export default class Controller {
 
   // 更新播放进度条
   updateSeekBar = (once?: boolean) => {
-    this.seekBar.value = (((this.player.video.currentTime - this.player.clipStart) / this.player.duration) * 100).toString()
+    this.seekBar.value = (((this.player.video.currentTime - this.player.clipStart) / this.player.duration) * 100).toString() || '0'
     if (once) return
     this.playRaf = window.requestAnimationFrame(() => this.updateSeekBar())
   }
