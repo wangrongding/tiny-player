@@ -13,7 +13,7 @@
     "baseUrl": "./", // 解析非相对模块名的基准目录
     "paths": {
       "@/*": ["src/*"], // 路径映射
-      "tslib" : ["node_modules/tslib/tslib.d.ts"]
+      "tslib": ["node_modules/tslib/tslib.d.ts"]
     }
     // "allowImportingTsExtensions": true // 允许从没有指定扩展名的非JavaScript文件导入时，该文件将被当成TypeScript文件处理
     // "noEmit": true, // 不生成输出文件
