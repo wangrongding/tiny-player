@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6", // 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'.
+    "target": "ES5", // 指定ECMAScript目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'.
     "module": "es6", // 指定生成哪个模块系统代码
     "esModuleInterop": true, // 允许从CommonJS模块导入默认导出
     "strict": true, // 启用所有严格类型检查选项
@@ -14,14 +14,14 @@
     "paths": {
       "@/*": ["src/*"], // 路径映射
       "tslib" : ["node_modules/tslib/tslib.d.ts"]
-    }
+    },
+    "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
     // "allowImportingTsExtensions": true // 允许从没有指定扩展名的非JavaScript文件导入时，该文件将被当成TypeScript文件处理
     // "noEmit": true, // 不生成输出文件
     // "emitDeclarationOnly": true,
     // "moduleResolution": "nodenext", // 指定模块解析策略
     // "removeComments": false // 是否删除注释
     // "skipLibCheck": true // 忽略依赖包的类型检查
-    // "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件
     // "declarationDir": "dist/types", // 声明文件的输出目录
     // "declarationDir": "dist/types", // 声明文件的输出目录
     // "forceConsistentCasingInFileNames": true // 在文件名中强制使用一致的大小写
