@@ -91,10 +91,10 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class="page-warp grid place-content-center mt-10">
+  <div class="page-warp mt-10 grid place-content-center">
     <div id="tiny-player"></div>
     <div>
-      <p class="text-black bg-amber-200 leading-8 box-border my-4 select-none text-center font-bold">🦾🤖 调试栏 🎯🎮</p>
+      <p class="my-4 box-border select-none bg-amber-200 text-center font-bold leading-8 text-black">🦾🤖 调试栏 🎯🎮</p>
       <div class="my-4 flex gap-10">
         <div class="flex">
           <el-button type="primary" @click="mountControl">转移控制栏到目标节点</el-button>
@@ -104,11 +104,11 @@ onMounted(() => {
         <el-button type="success" @click="cutVideo">裁剪视频</el-button>
       </div>
       <ResizeBox />
-      <div class="flex my-4 justify-between">
+      <div class="my-4 flex justify-between">
         <el-switch
           style="--el-switch-on-color: #13ce66; --el-switch-off-color: #686767"
           v-model="playOptions.waterMarkShow"
-          class="px-4 select-none"
+          class="select-none px-4"
           inline-prompt
           active-text="显示水印"
           inactive-text="隐藏水印"

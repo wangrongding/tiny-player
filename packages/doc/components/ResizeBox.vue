@@ -32,11 +32,11 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="control-target max-w-[800px] min-w-[200px] min-h-[50px] select-none bg-gradient-to-r border-blue-400 border-2 border-solid from-red-500 to-sky-500 h-[200px] relative grid place-content-center"
+    class="control-target relative grid h-[200px] min-h-[50px] min-w-[200px] max-w-[800px] select-none place-content-center border-2 border-solid border-blue-400 bg-gradient-to-r from-red-500 to-sky-500"
     id="resizable-div"
   >
     <span class="placeholder">目标节点</span>
-    <div class="drag-el absolute right-[-8px] bottom-[-8px] w-[16px] h-[16px] grid place-content-center bg-blue-500 cursor-nwse-resize font-bold text-lg">
+    <div class="drag-el absolute bottom-[-8px] right-[-8px] grid h-[16px] w-[16px] cursor-nwse-resize place-content-center bg-blue-500 text-lg font-bold">
       ⤡
     </div>
   </div>
