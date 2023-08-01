@@ -2,6 +2,8 @@
  * 参考 https://prettier.io/docs/en/options.html
  */
 module.exports = {
+  plugins: [require('prettier-plugin-tailwindcss')], // tailwindcss class 进行排序
+  tailwindConfig: './packages/doc/tailwind.config.js',
   tabWidth: 2, // 空格数
   useTabs: false, // 是否开启tab
   printWidth: 160, // 换行的宽度
