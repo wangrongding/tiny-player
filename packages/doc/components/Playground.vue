@@ -76,6 +76,7 @@ const playOptions: PlayerOptions = reactive({
   preload: 'metadata', // 预加载
   poster: poster, // 封面地址
   src: videoSource, // 视频地址
+  playbackRate: 1, // 播放速率
   type: 'hls', // 视频类型
   waterMarkShow: true, // 是否显示水印
   waterMarkUrl: '//assets.fedtop.com/picbed/202306091010648.png',

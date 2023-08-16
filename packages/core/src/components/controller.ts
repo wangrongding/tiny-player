@@ -54,6 +54,7 @@ export default class Controller {
     this.initSeekBar()
     this.initVolumeButton()
     this.initFullScreenButton()
+    this.initPlaybackRate()
 
     // 其他
     // if (!this.player.options.controlOptions) {}
@@ -93,6 +94,11 @@ export default class Controller {
     this.seekBar.addEventListener('touchmove', (event) => event.stopPropagation())
     this.seekBar.addEventListener('input', this.onSeeking)
     this.playTime = this.controlElement.querySelector('.tp-play-time') as HTMLInputElement
+  }
+
+  // 初始化视频播放速率
+  private initPlaybackRate = () => {
+    this.player.video.playbackRate = this.player.options.playbackRate || 1
   }
 
   // 初始化音量控制栏

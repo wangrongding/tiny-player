@@ -1,7 +1,6 @@
 <!-- prettier-ignore -->
 <video 
   class="tp-video"
-  crossorigin="anonymous"
   webkit-playsinline
   playsinline
   src="<%= locals.src %>" 
@@ -12,9 +11,7 @@
   <% if(locals.airplay){ %> x-webkit-airplay="allow" <% } %> 
   <% if(locals.preload){ %> src="<%= locals.preload %>" <% } %> 
   <% if(locals.poster){ %> poster="<%= locals.poster %>" <% } %> 
-  <% if(locals.volume){ %> src="<%= locals.volume %>" <% } %> 
-  <% if(locals.playbackSpeed){ %> src="<%= locals.playbackSpeed %>" <% } %> 
-  <% if(locals.anonymous){ %> src="<%= locals.anonymous %>" <% } %> 
+  <% if(locals.crossorigin){ %> src="<%= locals.crossorigin %>" <% } %> 
 >
   你的浏览器不支持 video 标签，换个浏览器试试？
 </video>

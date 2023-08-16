@@ -59,6 +59,10 @@ export interface PlayerOptions {
    */
   playbackRate?: number
   /**
+   * @description 是否使用 CORS（跨域资源共享）来获取相关视频
+   */
+  crossorigin?: 'anonymous' | 'use-credentials'
+  /**
    * @description 是否显示水印
    */
   waterMarkShow?: boolean
