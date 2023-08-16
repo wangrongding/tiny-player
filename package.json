@@ -19,7 +19,7 @@
     "build:player": "pnpm -F \"tiny-player\" build",
     "preview": "pnpm -F doc preview",
     "--  publish  ----------------------------------------------": "",
-    "pub": "pnpm -F \"tiny-player\" publish",
+    "pub": "pnpm -F \"tiny-player\" publish --registry https://registry.npmjs.org",
     "pub:dry": "pnpm -F \"tiny-player\" publish --dry-run --no-git-checks",
     "format": "prettier --write .",
     "commit": "cz"
