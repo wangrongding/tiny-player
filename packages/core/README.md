@@ -16,11 +16,9 @@
 
 ---
 
-<p align="center">
-  <a href="https://tiny-player.vercel.app">Document</a> |
-  <a href="#Features">Features</a> |
-  <a href="#Development">Development</a> 
-</p>
+## Usage
+
+参考 [Tiny Player 使用文档](https://tiny-player.vercel.app)
 
 ## Features
 
@@ -33,62 +31,10 @@
 - 🎨 轻量（仅 25kb 大小，gzip 压缩后仅 7kb 大小。）
 - 🥳 软解【wip】（支持音视频软解，支持自定义解码器，解决各个浏览器的兼容性问题。（开发中））
 
-## Development
-
-确保 node 版本 >= 16 ，且全局安装 pnpm
-
-```sh
-npm install -g pnpm
-```
-
-```sh
-# 安装依赖
-pnpm i
-# 开发调试
-pnpm dev
-# 构建
-pnpm build
-```
-
-### 在其他项目中调试
-
-通用型：
-
-```sh
-# 开发
-pnpm dev
-# 获取项目地址
-cd packages/core && pwd # "/Users/xxx/xxx/chuangkit-tiny-player/packages/core"
-# 在其他项目中安装
-pnpm add "/Users/xxx/xxx/chuangkit-tiny-player/packages/core"
-yarn add "/Users/xxx/xxx/chuangkit-tiny-player/packages/core"
-npm i "/Users/xxx/xxx/chuangkit-tiny-player/packages/core"
-```
-
-软连接形式：
-
-```sh
-pnpm dev
-# 如果其他项目以 npm 作为包管理器
-cd packages/core && npm link
-# 如果其他项目以 yarn 作为包管理器
-cd packages/core && yarn link
-# 如果其他项目以 pnpm 作为包管理器
-cd packages/core && pnpm link
-
-# 在其他项目中安装
-# npm
-npm link tiny-player
-# yarn
-yarn link tiny-player
-# pnpm
-pnpm link tiny-player
-```
-
-## 相关参考：
+<!-- ## 相关参考：
 
 - [plyr](https://github.com/sampotts/plyr)
 - [dplayer](https://dplayer.diygod.dev/zh/)
 - [xgplayer](https://github.com/bytedance/xgplayer)
 - [shaka-player](https://github.com/shaka-project/shaka-player)
-- [videojs-player](https://github.com/surmon-china/videojs-player)
+- [videojs-player](https://github.com/surmon-china/videojs-player) -->
