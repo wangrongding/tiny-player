@@ -43,19 +43,19 @@
   "author": "荣顶",
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "^2.26.1",
-    "@commitlint/cli": "^17.6.3",
-    "@commitlint/config-conventional": "^17.6.3",
-    "commitizen": "^4.3.0",
+    "@changesets/cli": "^2.31.1",
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
+    "commitizen": "^4.3.2",
     "commitlint-config-cz": "^0.13.3",
-    "concurrently": "^8.0.1",
-    "cz-customizable": "^7.0.0",
-    "eslint": "^8.40.0",
+    "concurrently": "^8.2.2",
+    "cz-customizable": "7.0.0",
+    "eslint": "^8.57.1",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
-    "prettier": "^2.8.6",
+    "lint-staged": "^13.3.0",
+    "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.2.0"
   },
   "pnpm": {
     "patchedDependencies": {
